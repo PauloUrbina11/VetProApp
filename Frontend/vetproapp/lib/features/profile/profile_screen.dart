@@ -159,8 +159,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: ElevatedButton(
                         onPressed: _saving ? null : _save,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: vetproGreen,
+                          backgroundColor: white,
+                          foregroundColor: darkGreen,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12)),
                         ),
@@ -212,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           color: Colors.white, fontFamily: 'Montserrat', fontSize: 14),
       decoration: InputDecoration(
         filled: true,
-        fillColor: vetproGreen,
+        fillColor: softGreen,
         contentPadding:
             const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
         hintText: hint,

@@ -212,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final bool hasAppointment = _nextAppointment != null;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: mint,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -304,13 +304,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   height: 140,
                   decoration: BoxDecoration(
-                    color: vetproGreen,
+                    color: softGreen,
                     borderRadius: BorderRadius.circular(18),
                   ),
                   padding: const EdgeInsets.all(14),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: white,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -347,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: vetproGreen,
+                        color: lightGreen,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Column(
@@ -357,7 +357,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             _formatAppointmentDate(
                                 _nextAppointment!['fecha_hora']),
                             style: const TextStyle(
-                              color: Colors.white,
+                              color: darkGreen,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -367,7 +367,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               _nextAppointment!['notas_cliente'],
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: darkGreen,
                                 fontSize: 14,
                               ),
                               maxLines: 2,
@@ -581,7 +581,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildVeterinaryHome() {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: mint,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -920,7 +920,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildAdminHome() {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: mint,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

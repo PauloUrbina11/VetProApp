@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/login_form.dart';
 import '../widgets/register_form.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/config/theme.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF15803D),
+      backgroundColor: softGreen,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -119,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Container(
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.15),
+                      color: lightGreen.withOpacity(0.3),
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: isLogin ? const LoginForm() : const RegisterForm(),

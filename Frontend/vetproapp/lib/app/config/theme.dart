@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
 
-const Color vetproGreen = Color(0xFF15803D);
+// Nueva paleta de colores verde suave y profesional
+const Color mint = Color(0xFFE2F7EF); // fondo principal
+const Color lightGreen = Color(0xFFA7E1C2); // tarjetas, contenedores
+const Color softGreen = Color(0xFF5DB075); // inputs, acentos
+const Color darkGreen = Color(0xFF234F32); // textos, encabezados
+const Color white = Color(0xFFFFFFFF); // botones y fondos claros
+
+// Mantener compatibilidad con código existente
+const Color vetproGreen = softGreen;
 
 final ThemeData appTheme = ThemeData(
-  primaryColor: vetproGreen,
-  colorScheme: ColorScheme.fromSeed(seedColor: vetproGreen),
-  scaffoldBackgroundColor: vetproGreen,
+  primaryColor: softGreen,
+  colorScheme: ColorScheme.fromSeed(seedColor: softGreen),
+  scaffoldBackgroundColor: mint,
   appBarTheme: const AppBarTheme(
-    backgroundColor: vetproGreen,
-    foregroundColor: Colors.white,
+    backgroundColor: softGreen,
+    foregroundColor: white,
     elevation: 0,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      backgroundColor: Colors.white,
-      foregroundColor: vetproGreen,
+      backgroundColor: white,
+      foregroundColor: darkGreen,
     ),
   ),
 );

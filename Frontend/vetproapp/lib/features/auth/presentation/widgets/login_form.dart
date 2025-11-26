@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/config/theme.dart';
 import 'password_field.dart';
 
 class LoginForm extends StatefulWidget {
@@ -40,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
             controller: correoController,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFF15803D),
+              fillColor: softGreen,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(8),
@@ -90,8 +91,8 @@ class _LoginFormState extends State<LoginForm> {
             child: ElevatedButton(
               onPressed: loading ? null : loginUser,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: const Color(0xFF15803D),
+                backgroundColor: white,
+                foregroundColor: darkGreen,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -101,7 +102,7 @@ class _LoginFormState extends State<LoginForm> {
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
-                        color: Color(0xFF15803D),
+                        color: darkGreen,
                         strokeWidth: 2,
                       ),
                     )

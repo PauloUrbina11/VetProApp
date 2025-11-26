@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'password_field.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/config/theme.dart';
 
 class RegisterForm extends StatefulWidget {
   const RegisterForm({super.key});
@@ -47,14 +48,14 @@ class _RegisterFormState extends State<RegisterForm> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF15803D),
+        color: softGreen,
         borderRadius: BorderRadius.circular(8),
       ),
       child: DropdownButton<int>(
         isExpanded: true,
         value: selectedDepartamentoId,
         underline: const SizedBox.shrink(),
-        dropdownColor: const Color(0xFF15803D),
+        dropdownColor: softGreen,
         hint: Text(
           'Selecciona un departamento',
           style: TextStyle(color: Colors.white.withOpacity(0.7)),
@@ -82,14 +83,14 @@ class _RegisterFormState extends State<RegisterForm> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF15803D),
+        color: softGreen,
         borderRadius: BorderRadius.circular(8),
       ),
       child: DropdownButton<int>(
         isExpanded: true,
         value: selectedCiudadId,
         underline: const SizedBox.shrink(),
-        dropdownColor: const Color(0xFF15803D),
+        dropdownColor: softGreen,
         hint: Text(
           'Selecciona una ciudad',
           style: TextStyle(color: Colors.white.withOpacity(0.7)),
@@ -242,8 +243,8 @@ class _RegisterFormState extends State<RegisterForm> {
             child: ElevatedButton(
               onPressed: loading ? null : _createAccount,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: const Color(0xFF15803D),
+                backgroundColor: white,
+                foregroundColor: darkGreen,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -253,7 +254,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
-                        color: Color(0xFF15803D),
+                        color: darkGreen,
                         strokeWidth: 2,
                       ),
                     )
@@ -404,7 +405,7 @@ class _RegisterFormState extends State<RegisterForm> {
       ),
       decoration: InputDecoration(
         filled: true,
-        fillColor: const Color(0xFF15803D), // Verde VetProApp
+        fillColor: softGreen,
         contentPadding:
             const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
         hintText: hint,
