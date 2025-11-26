@@ -523,7 +523,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: Colors.orange.shade100,
+                        color: lightGreen.withOpacity(0.5),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
@@ -872,11 +872,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildLegendItem('1-2', Colors.green.shade200),
+                    _buildLegendItem('1-2', lightGreen),
                     const SizedBox(width: 12),
-                    _buildLegendItem('3-5', Colors.orange.shade300),
+                    _buildLegendItem('3-5', softGreen),
                     const SizedBox(width: 12),
-                    _buildLegendItem('6+', Colors.red.shade400),
+                    _buildLegendItem('6+', darkGreen),
                   ],
                 ),
 
@@ -913,9 +913,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Color _getColorForCount(int count) {
     if (count == 0) return Colors.transparent;
-    if (count <= 2) return Colors.green.shade200;
-    if (count <= 5) return Colors.orange.shade300;
-    return Colors.red.shade400;
+    if (count <= 2) return lightGreen;
+    if (count <= 5) return softGreen;
+    return darkGreen;
   }
 
   Widget _buildAdminHome() {
@@ -1020,22 +1020,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         'Usuarios',
                         '${_globalStats?['totalUsuarios'] ?? 0}',
                         Icons.people,
-                        Colors.blue.shade400),
+                        lightGreen),
                     _buildStatCard(
                         'Veterinarias',
                         '${_globalStats?['totalVeterinarias'] ?? 0}',
                         Icons.local_hospital,
-                        Colors.green.shade400),
+                        softGreen),
                     _buildStatCard(
                         'Mascotas',
                         '${_globalStats?['totalMascotas'] ?? 0}',
                         Icons.pets,
-                        Colors.orange.shade400),
+                        lightGreen.withOpacity(0.8)),
                     _buildStatCard(
                         'Citas Hoy',
                         '${_globalStats?['citasHoy'] ?? 0}',
                         Icons.calendar_today,
-                        Colors.purple.shade400),
+                        darkGreen),
                   ],
                 ),
 

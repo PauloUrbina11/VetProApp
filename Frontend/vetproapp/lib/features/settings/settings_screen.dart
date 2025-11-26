@@ -22,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: vetproGreen,
+      backgroundColor: mint,
       appBar: AppBar(
         title: const Text('Ajustes'),
       ),
@@ -31,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 8),
           ListTile(
             title: const Text('Notificaciones',
-                style: TextStyle(color: Colors.white)),
+                style: TextStyle(color: darkGreen)),
             trailing: Switch(
               value: notificationsEnabled,
               onChanged: (v) => setState(() => notificationsEnabled = v),
@@ -46,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   SwitchListTile(
                     title: const Text('Preferencias de notificaciones',
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(color: darkGreen)),
                     value: notificationPrefs,
                     onChanged: (v) => setState(() => notificationPrefs = v),
                     activeColor: Colors.white,
@@ -56,9 +56,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           const Divider(color: Colors.white54),
           ListTile(
-            title: const Text('Tema', style: TextStyle(color: Colors.white)),
+            title: const Text('Tema', style: TextStyle(color: darkGreen)),
             subtitle: Text(darkTheme ? 'Oscuro' : 'Claro',
-                style: const TextStyle(color: Colors.white70)),
+                style: TextStyle(color: darkGreen.withOpacity(0.7))),
             trailing: Switch(
               value: darkTheme,
               onChanged: (v) => setState(() => darkTheme = v),
@@ -66,54 +66,54 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           ListTile(
-            title: const Text('Idioma', style: TextStyle(color: Colors.white)),
+            title: const Text('Idioma', style: TextStyle(color: darkGreen)),
             subtitle:
-                Text(language, style: const TextStyle(color: Colors.white70)),
+                Text(language, style: TextStyle(color: darkGreen.withOpacity(0.7))),
             onTap: _chooseLanguage,
           ),
           const Divider(color: Colors.white54),
           ListTile(
             title:
-                const Text('Permisos', style: TextStyle(color: Colors.white)),
-            subtitle: const Text('Ubicación, cámara, galería',
-                style: TextStyle(color: Colors.white70)),
+                const Text('Permisos', style: TextStyle(color: darkGreen)),
+            subtitle: Text('Ubicación, cámara, galería',
+                style: TextStyle(color: darkGreen.withOpacity(0.7))),
             onTap: _showPermissionsDialog,
           ),
           const Divider(color: Colors.white54),
           ListTile(
             title:
-                const Text('Seguridad', style: TextStyle(color: Colors.white)),
-            subtitle: const Text('Opciones de seguridad',
-                style: TextStyle(color: Colors.white70)),
+                const Text('Seguridad', style: TextStyle(color: darkGreen)),
+            subtitle: Text('Opciones de seguridad',
+                style: TextStyle(color: darkGreen.withOpacity(0.7))),
             onTap: _showSecurity,
           ),
           const Divider(color: Colors.white54),
           ListTile(
             title: const Text('Política de privacidad',
-                style: TextStyle(color: Colors.white)),
+                style: TextStyle(color: darkGreen)),
             onTap: () =>
                 _showInfo('Política de privacidad', 'Aquí va la política...'),
           ),
           ListTile(
             title: const Text('Términos y condiciones',
-                style: TextStyle(color: Colors.white)),
+                style: TextStyle(color: darkGreen)),
             onTap: () => _showInfo('Términos y condiciones', 'Términos...'),
           ),
           ListTile(
             title: const Text('Información de la app',
-                style: TextStyle(color: Colors.white)),
+                style: TextStyle(color: darkGreen)),
             onTap: () => _showInfo('Información', 'VetProApp v1.0'),
           ),
           ListTile(
             title: const Text('Contactar soporte',
-                style: TextStyle(color: Colors.white)),
+                style: TextStyle(color: darkGreen)),
             onTap: () => _showInfo('Soporte', 'contacto@vetproapp.example'),
           ),
           const Divider(color: Colors.white54),
           ListTile(
             title: const Text('Cerrar sesión',
-                style: TextStyle(color: Colors.white)),
-            leading: const Icon(Icons.logout, color: Colors.white),
+                style: TextStyle(color: darkGreen)),
+            leading: const Icon(Icons.logout, color: darkGreen),
             onTap: () async {
               await AuthService.logout();
               Navigator.pushReplacementNamed(context, '/login');

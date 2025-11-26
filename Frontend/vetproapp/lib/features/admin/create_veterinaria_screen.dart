@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../app/services/admin_service.dart';
+import '../../app/services/auth_service.dart';
+import '../../app/config/theme.dart';
 
 class CreateVeterinariaScreen extends StatefulWidget {
   const CreateVeterinariaScreen({super.key});
@@ -132,7 +134,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
           label,
           style: const TextStyle(
             fontFamily: 'Montserrat',
-            color: Colors.white,
+            color: darkGreen,
             fontSize: 15,
           ),
         ),
@@ -143,7 +145,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
           maxLines: maxLines,
           decoration: InputDecoration(
             filled: true,
-            fillColor: const Color(0xFF15803D),
+            fillColor: softGreen,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(8),
@@ -177,21 +179,21 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
           label + (required ? ' *' : ''),
           style: const TextStyle(
             fontFamily: 'Montserrat',
-            color: Colors.white,
+            color: darkGreen,
             fontSize: 15,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: const Color(0xFF15803D),
+            color: softGreen,
             borderRadius: BorderRadius.circular(8),
           ),
           child: DropdownButtonFormField<int>(
             value: value,
             decoration: InputDecoration(
               filled: true,
-              fillColor: const Color(0xFF15803D),
+              fillColor: softGreen,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(8),
@@ -199,7 +201,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             ),
-            dropdownColor: const Color(0xFF15803D),
+            dropdownColor: softGreen,
             style:
                 const TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
             items: items.map((item) {
@@ -223,14 +225,14 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF15803D),
+      backgroundColor: mint,
       appBar: AppBar(
         title: const Text(
           'Crear Veterinaria',
           style:
               TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF15803D),
+        backgroundColor: softGreen,
         elevation: 0,
       ),
       body: SafeArea(
@@ -243,7 +245,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                 Container(
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.15),
+                    color: lightGreen.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Column(
@@ -337,8 +339,8 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                         child: ElevatedButton(
                           onPressed: _loading ? null : _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                            foregroundColor: const Color(0xFF15803D),
+                            backgroundColor: white,
+                            foregroundColor: darkGreen,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),
@@ -348,7 +350,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                                   width: 20,
                                   height: 20,
                                   child: CircularProgressIndicator(
-                                    color: Color(0xFF15803D),
+                                    color: darkGreen,
                                     strokeWidth: 2,
                                   ),
                                 )

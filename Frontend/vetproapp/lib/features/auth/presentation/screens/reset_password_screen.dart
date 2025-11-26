@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/config/theme.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   final String token;
@@ -75,7 +76,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   obscureText: _obscureNew,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: const Color(0xFF15803D),
+                    fillColor: softGreen,
                     labelText: 'Nueva contraseña',
                     labelStyle: const TextStyle(
                       fontFamily: 'Montserrat',
@@ -105,7 +106,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   obscureText: _obscureConfirm,
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: const Color(0xFF15803D),
+                    fillColor: softGreen,
                     labelText: 'Confirmar contraseña',
                     labelStyle: const TextStyle(
                       fontFamily: 'Montserrat',

@@ -118,7 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : Container(
-              color: vetproGreen,
+              color: mint,
               child: Form(
                 key: _formKey,
                 child: ListView(
@@ -229,13 +229,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-          color: vetproGreen, borderRadius: BorderRadius.circular(12)),
+          color: softGreen, borderRadius: BorderRadius.circular(12)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<int>(
           isExpanded: true,
           value: _departamentoId,
           iconEnabledColor: Colors.white,
-          dropdownColor: vetproGreen,
+          dropdownColor: softGreen,
           hint: Text('Selecciona',
               style: TextStyle(color: Colors.white.withOpacity(0.7))),
           items: _departamentos
@@ -255,13 +255,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-          color: vetproGreen, borderRadius: BorderRadius.circular(12)),
+          color: softGreen, borderRadius: BorderRadius.circular(12)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<int>(
           isExpanded: true,
           value: _ciudadId,
           iconEnabledColor: Colors.white,
-          dropdownColor: vetproGreen,
+          dropdownColor: softGreen,
           hint: Text('Selecciona',
               style: TextStyle(color: Colors.white.withOpacity(0.7))),
           items: _ciudades

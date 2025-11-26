@@ -65,7 +65,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: mint,
       appBar: AppBar(
         title: const Text(
           'Recomendaciones',
@@ -74,8 +74,8 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: vetproGreen,
-        foregroundColor: Colors.white,
+        backgroundColor: softGreen,
+        foregroundColor: white,
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
@@ -147,7 +147,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                     fontFamily: 'Montserrat',
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: vetproGreen,
+                    color: darkGreen,
                   ),
                 ),
                 const SizedBox(height: 8),

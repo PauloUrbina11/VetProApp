@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../app/services/appointments_service.dart';
 import '../../app/services/admin_service.dart';
 import '../../app/services/auth_service.dart';
+import '../../app/config/theme.dart';
 
 class ManageAppointmentsScreen extends StatefulWidget {
   const ManageAppointmentsScreen({super.key});
@@ -122,14 +123,14 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF15803D),
+      backgroundColor: mint,
       appBar: AppBar(
         title: const Text(
           'Gestión de Citas',
           style:
               TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF15803D),
+        backgroundColor: softGreen,
         elevation: 0,
       ),
       body: _loading
@@ -143,13 +144,13 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.2),
+                          color: lightGreen.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           _error!,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: darkGreen,
                             fontFamily: 'Montserrat',
                           ),
                         ),
@@ -158,7 +159,7 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
                     const Text(
                       'Lista de Citas',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: darkGreen,
                         fontFamily: 'Montserrat',
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -171,13 +172,13 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
                               child: Container(
                                 padding: const EdgeInsets.all(24),
                                 decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.15),
+                                  color: lightGreen.withOpacity(0.3),
                                   borderRadius: BorderRadius.circular(18),
                                 ),
                                 child: const Text(
                                   'No hay citas registradas',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: darkGreen,
                                     fontFamily: 'Montserrat',
                                     fontSize: 16,
                                   ),

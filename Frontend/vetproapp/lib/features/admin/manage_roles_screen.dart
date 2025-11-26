@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../app/services/admin_service.dart';
+import '../../app/config/theme.dart';
 
 class ManageRolesScreen extends StatefulWidget {
   const ManageRolesScreen({super.key});
@@ -84,14 +85,14 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF15803D),
+      backgroundColor: mint,
       appBar: AppBar(
         title: const Text(
           'Asignar Roles Veterinaria',
           style:
               TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF15803D),
+        backgroundColor: softGreen,
         elevation: 0,
       ),
       body: _loading
@@ -105,13 +106,13 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.2),
+                          color: lightGreen.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           _error!,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: darkGreen,
                             fontFamily: 'Montserrat',
                           ),
                         ),
@@ -120,7 +121,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                     const Text(
                       'Usuarios con rol Veterinaria',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: darkGreen,
                         fontFamily: 'Montserrat',
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -137,15 +138,15 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                             margin: const EdgeInsets.only(bottom: 8),
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? Colors.white.withOpacity(0.3)
-                                  : Colors.white.withOpacity(0.15),
+                                  ? lightGreen.withOpacity(0.8)
+                                  : lightGreen.withOpacity(0.5),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: ListTile(
                               title: Text(
                                 '${u['nombre_completo'] ?? 'Usuario'}',
                                 style: const TextStyle(
-                                  color: Colors.white,
+                                  color: darkGreen,
                                   fontFamily: 'Montserrat',
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -153,7 +154,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                               subtitle: Text(
                                 '${u['correo']} - ID: ${u['id']}',
                                 style: TextStyle(
-                                  color: Colors.white.withOpacity(0.8),
+                                  color: darkGreen.withOpacity(0.7),
                                   fontFamily: 'Montserrat',
                                 ),
                               ),
@@ -170,7 +171,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                     Container(
                       padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
+                        color: lightGreen.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(18),
                       ),
                       child: Column(
@@ -180,7 +181,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                             'Veterinaria',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
-                              color: Colors.white,
+                              color: darkGreen,
                               fontSize: 15,
                             ),
                           ),
@@ -188,7 +189,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF15803D),
+                              color: softGreen,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: DropdownButton<int>(
@@ -196,7 +197,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                               hint: const Text(
                                 'Seleccionar veterinaria',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: white,
                                   fontFamily: 'Montserrat',
                                 ),
                               ),
@@ -230,7 +231,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                             'Rol en Veterinaria',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
-                              color: Colors.white,
+                              color: darkGreen,
                               fontSize: 15,
                             ),
                           ),
@@ -238,7 +239,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF15803D),
+                              color: softGreen,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: DropdownButton<int>(
@@ -246,7 +247,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                               hint: const Text(
                                 'Seleccionar rol',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: white,
                                   fontFamily: 'Montserrat',
                                 ),
                               ),
@@ -282,8 +283,8 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                             child: ElevatedButton(
                               onPressed: _assigning ? null : _assign,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: const Color(0xFF15803D),
+                                backgroundColor: white,
+                                foregroundColor: darkGreen,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -293,7 +294,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                                       width: 20,
                                       height: 20,
                                       child: CircularProgressIndicator(
-                                        color: Color(0xFF15803D),
+                                        color: darkGreen,
                                         strokeWidth: 2,
                                       ),
                                     )

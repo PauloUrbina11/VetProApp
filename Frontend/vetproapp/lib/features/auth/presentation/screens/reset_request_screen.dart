@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../app/services/auth_service.dart';
+import '../../../../app/config/theme.dart';
 
 class ResetRequestScreen extends StatefulWidget {
   const ResetRequestScreen({super.key});
@@ -36,7 +37,7 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
                 controller: correoController,
                 decoration: InputDecoration(
                   filled: true,
-                  fillColor: const Color(0xFF15803D), // Fondo verde
+                  fillColor: softGreen, // Fondo verde
                   labelText: 'Correo electrónico',
                   labelStyle: const TextStyle(
                     fontFamily: 'Montserrat',

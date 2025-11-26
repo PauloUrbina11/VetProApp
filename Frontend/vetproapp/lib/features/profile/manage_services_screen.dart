@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../app/services/services_service.dart';
+import '../../app/config/theme.dart';
 
 class ManageServicesScreen extends StatefulWidget {
   const ManageServicesScreen({super.key});
@@ -151,7 +152,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
           maxLines: maxLines,
           decoration: InputDecoration(
             filled: true,
-            fillColor: const Color(0xFF15803D),
+            fillColor: softGreen,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
               borderRadius: BorderRadius.circular(8),
@@ -171,14 +172,14 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF15803D),
+      backgroundColor: mint,
       appBar: AppBar(
         title: const Text(
           'Gestión de Servicios',
           style:
               TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
         ),
-        backgroundColor: const Color(0xFF15803D),
+        backgroundColor: softGreen,
         elevation: 0,
       ),
       body: _loading
@@ -193,13 +194,13 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                       Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.2),
+                          color: lightGreen.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
                           _error!,
                           style: const TextStyle(
-                            color: Colors.white,
+                            color: darkGreen,
                             fontFamily: 'Montserrat',
                           ),
                         ),
@@ -210,7 +211,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                     Container(
                       padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.15),
+                        color: lightGreen.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(18),
                       ),
                       child: Column(
@@ -219,7 +220,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                           const Text(
                             'Crear Nuevo Servicio',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: darkGreen,
                               fontFamily: 'Montserrat',
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -239,7 +240,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                             'Tipo de Servicio *',
                             style: TextStyle(
                               fontFamily: 'Montserrat',
-                              color: Colors.white,
+                              color: darkGreen,
                               fontSize: 15,
                             ),
                           ),
@@ -247,7 +248,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF15803D),
+                              color: softGreen,
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: DropdownButton<int>(
@@ -255,15 +256,15 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                               hint: const Text(
                                 'Seleccionar tipo',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: white,
                                   fontFamily: 'Montserrat',
                                 ),
                               ),
                               isExpanded: true,
                               underline: const SizedBox(),
-                              dropdownColor: const Color(0xFF15803D),
+                              dropdownColor: softGreen,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: white,
                                 fontFamily: 'Montserrat',
                               ),
                               items: _serviceTypes
@@ -290,8 +291,8 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                             child: ElevatedButton(
                               onPressed: _creating ? null : _createService,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: const Color(0xFF15803D),
+                                backgroundColor: white,
+                                foregroundColor: darkGreen,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -301,7 +302,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                       height: 20,
                                       width: 20,
                                       child: CircularProgressIndicator(
-                                        color: Color(0xFF15803D),
+                                        color: darkGreen,
                                         strokeWidth: 2,
                                       ),
                                     )

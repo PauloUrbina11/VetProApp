@@ -34,15 +34,15 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Card(
-        color: vetproGreen,
+        color: lightGreen,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         elevation: 2,
         child: ListTile(
-          leading: Icon(icon, color: Colors.white),
+          leading: Icon(icon, color: darkGreen),
           title: Text(title,
               style: const TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.w600)),
-          trailing: const Icon(Icons.chevron_right, color: Colors.white),
+                  color: darkGreen, fontWeight: FontWeight.w600)),
+          trailing: const Icon(Icons.chevron_right, color: darkGreen),
           onTap: onTap,
         ),
       ),
