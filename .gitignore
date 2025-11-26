@@ -1,0 +1,114 @@
+# ===================================
+# Backend (Node.js / Express)
+# ===================================
+
+Backend/node_modules/
+Backend/.env
+Backend/.env.local
+Backend/.env.*.local
+Backend/npm-debug.log*
+Backend/yarn-debug.log*
+Backend/yarn-error.log*
+Backend/package-lock.json
+Backend/yarn.lock
+
+# ===================================
+# Frontend (Flutter / Dart)
+# ===================================
+
+# Miscellaneous
+Frontend/vetproapp/*.class
+Frontend/vetproapp/*.log
+Frontend/vetproapp/*.pyc
+Frontend/vetproapp/*.swp
+Frontend/vetproapp/.DS_Store
+Frontend/vetproapp/.atom/
+Frontend/vetproapp/.buildlog/
+Frontend/vetproapp/.history
+Frontend/vetproapp/.svn/
+Frontend/vetproapp/migrate_working_dir/
+
+# IntelliJ related
+Frontend/vetproapp/*.iml
+Frontend/vetproapp/*.ipr
+Frontend/vetproapp/*.iws
+Frontend/vetproapp/.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#Frontend/vetproapp/.vscode/
+
+# Flutter/Dart/Pub related
+Frontend/vetproapp/**/doc/api/
+Frontend/vetproapp/**/ios/Flutter/.last_build_id
+Frontend/vetproapp/.dart_tool/
+Frontend/vetproapp/.flutter-plugins
+Frontend/vetproapp/.flutter-plugins-dependencies
+Frontend/vetproapp/.packages
+Frontend/vetproapp/.pub-cache/
+Frontend/vetproapp/.pub/
+Frontend/vetproapp/build/
+
+# Symbolication related
+Frontend/vetproapp/app.*.symbols
+
+# Obfuscation related
+Frontend/vetproapp/app.*.map.json
+
+# Android Studio will place build artifacts here
+Frontend/vetproapp/android/app/debug
+Frontend/vetproapp/android/app/profile
+Frontend/vetproapp/android/app/release
+
+# iOS
+Frontend/vetproapp/ios/Pods/
+Frontend/vetproapp/ios/.symlinks/
+Frontend/vetproapp/ios/Flutter/Flutter.framework
+Frontend/vetproapp/ios/Flutter/Flutter.podspec
+Frontend/vetproapp/ios/Flutter/Generated.xcconfig
+Frontend/vetproapp/ios/Flutter/app.flx
+Frontend/vetproapp/ios/Flutter/app.zip
+Frontend/vetproapp/ios/Flutter/flutter_assets/
+Frontend/vetproapp/ios/Flutter/flutter_export_environment.sh
+Frontend/vetproapp/ios/ServiceDefinitions.json
+Frontend/vetproapp/ios/Runner/GeneratedPluginRegistrant.*
+
+# macOS
+Frontend/vetproapp/macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Web
+Frontend/vetproapp/web/*.js
+Frontend/vetproapp/web/*.js.map
+
+# Windows
+Frontend/vetproapp/windows/flutter/generated_plugin_registrant.cc
+Frontend/vetproapp/windows/flutter/generated_plugin_registrant.h
+Frontend/vetproapp/windows/flutter/generated_plugins.cmake
+
+# Linux
+Frontend/vetproapp/linux/flutter/generated_plugin_registrant.cc
+Frontend/vetproapp/linux/flutter/generated_plugin_registrant.h
+Frontend/vetproapp/linux/flutter/generated_plugins.cmake
+
+# ===================================
+# General
+# ===================================
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*~
