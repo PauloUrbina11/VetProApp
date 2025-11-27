@@ -9,6 +9,7 @@ import {
   getMascotaController,
   getAllMascotasController,
   deleteMascotaController,
+  putMascotaController,
 } from "../controllers/pets.controller.js";
 
 const router = Router();
@@ -18,6 +19,7 @@ router.get("/razas", getRazasController);
 router.get("/mis", authMiddleware, getMisMascotasController);
 router.get("/all", authMiddleware, requireRole(1), getAllMascotasController);
 router.post("/", authMiddleware, postMascotaController);
+router.put("/:id", authMiddleware, putMascotaController);
 router.delete("/:id", authMiddleware, deleteMascotaController);
 router.get("/:id", authMiddleware, getMascotaController);
 

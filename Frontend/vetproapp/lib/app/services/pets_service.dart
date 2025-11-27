@@ -80,10 +80,20 @@ class PetsService {
 
   static Future<void> deletePet(int id) async {
     final h = await _headers();
-    final resp = await http.delete(Uri.parse('$_baseUrl/$id'), headers: h);
+    final resp = await http.delete(Uri.parse('\$_baseUrl/\$id'), headers: h);
     final data = jsonDecode(resp.body);
     if (resp.statusCode != 200 || data['ok'] != true) {
       throw Exception(data['error'] ?? 'Error al eliminar mascota');
+    }
+  }
+
+  static Future<void> updatePet(int id, Map<String, dynamic> payload) async {
+    final h = await _headers();
+    final resp = await http.put(Uri.parse('\$_baseUrl/\$id'),
+        headers: h, body: jsonEncode(payload));
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error al actualizar mascota');
     }
   }
 }

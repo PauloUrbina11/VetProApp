@@ -119,3 +119,29 @@ export const deleteMascota = async (id) => {
   return res.rows[0];
 };
 
+export const updateMascota = async (id, data) => {
+  // Solo permitir actualizar: fecha_nacimiento, color, peso_kg, foto_principal
+  const { fecha_nacimiento, color, peso_kg, foto_principal } = data;
+  
+  const q = `
+    UPDATE mascotas 
+    SET 
+      fecha_nacimiento = COALESCE($1, fecha_nacimiento),
+      color = COALESCE($2, color),
+      peso_kg = COALESCE($3, peso_kg),
+      foto_principal = COALESCE($4, foto_principal)
+    WHERE id = $5
+    RETURNING *
+  `;
+  
+  const res = await pool.query(q, [
+    fecha_nacimiento || null,
+    color || null,
+    peso_kg || null,
+    foto_principal || null,
+    id
+  ]);
+  
+  return res.rows[0];
+};
+

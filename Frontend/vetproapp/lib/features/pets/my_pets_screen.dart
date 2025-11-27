@@ -705,6 +705,42 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
     );
   }
 
+  Future<void> _editPet() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditPetScreen(pet: widget.pet),
+      ),
+    );
+    if (result == true) {
+      // Recargar los datos de la mascota
+      try {
+        final updatedPet = await PetsService.getPetById(widget.pet['id']);
+        setState(() {
+          widget.pet.clear();
+          widget.pet.addAll(updatedPet);
+        });
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Mascota actualizada exitosamente'),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error al recargar datos: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      }
+    }
+  }
+
   String _formatDate(String? dateString) {
     if (dateString == null) return 'N/A';
     try {
@@ -818,6 +854,30 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
               width: double.infinity,
               height: 48,
               child: ElevatedButton.icon(
+                onPressed: _editPet,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue.shade400,
+                  foregroundColor: white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                icon: const Icon(Icons.edit),
+                label: const Text(
+                  'Editar Mascota',
+                  style: TextStyle(
+                    fontFamily: 'Montserrat',
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton.icon(
                 onPressed: _deleting ? null : _deletePet,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red.shade400,
@@ -877,6 +937,338 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                 fontFamily: 'Montserrat',
                 color: darkGreen.withOpacity(0.8),
                 fontSize: 14,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// Pantalla para editar mascota (campos limitados)
+class EditPetScreen extends StatefulWidget {
+  final dynamic pet;
+
+  const EditPetScreen({super.key, required this.pet});
+
+  @override
+  State<EditPetScreen> createState() => _EditPetScreenState();
+}
+
+class _EditPetScreenState extends State<EditPetScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _colorCtrl = TextEditingController();
+  final _pesoCtrl = TextEditingController();
+  DateTime? _fechaNacimiento;
+  bool _loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Cargar datos actuales de la mascota
+    _colorCtrl.text = widget.pet['color'] ?? '';
+    _pesoCtrl.text = widget.pet['peso_kg']?.toString() ?? '';
+
+    if (widget.pet['fecha_nacimiento'] != null) {
+      try {
+        _fechaNacimiento = DateTime.parse(widget.pet['fecha_nacimiento']);
+      } catch (e) {
+        // Ignorar si no se puede parsear
+      }
+    }
+  }
+
+  Future<void> _selectDate() async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _fechaNacimiento ?? DateTime.now(),
+      firstDate: DateTime(1990),
+      lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: softGreen,
+              onPrimary: white,
+              onSurface: darkGreen,
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (picked != null) {
+      setState(() {
+        _fechaNacimiento = picked;
+      });
+    }
+  }
+
+  Future<void> _save() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _loading = true);
+    try {
+      final payload = {
+        'color':
+            _colorCtrl.text.trim().isNotEmpty ? _colorCtrl.text.trim() : null,
+        'peso_kg': _pesoCtrl.text.isNotEmpty
+            ? double.tryParse(_pesoCtrl.text.trim())
+            : null,
+        'fecha_nacimiento': _fechaNacimiento?.toIso8601String().split('T')[0],
+      };
+
+      await PetsService.updatePet(widget.pet['id'], payload);
+
+      if (mounted) {
+        Navigator.pop(context, true);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
+  }
+
+  @override
+  void dispose() {
+    _colorCtrl.dispose();
+    _pesoCtrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: mint,
+      appBar: AppBar(
+        title: const Text(
+          'Editar Mascota',
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: softGreen,
+        foregroundColor: white,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Información NO editable
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: lightGreen.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: darkGreen.withOpacity(0.2)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Información no editable:',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Montserrat',
+                        color: darkGreen,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildReadOnlyRow('Nombre', widget.pet['nombre'] ?? 'N/A'),
+                    _buildReadOnlyRow(
+                        'Especie', widget.pet['especie_nombre'] ?? 'N/A'),
+                    _buildReadOnlyRow(
+                        'Raza', widget.pet['raza_nombre'] ?? 'N/A'),
+                    if (widget.pet['sexo'] != null)
+                      _buildReadOnlyRow('Sexo', widget.pet['sexo']),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 24),
+
+              const Text(
+                'Campos editables:',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Montserrat',
+                  color: darkGreen,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 18),
+
+              _label('Fecha de Nacimiento'),
+              InkWell(
+                onTap: _selectDate,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+                  decoration: BoxDecoration(
+                    color: softGreen,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.calendar_today,
+                          color: white.withOpacity(0.85)),
+                      const SizedBox(width: 12),
+                      Text(
+                        _fechaNacimiento != null
+                            ? '${_fechaNacimiento!.day}/${_fechaNacimiento!.month}/${_fechaNacimiento!.year}'
+                            : 'Seleccionar fecha',
+                        style: TextStyle(
+                          color: _fechaNacimiento != null
+                              ? white
+                              : white.withOpacity(0.6),
+                          fontFamily: 'Montserrat',
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 18),
+
+              _label('Color'),
+              _buildInput(
+                controller: _colorCtrl,
+                hint: 'Color del pelaje',
+                icon: Icons.palette,
+              ),
+
+              const SizedBox(height: 18),
+
+              _label('Peso (kg)'),
+              _buildInput(
+                controller: _pesoCtrl,
+                hint: 'Peso en kilogramos',
+                icon: Icons.monitor_weight,
+                keyboardType: TextInputType.number,
+              ),
+
+              const SizedBox(height: 28),
+
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: _loading ? null : _save,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: white,
+                    foregroundColor: darkGreen,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: _loading
+                      ? const SizedBox(
+                          height: 22,
+                          width: 22,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: softGreen,
+                          ),
+                        )
+                      : const Text(
+                          'Guardar Cambios',
+                          style: TextStyle(
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _label(String text) => Text(
+        text,
+        style: const TextStyle(
+          fontSize: 14,
+          fontFamily: 'Montserrat',
+          color: darkGreen,
+          fontWeight: FontWeight.w600,
+        ),
+      );
+
+  Widget _buildInput({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    TextInputType? keyboardType,
+  }) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      style: const TextStyle(
+        color: white,
+        fontFamily: 'Montserrat',
+        fontSize: 14,
+      ),
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: softGreen,
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
+        hintText: hint,
+        hintStyle: TextStyle(color: white.withOpacity(0.6)),
+        prefixIcon: Icon(icon, color: white.withOpacity(0.85)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildReadOnlyRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              '$label:',
+              style: TextStyle(
+                fontFamily: 'Montserrat',
+                color: darkGreen.withOpacity(0.7),
+                fontSize: 13,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontFamily: 'Montserrat',
+                color: darkGreen,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),

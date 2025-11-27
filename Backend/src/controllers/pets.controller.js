@@ -6,6 +6,7 @@ import {
   getMascota,
   listAllMascotas,
   removeMascota,
+  updateMascotaData,
 } from "../services/pets.service.js";
 
 export const getEspeciesController = async (req, res) => {
@@ -77,6 +78,17 @@ export const deleteMascotaController = async (req, res) => {
     res.json({ ok: true, data: deleted });
   } catch (err) {
     res.status(400).json({ ok: false, error: err.message });
+  }
+};
+
+export const putMascotaController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updated = await updateMascotaData(Number(id), req.body);
+    if (!updated) return res.status(404).json({ ok: false, error: "Not Found" });
+    res.json({ ok: true, data: updated });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
   }
 };
 

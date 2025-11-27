@@ -7,6 +7,7 @@ import {
   getAllMascotas,
   checkMascotaHasHistorial,
   deleteMascota,
+  updateMascota,
 } from "../models/pets.model.js";
 
 export const listEspecies = async () => {
@@ -39,5 +40,9 @@ export const removeMascota = async (id) => {
     throw new Error('No se puede eliminar una mascota con historial clínico');
   }
   return await deleteMascota(id);
+};
+
+export const updateMascotaData = async (id, data) => {
+  return await updateMascota(id, data);
 };
 

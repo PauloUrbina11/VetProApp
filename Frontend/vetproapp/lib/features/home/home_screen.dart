@@ -9,6 +9,7 @@ import '../../../app/services/appointments_service.dart';
 import '../../../app/services/recommendations_service.dart';
 import '../../../app/services/veterinaria_service.dart';
 import '../profile/profile_menu_screen.dart';
+import '../pets/my_pets_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -52,6 +53,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loadUserRole();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Recargar datos cuando se vuelve a la pantalla
+    if (_userRole == 3) {
+      _loadUserData();
+    }
   }
 
   Future<void> _refreshUserName() async {
@@ -434,45 +444,60 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   )
                 else
-                  ...(_userPets.take(3).map((pet) => Container(
-                        margin: const EdgeInsets.only(bottom: 10),
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          border:
-                              Border.all(color: vetproGreen.withOpacity(0.3)),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              _getAnimalIcon(pet['especie_id']),
-                              style: const TextStyle(fontSize: 32),
+                  ...(_userPets.take(3).map((pet) => GestureDetector(
+                        onTap: () async {
+                          // Navegar al detalle de la mascota
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PetDetailScreen(pet: pet),
                             ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    pet['nombre'] ?? 'Sin nombre',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    _getEspecieName(pet['especie_id']),
-                                    style: TextStyle(
-                                      color: Colors.grey.shade600,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
+                          );
+                          // Recargar la lista si hubo cambios
+                          if (result == true) {
+                            _loadUserData();
+                          }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(color: vetproGreen.withOpacity(0.3)),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                _getAnimalIcon(pet['especie_id']),
+                                style: const TextStyle(fontSize: 32),
                               ),
-                            ),
-                            Icon(Icons.chevron_right, color: vetproGreen),
-                          ],
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      pet['nombre'] ?? 'Sin nombre',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      _getEspecieName(pet['especie_id']),
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Icon(Icons.chevron_right, color: vetproGreen),
+                            ],
+                          ),
                         ),
                       ))),
 
