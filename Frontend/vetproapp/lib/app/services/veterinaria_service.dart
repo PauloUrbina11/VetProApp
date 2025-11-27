@@ -58,4 +58,29 @@ class VeterinariaService {
     }
     return data['data'] as List<dynamic>;
   }
+
+  static Future<List<dynamic>> getAllVeterinarias({int? ciudadId}) async {
+    final h = await _headers();
+    String url = _baseUrl;
+    if (ciudadId != null) {
+      url += '?ciudad_id=$ciudadId';
+    }
+    final resp = await http.get(Uri.parse(url), headers: h);
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error al obtener veterinarias');
+    }
+    return data['data'] as List<dynamic>;
+  }
+
+  static Future<void> updateVeterinaria(
+      int id, Map<String, dynamic> payload) async {
+    final h = await _headers();
+    final resp = await http.put(Uri.parse('$_baseUrl/$id'),
+        headers: h, body: jsonEncode(payload));
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error al actualizar veterinaria');
+    }
+  }
 }

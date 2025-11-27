@@ -16,6 +16,7 @@ import '../../features/activation/activation_page.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/admin/create_veterinaria_screen.dart';
 import '../../features/admin/manage_roles_screen.dart';
+import '../../features/veterinarias/veterinarias_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/login';
@@ -35,6 +36,7 @@ class AppRoutes {
     '/manage_services': (context) => const ManageServicesScreen(),
     '/create_veterinaria': (context) => const CreateVeterinariaScreen(),
     '/manage_roles': (context) => const ManageRolesScreen(),
+    '/veterinarias': (context) => const VeterinariasScreen(),
     '/home': (context) => const HomeScreen(),
     '/activate': (context) {
       final args =
