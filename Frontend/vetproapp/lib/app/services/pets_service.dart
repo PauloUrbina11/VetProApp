@@ -52,7 +52,8 @@ class PetsService {
     final resp = await http.post(Uri.parse(_baseUrl),
         headers: h, body: jsonEncode(payload));
     final data = jsonDecode(resp.body);
-    if (resp.statusCode != 200 && resp.statusCode != 201 || data['ok'] != true) {
+    if (resp.statusCode != 200 && resp.statusCode != 201 ||
+        data['ok'] != true) {
       throw Exception(data['error'] ?? 'Error al crear mascota');
     }
   }
@@ -86,4 +87,3 @@ class PetsService {
     }
   }
 }
-

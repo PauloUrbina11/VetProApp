@@ -134,7 +134,8 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Icon(Icons.pets,
-                                      size: 64, color: darkGreen.withOpacity(0.5)),
+                                      size: 64,
+                                      color: darkGreen.withOpacity(0.5)),
                                   const SizedBox(height: 16),
                                   Text(
                                     _userRole == 1
@@ -704,6 +705,19 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
     );
   }
 
+  String _formatDate(String? dateString) {
+    if (dateString == null) return 'N/A';
+    try {
+      final date = DateTime.parse(dateString);
+      final day = date.day.toString().padLeft(2, '0');
+      final month = date.month.toString().padLeft(2, '0');
+      final year = date.year.toString();
+      return '$day-$month-$year';
+    } catch (e) {
+      return dateString;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final pet = widget.pet;
@@ -760,11 +774,10 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                   _buildInfoRow('Nombre', pet['nombre'] ?? 'N/A'),
                   _buildInfoRow('Especie', pet['especie_nombre'] ?? 'N/A'),
                   _buildInfoRow('Raza', pet['raza_nombre'] ?? 'N/A'),
-                  if (pet['sexo'] != null)
-                    _buildInfoRow('Sexo', pet['sexo']),
+                  if (pet['sexo'] != null) _buildInfoRow('Sexo', pet['sexo']),
                   if (pet['fecha_nacimiento'] != null)
-                    _buildInfoRow(
-                        'Fecha Nacimiento', pet['fecha_nacimiento']),
+                    _buildInfoRow('Fecha Nacimiento',
+                        _formatDate(pet['fecha_nacimiento'])),
                   if (pet['color'] != null)
                     _buildInfoRow('Color', pet['color']),
                   if (pet['peso_kg'] != null)
@@ -872,4 +885,3 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
     );
   }
 }
-

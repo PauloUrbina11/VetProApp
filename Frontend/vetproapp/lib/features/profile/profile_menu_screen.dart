@@ -62,22 +62,6 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
       // Rol 1: Administrador - Ve todo
       cards.addAll([
         _buildCard(context,
-            icon: Icons.admin_panel_settings,
-            title: 'Panel de administración',
-            onTap: () => Navigator.pushNamed(context, '/home')),
-        _buildCard(context,
-            icon: Icons.add_business,
-            title: 'Crear Veterinaria',
-            onTap: () => Navigator.pushNamed(context, '/create_veterinaria')),
-        _buildCard(context,
-            icon: Icons.security,
-            title: 'Asignar Roles Usuarios',
-            onTap: () => Navigator.pushNamed(context, '/manage_roles')),
-        _buildCard(context,
-            icon: Icons.local_hospital,
-            title: 'Gestión de veterinarias',
-            onTap: () => Navigator.pushNamed(context, '/create_veterinaria')),
-        _buildCard(context,
             icon: Icons.pets,
             title: 'Mis mascotas',
             onTap: () => Navigator.pushNamed(context, '/my_pets')),
@@ -93,14 +77,6 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             icon: Icons.medical_services,
             title: 'Gestión de citas',
             onTap: () => Navigator.pushNamed(context, '/manage_appointments')),
-        _buildCard(context,
-            icon: Icons.miscellaneous_services,
-            title: 'Gestión de servicios',
-            onTap: () => Navigator.pushNamed(context, '/manage_services')),
-        _buildCard(context,
-            icon: Icons.thumb_up,
-            title: 'Recomendaciones',
-            onTap: () => Navigator.pushNamed(context, '/recommendations')),
       ]);
     } else if (_userRole == 3) {
       // Rol 3: Dueño de mascotas
@@ -113,10 +89,6 @@ class _ProfileMenuScreenState extends State<ProfileMenuScreen> {
             icon: Icons.calendar_today,
             title: 'Mis citas',
             onTap: () => Navigator.pushNamed(context, '/my_appointments')),
-        _buildCard(context,
-            icon: Icons.thumb_up,
-            title: 'Recomendaciones',
-            onTap: () => Navigator.pushNamed(context, '/recommendations')),
       ]);
     } else if (_userRole == 2) {
       // Rol 2: Veterinaria/Clínica

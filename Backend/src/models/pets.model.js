@@ -14,9 +14,14 @@ export const getRazasByEspecie = async (especieId) => {
 
 export const getMascotasByUserId = async (userId) => {
   const q = `
-    SELECT m.id, m.nombre, m.especie_id, m.raza_id, m.foto_principal, m.fecha_nacimiento, m.sexo, m.color, m.peso_kg
+    SELECT 
+      m.id, m.nombre, m.especie_id, m.raza_id, m.foto_principal, m.fecha_nacimiento, 
+      m.sexo, m.color, m.peso_kg,
+      e.nombre as especie_nombre, r.nombre as raza_nombre
     FROM mascotas m
     JOIN mascotas_users mu ON mu.mascota_id = m.id
+    LEFT JOIN especies e ON e.id = m.especie_id
+    LEFT JOIN razas r ON r.id = m.raza_id
     WHERE mu.user_id = $1
     ORDER BY m.id
   `;
@@ -63,7 +68,16 @@ export const createMascota = async (data, ownerUserId) => {
 };
 
 export const getMascotaById = async (id) => {
-  const q = `SELECT * FROM mascotas WHERE id = $1 LIMIT 1`;
+  const q = `
+    SELECT 
+      m.*,
+      e.nombre as especie_nombre, r.nombre as raza_nombre
+    FROM mascotas m
+    LEFT JOIN especies e ON e.id = m.especie_id
+    LEFT JOIN razas r ON r.id = m.raza_id
+    WHERE m.id = $1 
+    LIMIT 1
+  `;
   const res = await pool.query(q, [id]);
   return res.rows[0];
 };
@@ -89,7 +103,7 @@ export const getAllMascotas = async () => {
 export const checkMascotaHasHistorial = async (mascotaId) => {
   const q = `
     SELECT COUNT(*) as count 
-    FROM citas_mascotas 
+    FROM historia_clinica_mascota 
     WHERE mascota_id = $1
   `;
   const res = await pool.query(q, [mascotaId]);
