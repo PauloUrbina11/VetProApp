@@ -6,6 +6,7 @@ class AuthService {
   static const String baseUrl = "http://10.0.2.2:4000/api/auth";
   static const String _kTokenKey = "_vetpro_token";
   static const String _kRoleKey = "_vetpro_role";
+  static const String _kUserIdKey = "_vetpro_user_id";
 
   /// LOGIN
   static Future<Map<String, dynamic>> login(
@@ -46,9 +47,14 @@ class AuthService {
         // Guardar token localmente
         await _saveToken(token);
 
-        // Guardar rol si existe
-        if (user != null && user['rol_id'] != null) {
-          await _saveRole(user['rol_id']);
+        // Guardar rol y user_id si existen
+        if (user != null) {
+          if (user['rol_id'] != null) {
+            await _saveRole(user['rol_id']);
+          }
+          if (user['id'] != null) {
+            await _saveUserId(user['id']);
+          }
         }
 
         return {
@@ -195,9 +201,24 @@ class AuthService {
     return prefs.getInt(_kRoleKey);
   }
 
+  /// USER ID STORAGE
+  static Future<void> _saveUserId(dynamic userId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = userId is int ? userId : int.tryParse(userId.toString());
+    if (id != null) {
+      await prefs.setInt(_kUserIdKey, id);
+    }
+  }
+
+  static Future<int?> getUserId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_kUserIdKey);
+  }
+
   static Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_kTokenKey);
     await prefs.remove(_kRoleKey);
+    await prefs.remove(_kUserIdKey);
   }
 }
