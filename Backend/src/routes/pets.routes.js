@@ -17,7 +17,7 @@ const router = Router();
 router.get("/especies", getEspeciesController);
 router.get("/razas", getRazasController);
 router.get("/mis", authMiddleware, getMisMascotasController);
-router.get("/all", authMiddleware, requireRole(1), getAllMascotasController);
+router.get("/all", authMiddleware, requireRole([1]), getAllMascotasController);
 router.post("/", authMiddleware, postMascotaController);
 router.put("/:id", authMiddleware, putMascotaController);
 router.delete("/:id", authMiddleware, deleteMascotaController);
