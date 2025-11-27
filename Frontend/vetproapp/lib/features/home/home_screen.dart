@@ -68,6 +68,33 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _reloadAllData() async {
+    // Recargar todos los datos según el rol
+    if (_userRole == 1) {
+      // Admin: recargar stats y actividad
+      try {
+        final stats = await AdminService.getGlobalStats();
+        final activity = await AdminService.getRecentActivity();
+        if (mounted) {
+          setState(() {
+            _globalStats = stats;
+            _recentActivity = activity;
+          });
+        }
+      } catch (e) {
+        // Silenciar
+      }
+    } else if (_userRole == 3) {
+      // Usuario: recargar mascotas, citas, recomendaciones
+      await _loadUserData();
+    } else if (_userRole == 2) {
+      // Veterinaria: recargar dashboard y calendario
+      await _loadVeterinariaData();
+    }
+    // Siempre refrescar el nombre
+    await _refreshUserName();
+  }
+
   Future<void> _loadUserRole() async {
     try {
       final role = await AuthService.getRole();
@@ -277,7 +304,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           await Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => const ProfileMenuScreen(),
                           ));
-                          _refreshUserName();
+                          _reloadAllData();
                         },
                         icon: const Icon(Icons.person),
                         color: vetproGreen,
@@ -663,7 +690,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           await Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => const ProfileMenuScreen(),
                           ));
-                          _refreshUserName();
+                          _reloadAllData();
                         },
                         icon: const Icon(Icons.person),
                         color: vetproGreen,
@@ -1002,7 +1029,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           await Navigator.of(context).push(MaterialPageRoute(
                             builder: (_) => const ProfileMenuScreen(),
                           ));
-                          _refreshUserName();
+                          _reloadAllData();
                         },
                         icon: const Icon(Icons.person),
                         color: vetproGreen,
