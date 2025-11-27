@@ -93,9 +93,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       borderSide: BorderSide.none,
                     ),
                   ),
-                  style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
+                  style: const TextStyle(
+                      color: Colors.white, fontFamily: 'Montserrat'),
                   validator: (v) {
-                    if (v == null || v.isEmpty) return 'Ingresa la nueva contraseña';
+                    if (v == null || v.isEmpty)
+                      return 'Ingresa la nueva contraseña';
                     if (v.length < 6) return 'Mínimo 6 caracteres';
                     return null;
                   },
@@ -124,7 +126,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     ),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscureConfirm ? Icons.visibility : Icons.visibility_off,
+                        _obscureConfirm
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: Colors.white.withOpacity(0.8),
                       ),
                       onPressed: () {
@@ -134,10 +138,12 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       },
                     ),
                   ),
-                  style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
+                  style: const TextStyle(
+                      color: Colors.white, fontFamily: 'Montserrat'),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Confirma la contraseña';
-                    if (v != _passwordController.text) return 'Las contraseñas no coinciden';
+                    if (v != _passwordController.text)
+                      return 'Las contraseñas no coinciden';
                     return null;
                   },
                 ),

@@ -1020,22 +1020,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         'Usuarios',
                         '${_globalStats?['totalUsuarios'] ?? 0}',
                         Icons.people,
-                        lightGreen),
+                        Colors.blue.shade400),
                     _buildStatCard(
                         'Veterinarias',
                         '${_globalStats?['totalVeterinarias'] ?? 0}',
                         Icons.local_hospital,
-                        softGreen),
+                        Colors.green.shade400),
                     _buildStatCard(
                         'Mascotas',
                         '${_globalStats?['totalMascotas'] ?? 0}',
                         Icons.pets,
-                        lightGreen.withOpacity(0.8)),
+                        Colors.orange.shade400),
                     _buildStatCard(
                         'Citas Hoy',
                         '${_globalStats?['citasHoy'] ?? 0}',
                         Icons.calendar_today,
-                        darkGreen),
+                        Colors.purple.shade400),
                   ],
                 ),
 

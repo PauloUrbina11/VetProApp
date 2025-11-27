@@ -31,40 +31,40 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
               const SizedBox(height: 16),
-            Form(
-              key: formKey,
-              child: TextFormField(
-                controller: correoController,
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: softGreen, // Fondo verde
-                  labelText: 'Correo electrónico',
-                  labelStyle: const TextStyle(
+              Form(
+                key: formKey,
+                child: TextFormField(
+                  controller: correoController,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: softGreen, // Fondo verde
+                    labelText: 'Correo electrónico',
+                    labelStyle: const TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                    hintText: 'usuario@example.com',
+                    hintStyle: TextStyle(
+                      color: Colors.white.withOpacity(0.6),
+                      fontFamily: 'Montserrat',
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  style: const TextStyle(
+                    color: Colors.white, // Texto ingresado en blanco
                     fontFamily: 'Montserrat',
-                    color: Colors.white,
-                    fontSize: 15,
                   ),
-                  hintText: 'usuario@example.com',
-                  hintStyle: TextStyle(
-                    color: Colors.white.withOpacity(0.6),
-                    fontFamily: 'Montserrat',
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
+                  validator: (v) {
+                    if (v == null || v.isEmpty) return 'Ingresa tu correo';
+                    if (!v.contains('@')) return 'Correo inválido';
+                    return null;
+                  },
                 ),
-                style: const TextStyle(
-                  color: Colors.white, // Texto ingresado en blanco
-                  fontFamily: 'Montserrat',
-                ),
-                validator: (v) {
-                  if (v == null || v.isEmpty) return 'Ingresa tu correo';
-                  if (!v.contains('@')) return 'Correo inválido';
-                  return null;
-                },
               ),
-            ),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,

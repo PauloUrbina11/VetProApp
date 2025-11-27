@@ -4,6 +4,9 @@ import {
   getMascotasByUserId,
   createMascota,
   getMascotaById,
+  getAllMascotas,
+  checkMascotaHasHistorial,
+  deleteMascota,
 } from "../models/pets.model.js";
 
 export const listEspecies = async () => {
@@ -25,3 +28,16 @@ export const addMascota = async (data, ownerUserId) => {
 export const getMascota = async (id) => {
   return await getMascotaById(id);
 };
+
+export const listAllMascotas = async () => {
+  return await getAllMascotas();
+};
+
+export const removeMascota = async (id) => {
+  const hasHistorial = await checkMascotaHasHistorial(id);
+  if (hasHistorial) {
+    throw new Error('No se puede eliminar una mascota con historial clínico');
+  }
+  return await deleteMascota(id);
+};
+

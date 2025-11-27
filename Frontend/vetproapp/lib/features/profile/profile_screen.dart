@@ -192,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         style: const TextStyle(
           fontSize: 14,
           fontFamily: 'Montserrat',
-          color: Colors.white,
+          color: darkGreen,
           fontWeight: FontWeight.w600,
         ),
       );

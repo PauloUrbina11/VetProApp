@@ -141,7 +141,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
           label,
           style: const TextStyle(
             fontFamily: 'Montserrat',
-            color: Colors.white,
+            color: darkGreen,
             fontSize: 15,
           ),
         ),
@@ -325,7 +325,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                     const Text(
                       'Servicios Existentes',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: darkGreen,
                         fontFamily: 'Montserrat',
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -344,7 +344,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                               child: Text(
                                 'No hay servicios registrados',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: darkGreen,
                                   fontFamily: 'Montserrat',
                                   fontSize: 16,
                                 ),
@@ -369,7 +369,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                   title: Text(
                                     service['nombre'] ?? 'Sin nombre',
                                     style: const TextStyle(
-                                      color: Colors.white,
+                                      color: darkGreen,
                                       fontFamily: 'Montserrat',
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -383,8 +383,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                         Text(
                                           service['descripcion'],
                                           style: TextStyle(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
+                                            color: darkGreen.withOpacity(0.8),
                                             fontFamily: 'Montserrat',
                                           ),
                                         ),
@@ -392,8 +391,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                         Text(
                                           'Tipo: ${service['tipo_nombre']}',
                                           style: TextStyle(
-                                            color:
-                                                Colors.white.withOpacity(0.8),
+                                            color: darkGreen.withOpacity(0.8),
                                             fontFamily: 'Montserrat',
                                           ),
                                         ),

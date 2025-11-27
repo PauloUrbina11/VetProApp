@@ -67,22 +67,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           ListTile(
             title: const Text('Idioma', style: TextStyle(color: darkGreen)),
-            subtitle:
-                Text(language, style: TextStyle(color: darkGreen.withOpacity(0.7))),
+            subtitle: Text(language,
+                style: TextStyle(color: darkGreen.withOpacity(0.7))),
             onTap: _chooseLanguage,
           ),
           const Divider(color: Colors.white54),
           ListTile(
-            title:
-                const Text('Permisos', style: TextStyle(color: darkGreen)),
+            title: const Text('Permisos', style: TextStyle(color: darkGreen)),
             subtitle: Text('Ubicación, cámara, galería',
                 style: TextStyle(color: darkGreen.withOpacity(0.7))),
             onTap: _showPermissionsDialog,
           ),
           const Divider(color: Colors.white54),
           ListTile(
-            title:
-                const Text('Seguridad', style: TextStyle(color: darkGreen)),
+            title: const Text('Seguridad', style: TextStyle(color: darkGreen)),
             subtitle: Text('Opciones de seguridad',
                 style: TextStyle(color: darkGreen.withOpacity(0.7))),
             onTap: _showSecurity,
@@ -111,8 +109,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const Divider(color: Colors.white54),
           ListTile(
-            title: const Text('Cerrar sesión',
-                style: TextStyle(color: darkGreen)),
+            title:
+                const Text('Cerrar sesión', style: TextStyle(color: darkGreen)),
             leading: const Icon(Icons.logout, color: darkGreen),
             onTap: () async {
               await AuthService.logout();
