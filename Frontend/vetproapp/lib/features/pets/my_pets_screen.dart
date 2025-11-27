@@ -333,10 +333,27 @@ class _AddPetScreenState extends State<AddPetScreen> {
 
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
-    if (_selectedEspecieId == null || _selectedRazaId == null) {
+    if (_selectedEspecieId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Selecciona especie y raza'),
+        const SnackBar( content: Text('Debes seleccionar una especie'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (_selectedRazaId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar( content: Text('Debes seleccionar una raza'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
+    if (_sexo == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar( content: Text('Debes seleccionar el sexo'),
           backgroundColor: Colors.red,
         ),
       );
@@ -446,7 +463,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       enabled: _selectedEspecieId != null,
                     ),
                     const SizedBox(height: 18),
-                    _label('Sexo'),
+                    _label('Sexo *'),
                     _buildDropdown(
                       value: _sexo,
                       items: const [

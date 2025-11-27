@@ -55,15 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _loadUserRole();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Recargar datos cuando se vuelve a la pantalla
-    if (_userRole == 3) {
-      _loadUserData();
-    }
-  }
-
   Future<void> _refreshUserName() async {
     try {
       final profile = await UserService.getMyProfile();
@@ -420,7 +411,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => Navigator.pushNamed(context, '/my_pets'),
+                      onPressed: () async {
+                        await Navigator.pushNamed(context, '/my_pets');
+                        // Recargar datos al volver
+                        _loadUserData();
+                      },
                       child: const Text('Ver todas'),
                     ),
                   ],
@@ -447,16 +442,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ...(_userPets.take(3).map((pet) => GestureDetector(
                         onTap: () async {
                           // Navegar al detalle de la mascota
-                          final result = await Navigator.push(
+                          await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => PetDetailScreen(pet: pet),
                             ),
                           );
-                          // Recargar la lista si hubo cambios
-                          if (result == true) {
-                            _loadUserData();
-                          }
+                          // Siempre recargar la lista al volver
+                          _loadUserData();
                         },
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 10),
