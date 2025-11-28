@@ -5,7 +5,6 @@ import '../../features/home/home_screen.dart';
 import '../../features/settings/settings_screen.dart';
 import '../../features/profile/profile_menu_screen.dart';
 import '../../features/profile/profile_screen.dart';
-import '../../features/profile/manage_services_screen.dart';
 import '../../features/pets/my_pets_screen.dart';
 import '../../features/appointments/my_appointments_screen.dart';
 import '../../features/appointments/schedule_screen.dart';
@@ -34,7 +33,6 @@ class AppRoutes {
     '/manage_appointments': (context) => const ManageAppointmentsScreen(),
     '/recommendations': (context) => const RecommendationsScreen(),
     '/notifications': (context) => const NotificationsScreen(),
-    '/manage_services': (context) => const ManageServicesScreen(),
     '/create_veterinaria': (context) => const CreateVeterinariaScreen(),
     '/manage_roles': (context) => const ManageRolesScreen(),
     '/veterinarias': (context) => const VeterinariasScreen(),

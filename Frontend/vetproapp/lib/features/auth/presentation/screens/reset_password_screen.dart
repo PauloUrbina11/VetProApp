@@ -79,29 +79,22 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     fillColor: softGreen,
                     labelText: 'Nueva contraseña',
                     labelStyle: const TextStyle(
-                      fontFamily: 'Montserrat',
                       color: Colors.white,
-                      fontSize: 15,
-                    ),
+                      fontSize: 15),
                     hintText: 'Ingresa tu nueva contraseña',
                     hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
-                      fontFamily: 'Montserrat',
-                    ),
+                      color: Colors.white.withOpacity(0.6)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
+                      borderSide: BorderSide.none)),
                   style: const TextStyle(
-                      color: Colors.white, fontFamily: 'Montserrat'),
+                      color: Colors.white),
                   validator: (v) {
                     if (v == null || v.isEmpty)
                       return 'Ingresa la nueva contraseña';
                     if (v.length < 6) return 'Mínimo 6 caracteres';
                     return null;
-                  },
-                ),
+                  }),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _confirmController,
@@ -111,42 +104,33 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                     fillColor: softGreen,
                     labelText: 'Confirmar contraseña',
                     labelStyle: const TextStyle(
-                      fontFamily: 'Montserrat',
                       color: Colors.white,
-                      fontSize: 15,
-                    ),
+                      fontSize: 15),
                     hintText: 'Repite la contraseña',
                     hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
-                      fontFamily: 'Montserrat',
-                    ),
+                      color: Colors.white.withOpacity(0.6)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: BorderSide.none,
-                    ),
+                      borderSide: BorderSide.none),
                     suffixIcon: IconButton(
                       icon: Icon(
                         _obscureConfirm
                             ? Icons.visibility
                             : Icons.visibility_off,
-                        color: Colors.white.withOpacity(0.8),
-                      ),
+                        color: Colors.white.withOpacity(0.8)),
                       onPressed: () {
                         setState(() {
                           _obscureConfirm = !_obscureConfirm;
                         });
-                      },
-                    ),
-                  ),
+                      })),
                   style: const TextStyle(
-                      color: Colors.white, fontFamily: 'Montserrat'),
+                      color: Colors.white),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Confirma la contraseña';
                     if (v != _passwordController.text)
                       return 'Las contraseñas no coinciden';
                     return null;
-                  },
-                ),
+                  }),
                 const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
@@ -158,17 +142,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                                color: Colors.white, strokeWidth: 2),
-                          )
-                        : const Text('Cambiar contraseña'),
-                  ),
-                ),
+                                color: Colors.white, strokeWidth: 2))
+                        : const Text('Cambiar contraseña'))),
                 const SizedBox(height: 12)
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ])))));
   }
 }

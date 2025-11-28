@@ -21,8 +21,7 @@ class AuthService {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: requestBody,
-      );
+        body: requestBody);
 
       final status = response.statusCode;
       final body = response.body;
@@ -85,8 +84,7 @@ class AuthService {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(payload),
-      );
+        body: jsonEncode(payload));
 
       final data = jsonDecode(response.body);
       return {"ok": response.statusCode == 201, ...data};
@@ -150,8 +148,7 @@ class AuthService {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"correo": correo}),
-      );
+        body: jsonEncode({"correo": correo}));
       final data = jsonDecode(response.body);
       return {"ok": response.statusCode == 200, ...data};
     } catch (e) {
@@ -167,8 +164,7 @@ class AuthService {
       final response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"token": token, "newPassword": newPassword}),
-      );
+        body: jsonEncode({"token": token, "newPassword": newPassword}));
       final data = jsonDecode(response.body);
       return {"ok": response.statusCode == 200, ...data};
     } catch (e) {

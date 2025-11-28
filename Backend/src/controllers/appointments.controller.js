@@ -1,6 +1,7 @@
 import {
   listMyAppointments,
   getAllAppointments,
+  getAppointmentsByVeterinaria,
   getMyNextAppointment,
   getMyCalendarCounts,
   createMyAppointment,
@@ -57,7 +58,8 @@ export const postAppointmentController = async (req, res) => {
 export const putAppointmentController = async (req, res) => {
   try {
     const { id } = req.params;
-    const cita = await updateMyAppointment(Number(id), req.body);
+    const userId = req.user?.id;
+    const cita = await updateMyAppointment(Number(id), req.body, userId);
     res.json({ ok: true, data: cita });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });
@@ -77,6 +79,19 @@ export const deleteAppointmentController = async (req, res) => {
 export const getAllAppointmentsController = async (req, res) => {
   try {
     const citas = await getAllAppointments();
+    res.json({ ok: true, data: citas });
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
+  }
+};
+
+export const getVeterinariaAppointmentsController = async (req, res) => {
+  try {
+    const { veterinariaId } = req.params;
+    if (!veterinariaId) {
+      return res.status(400).json({ ok: false, error: "veterinariaId requerido" });
+    }
+    const citas = await getAppointmentsByVeterinaria(Number(veterinariaId));
     res.json({ ok: true, data: citas });
   } catch (err) {
     res.status(500).json({ ok: false, error: err.message });

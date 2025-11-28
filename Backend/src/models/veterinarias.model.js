@@ -3,20 +3,38 @@ import { pool } from "../config/database.js";
 export const listVeterinarias = async ({ ciudad_id }) => {
   const filters = [];
   const values = [];
-  if (ciudad_id) { filters.push(`ciudad_id = $${values.length + 1}`); values.push(ciudad_id); }
+  if (ciudad_id) { filters.push(`v.ciudad_id = $${values.length + 1}`); values.push(ciudad_id); }
   const where = filters.length ? `WHERE ${filters.join(' AND ')}` : '';
   const q = `
-    SELECT id, nombre, direccion, telefono, ciudad_id, latitud, longitud, logo_url, descripcion
-    FROM veterinarias
+    SELECT 
+      v.id, 
+      v.nombre, 
+      v.direccion, 
+      v.telefono, 
+      v.ciudad_id, 
+      v.latitud, 
+      v.longitud, 
+      v.logo_url, 
+      v.descripcion,
+      c.nombre AS ciudad
+    FROM veterinarias v
+    LEFT JOIN ciudades c ON v.ciudad_id = c.id
     ${where}
-    ORDER BY nombre
+    ORDER BY v.nombre
   `;
   const res = await pool.query(q, values);
   return res.rows;
 };
 
 export const getVeterinariaById = async (id) => {
-  const q = `SELECT * FROM veterinarias WHERE id = $1`;
+  const q = `
+    SELECT 
+      v.*, 
+      c.nombre AS ciudad
+    FROM veterinarias v
+    LEFT JOIN ciudades c ON v.ciudad_id = c.id
+    WHERE v.id = $1
+  `;
   const res = await pool.query(q, [id]);
   return res.rows[0];
 };

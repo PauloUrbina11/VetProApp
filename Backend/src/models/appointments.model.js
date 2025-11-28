@@ -65,15 +65,27 @@ export const getCalendarCountsByUser = async (userId, fromDate, toDate) => {
 };
 
 export const createAppointment = async (userId, {
+  veterinaria_id,
+  fecha,
+  hora,
   fecha_hora,
   estado_id,
   notas_cliente,
   mascota_ids = [],
+  mascotas = [],
   servicio_ids = [],
+  servicios = [],
 }) => {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
+    
+    // Construir fecha_hora si vienen fecha y hora separados
+    let fechaHoraFinal = fecha_hora;
+    if (!fechaHoraFinal && fecha && hora) {
+      fechaHoraFinal = `${fecha} ${hora}:00`;
+    }
+    
     const insertCita = `
       INSERT INTO citas (user_id, fecha_hora, estado_id, notas_cliente)
       VALUES ($1, $2, $3, $4)
@@ -81,20 +93,32 @@ export const createAppointment = async (userId, {
     `;
     const resCita = await client.query(insertCita, [
       userId,
-      fecha_hora,
-      estado_id || null,
+      fechaHoraFinal,
+      estado_id || 1, // Estado por defecto: pendiente
       notas_cliente || null,
     ]);
     const cita = resCita.rows[0];
 
-    for (const mascotaId of mascota_ids) {
+    // Insertar relación con veterinaria si se proporciona
+    if (veterinaria_id) {
+      await client.query(
+        `INSERT INTO veterinarias_citas (veterinaria_id, cita_id) VALUES ($1, $2)`,
+        [veterinaria_id, cita.id]
+      );
+    }
+
+    // Usar mascotas o mascota_ids
+    const mascotasArray = mascotas.length > 0 ? mascotas : mascota_ids;
+    for (const mascotaId of mascotasArray) {
       await client.query(
         `INSERT INTO citas_mascotas (cita_id, mascota_id) VALUES ($1, $2)`,
         [cita.id, mascotaId]
       );
     }
 
-    for (const servicioId of servicio_ids) {
+    // Usar servicios o servicio_ids
+    const serviciosArray = servicios.length > 0 ? servicios : servicio_ids;
+    for (const servicioId of serviciosArray) {
       await client.query(
         `INSERT INTO citas_servicios (cita_id, servicio_id) VALUES ($1, $2)`,
         [cita.id, servicioId]
@@ -116,6 +140,7 @@ export const updateAppointment = async (id, {
   estado_id,
   notas_cliente,
   notas_veterinaria,
+  update_user,
 }) => {
   const q = `
     UPDATE citas
@@ -123,12 +148,40 @@ export const updateAppointment = async (id, {
         estado_id = COALESCE($3, estado_id),
         notas_cliente = COALESCE($4, notas_cliente),
         notas_veterinaria = COALESCE($5, notas_veterinaria),
+        update_user = COALESCE($6, update_user),
         updated_at = now()
     WHERE id = $1
     RETURNING *
   `;
-  const res = await pool.query(q, [id, fecha_hora || null, estado_id || null, notas_cliente || null, notas_veterinaria || null]);
+  const res = await pool.query(q, [id, fecha_hora || null, estado_id || null, notas_cliente || null, notas_veterinaria || null, update_user || null]);
   return res.rows[0];
+};
+
+export const listAppointmentsByVeterinaria = async (veterinariaId) => {
+  const q = `
+    SELECT c.id, c.user_id, c.fecha_hora, c.estado_id, c.notas_cliente, c.notas_veterinaria,
+           c.created_at, c.updated_at,
+           ec.nombre as estado_nombre,
+           u.nombre_completo as usuario_nombre, u.correo as usuario_email,
+           u.celular as usuario_telefono,
+           STRING_AGG(DISTINCT m.nombre, ', ') as mascotas,
+           STRING_AGG(DISTINCT s.nombre, ', ') as servicios
+    FROM citas c
+    INNER JOIN veterinarias_citas vc ON c.id = vc.cita_id
+    LEFT JOIN estados_citas ec ON c.estado_id = ec.id
+    LEFT JOIN users u ON c.user_id = u.id
+    LEFT JOIN citas_mascotas cm ON c.id = cm.cita_id
+    LEFT JOIN mascotas m ON cm.mascota_id = m.id
+    LEFT JOIN citas_servicios cs ON c.id = cs.cita_id
+    LEFT JOIN servicios s ON cs.servicio_id = s.id
+    WHERE vc.veterinaria_id = $1
+    GROUP BY c.id, c.user_id, c.fecha_hora, c.estado_id, c.notas_cliente, 
+             c.notas_veterinaria, c.created_at, c.updated_at,
+             ec.nombre, u.nombre_completo, u.correo, u.celular
+    ORDER BY c.fecha_hora DESC
+  `;
+  const res = await pool.query(q, [veterinariaId]);
+  return res.rows;
 };
 
 export const deleteAppointment = async (id) => {
@@ -137,6 +190,7 @@ export const deleteAppointment = async (id) => {
     await client.query('BEGIN');
     await client.query(`DELETE FROM citas_mascotas WHERE cita_id = $1`, [id]);
     await client.query(`DELETE FROM citas_servicios WHERE cita_id = $1`, [id]);
+    await client.query(`DELETE FROM veterinarias_citas WHERE cita_id = $1`, [id]);
     const res = await client.query(`DELETE FROM citas WHERE id = $1 RETURNING id`, [id]);
     await client.query('COMMIT');
     return res.rows[0] || null;

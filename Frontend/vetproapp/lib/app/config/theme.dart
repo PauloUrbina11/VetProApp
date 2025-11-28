@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Nueva paleta de colores verde suave y profesional
 const Color mint = Color(0xFFE2F7EF); // fondo principal
@@ -14,15 +15,12 @@ final ThemeData appTheme = ThemeData(
   primaryColor: softGreen,
   colorScheme: ColorScheme.fromSeed(seedColor: softGreen),
   scaffoldBackgroundColor: mint,
+  textTheme: GoogleFonts.kodchasanTextTheme(),
   appBarTheme: const AppBarTheme(
     backgroundColor: softGreen,
     foregroundColor: white,
-    elevation: 0,
-  ),
+    elevation: 0),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: white,
-      foregroundColor: darkGreen,
-    ),
-  ),
-);
+      foregroundColor: darkGreen)));

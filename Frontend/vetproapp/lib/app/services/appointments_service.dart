@@ -57,12 +57,60 @@ class AppointmentsService {
       String fromDate, String toDate) async {
     final h = await _headers();
     final resp = await http.get(
-      Uri.parse('$_baseUrl/calendar?from=$fromDate&to=$toDate'),
+        Uri.parse('$_baseUrl/calendar?from=$fromDate&to=$toDate'),
+        headers: h);
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error al obtener calendario');
+    }
+    return data['data'] as List<dynamic>;
+  }
+
+  // Obtener horarios disponibles de una veterinaria
+  static Future<List<dynamic>> getAvailableSlots(
+      int veterinariaId, String fecha) async {
+    final h = await _headers();
+    final resp = await http.get(
+      Uri.parse(
+          'http://10.0.2.2:4000/api/veterinarias/$veterinariaId/horarios-disponibles?fecha=$fecha'),
       headers: h,
     );
     final data = jsonDecode(resp.body);
     if (resp.statusCode != 200 || data['ok'] != true) {
-      throw Exception(data['error'] ?? 'Error al obtener calendario');
+      throw Exception(
+          data['message'] ?? 'Error al obtener horarios disponibles');
+    }
+    return data['slots'] as List<dynamic>;
+  }
+
+  // Crear una cita
+  static Future<Map<String, dynamic>> createAppointment(
+      Map<String, dynamic> payload) async {
+    final h = await _headers();
+    final resp = await http.post(
+      Uri.parse(_baseUrl),
+      headers: h,
+      body: jsonEncode(payload),
+    );
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 201 && resp.statusCode != 200 ||
+        data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error al crear cita');
+    }
+    return data['data'] as Map<String, dynamic>;
+  }
+
+  // Obtener citas de una veterinaria
+  static Future<List<dynamic>> getVeterinariaAppointments(
+      int veterinariaId) async {
+    final h = await _headers();
+    final resp = await http.get(
+      Uri.parse('$_baseUrl/veterinaria/$veterinariaId'),
+      headers: h,
+    );
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error al obtener citas');
     }
     return data['data'] as List<dynamic>;
   }

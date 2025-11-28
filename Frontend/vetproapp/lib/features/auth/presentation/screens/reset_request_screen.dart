@@ -18,8 +18,7 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Restablecer contraseña'),
-      ),
+        title: const Text('Restablecer contraseña')),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -28,8 +27,7 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
             children: [
               const Text(
                 'Introduce tu correo para recibir un enlace o token de restablecimiento',
-                style: TextStyle(fontSize: 16, color: Colors.white),
-              ),
+                style: TextStyle(fontSize: 16, color: darkGreen)),
               const SizedBox(height: 16),
               Form(
                 key: formKey,
@@ -40,31 +38,22 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
                     fillColor: softGreen, // Fondo verde
                     labelText: 'Correo electrónico',
                     labelStyle: const TextStyle(
-                      fontFamily: 'Montserrat',
                       color: Colors.white,
-                      fontSize: 15,
-                    ),
+                      fontSize: 15),
                     hintText: 'usuario@example.com',
                     hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
-                      fontFamily: 'Montserrat',
-                    ),
+                      color: Colors.white.withOpacity(0.6)),
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(8))),
                   style: const TextStyle(
                     color: Colors.white, // Texto ingresado en blanco
-                    fontFamily: 'Montserrat',
-                  ),
+                    ),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Ingresa tu correo';
                     if (!v.contains('@')) return 'Correo inválido';
                     return null;
-                  },
-                ),
-              ),
+                  })),
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
@@ -77,17 +66,9 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
                           height: 20,
                           child: CircularProgressIndicator(
                             color: Colors.white,
-                            strokeWidth: 2,
-                          ),
-                        )
-                      : const Text('Solicitar restablecimiento'),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                            strokeWidth: 2))
+                      : const Text('Solicitar restablecimiento')))
+            ]))));
   }
 
   Future<void> _submit() async {
@@ -109,8 +90,7 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(res["message"] ?? 'Se ha enviado un enlace al correo'),
-              ],
-            ),
+              ]),
             actions: [
               TextButton(
                 onPressed: () {
@@ -119,22 +99,17 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
                   correoController.clear();
                   Navigator.pushReplacementNamed(context, '/login');
                 },
-                child: const Text('Ir a iniciar sesión'),
-              )
-            ],
-          ),
-        );
+                child: const Text('Ir a iniciar sesión'))
+            ]));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               backgroundColor: Colors.red,
-              content: Text(res["message"] ?? 'Error')),
-        );
+              content: Text(res["message"] ?? 'Error')));
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(backgroundColor: Colors.red, content: Text(e.toString())),
-      );
+        SnackBar(backgroundColor: Colors.red, content: Text(e.toString())));
     }
 
     setState(() => loading = false);

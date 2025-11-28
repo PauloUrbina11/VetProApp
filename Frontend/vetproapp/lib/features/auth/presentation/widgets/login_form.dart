@@ -28,11 +28,7 @@ class _LoginFormState extends State<LoginForm> {
           /// LABEL CORREO
           const Text(
             'Correo Electrónico',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.white,
-              fontSize: 15,
-            ),
+            style: TextStyle(color: Colors.white, fontSize: 15),
           ),
           const SizedBox(height: 8),
 
@@ -49,7 +45,6 @@ class _LoginFormState extends State<LoginForm> {
               hintText: 'usuario@example.com',
               hintStyle: TextStyle(
                 color: Colors.white.withOpacity(0.6),
-                fontFamily: 'Montserrat',
               ),
             ),
             style: const TextStyle(color: Colors.white),
@@ -69,11 +64,7 @@ class _LoginFormState extends State<LoginForm> {
           /// LABEL CONTRASEÑA
           const Text(
             'Contraseña',
-            style: TextStyle(
-              fontFamily: 'Montserrat',
-              color: Colors.white,
-              fontSize: 15,
-            ),
+            style: TextStyle(color: Colors.white, fontSize: 15),
           ),
           const SizedBox(height: 8),
 
@@ -109,13 +100,12 @@ class _LoginFormState extends State<LoginForm> {
                   : const Text(
                       'Iniciar sesión',
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
                     ),
             ),
-          )
+          ),
         ],
       ),
     );

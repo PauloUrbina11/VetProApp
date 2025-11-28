@@ -15,7 +15,6 @@ class VetProApp extends StatelessWidget {
       theme: appTheme,
       navigatorKey: navigatorKey,
       initialRoute: AppRoutes.initialRoute,
-      routes: AppRoutes.routes,
-    );
+      routes: AppRoutes.routes);
   }
 }

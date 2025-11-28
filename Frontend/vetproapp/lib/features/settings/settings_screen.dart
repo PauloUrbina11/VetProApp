@@ -24,8 +24,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
       backgroundColor: mint,
       appBar: AppBar(
-        title: const Text('Ajustes'),
-      ),
+        title: const Text('Ajustes')),
       body: ListView(
         children: [
           const SizedBox(height: 8),
@@ -36,9 +35,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               value: notificationsEnabled,
               onChanged: (v) => setState(() => notificationsEnabled = v),
               activeColor: Colors.white,
-              inactiveThumbColor: Colors.white70,
-            ),
-          ),
+              inactiveThumbColor: Colors.white70)),
           if (notificationsEnabled)
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
@@ -49,11 +46,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         style: TextStyle(color: darkGreen)),
                     value: notificationPrefs,
                     onChanged: (v) => setState(() => notificationPrefs = v),
-                    activeColor: Colors.white,
-                  ),
-                ],
-              ),
-            ),
+                    activeColor: Colors.white),
+                ])),
           const Divider(color: Colors.white54),
           ListTile(
             title: const Text('Tema', style: TextStyle(color: darkGreen)),
@@ -62,51 +56,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
             trailing: Switch(
               value: darkTheme,
               onChanged: (v) => setState(() => darkTheme = v),
-              activeColor: Colors.white,
-            ),
-          ),
+              activeColor: Colors.white)),
           ListTile(
             title: const Text('Idioma', style: TextStyle(color: darkGreen)),
             subtitle: Text(language,
                 style: TextStyle(color: darkGreen.withOpacity(0.7))),
-            onTap: _chooseLanguage,
-          ),
+            onTap: _chooseLanguage),
           const Divider(color: Colors.white54),
           ListTile(
             title: const Text('Permisos', style: TextStyle(color: darkGreen)),
             subtitle: Text('Ubicación, cámara, galería',
                 style: TextStyle(color: darkGreen.withOpacity(0.7))),
-            onTap: _showPermissionsDialog,
-          ),
+            onTap: _showPermissionsDialog),
           const Divider(color: Colors.white54),
           ListTile(
             title: const Text('Seguridad', style: TextStyle(color: darkGreen)),
             subtitle: Text('Opciones de seguridad',
                 style: TextStyle(color: darkGreen.withOpacity(0.7))),
-            onTap: _showSecurity,
-          ),
+            onTap: _showSecurity),
           const Divider(color: Colors.white54),
           ListTile(
             title: const Text('Política de privacidad',
                 style: TextStyle(color: darkGreen)),
             onTap: () =>
-                _showInfo('Política de privacidad', 'Aquí va la política...'),
-          ),
+                _showInfo('Política de privacidad', 'Aquí va la política...')),
           ListTile(
             title: const Text('Términos y condiciones',
                 style: TextStyle(color: darkGreen)),
-            onTap: () => _showInfo('Términos y condiciones', 'Términos...'),
-          ),
+            onTap: () => _showInfo('Términos y condiciones', 'Términos...')),
           ListTile(
             title: const Text('Información de la app',
                 style: TextStyle(color: darkGreen)),
-            onTap: () => _showInfo('Información', 'VetProApp v1.0'),
-          ),
+            onTap: () => _showInfo('Información', 'VetProApp v1.0')),
           ListTile(
             title: const Text('Contactar soporte',
                 style: TextStyle(color: darkGreen)),
-            onTap: () => _showInfo('Soporte', 'contacto@vetproapp.example'),
-          ),
+            onTap: () => _showInfo('Soporte', 'contacto@vetproapp.example')),
           const Divider(color: Colors.white54),
           ListTile(
             title:
@@ -115,11 +100,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: () async {
               await AuthService.logout();
               Navigator.pushReplacementNamed(context, '/login');
-            },
-          ),
-        ],
-      ),
-    );
+            }),
+        ]));
   }
 
   void _chooseLanguage() async {
@@ -134,9 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SimpleDialogOption(
               onPressed: () => Navigator.pop(context, 'Inglés'),
               child: const Text('Inglés')),
-        ],
-      ),
-    );
+        ]));
     if (selected != null) setState(() => language = selected);
   }
 
@@ -155,33 +135,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(color: Colors.white)),
                 value: permissionLocation,
                 onChanged: (v) => setStateDialog(() => permissionLocation = v),
-                activeColor: Colors.white,
-              ),
+                activeColor: Colors.white),
               SwitchListTile(
                 title:
                     const Text('Cámara', style: TextStyle(color: Colors.white)),
                 value: permissionCamera,
                 onChanged: (v) => setStateDialog(() => permissionCamera = v),
-                activeColor: Colors.white,
-              ),
+                activeColor: Colors.white),
               SwitchListTile(
                 title: const Text('Galería',
                     style: TextStyle(color: Colors.white)),
                 value: permissionGallery,
                 onChanged: (v) => setStateDialog(() => permissionGallery = v),
-                activeColor: Colors.white,
-              ),
-            ],
-          ),
+                activeColor: Colors.white),
+            ]),
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(context),
                 child:
                     const Text('Cerrar', style: TextStyle(color: Colors.white)))
-          ],
-        );
-      }),
-    );
+          ]);
+      }));
   }
 
   void _showSecurity() {
@@ -199,8 +173,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(color: Colors.white)),
                 value: biometrics,
                 onChanged: (v) => setStateDialog(() => biometrics = v),
-                activeColor: Colors.white,
-              ),
+                activeColor: Colors.white),
               ListTile(
                 title: const Text('Ver actividad de la cuenta',
                     style: TextStyle(color: Colors.white)),
@@ -208,19 +181,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   Navigator.pop(context);
                   _showInfo('Actividad',
                       'Aquí se mostraría la actividad de la cuenta');
-                },
-              ),
-            ],
-          ),
+                }),
+            ]),
           actions: [
             TextButton(
                 onPressed: () => Navigator.pop(context),
                 child:
                     const Text('Cerrar', style: TextStyle(color: Colors.white)))
-          ],
-        );
-      }),
-    );
+          ]);
+      }));
   }
 
   void _showInfo(String title, String content) {
@@ -235,8 +204,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onPressed: () => Navigator.pop(context),
               child:
                   const Text('Cerrar', style: TextStyle(color: Colors.white)))
-        ],
-      ),
-    );
+        ]));
   }
 }

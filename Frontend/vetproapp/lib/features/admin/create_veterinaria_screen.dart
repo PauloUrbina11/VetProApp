@@ -133,11 +133,8 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
         Text(
           label,
           style: const TextStyle(
-            fontFamily: 'Montserrat',
             color: darkGreen,
-            fontSize: 15,
-          ),
-        ),
+            fontSize: 15)),
         const SizedBox(height: 8),
         TextFormField(
           controller: controller,
@@ -148,19 +145,13 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
             fillColor: softGreen,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(8),
-            ),
+              borderRadius: BorderRadius.circular(8)),
             hintStyle: TextStyle(
-              color: Colors.white.withOpacity(0.6),
-              fontFamily: 'Montserrat',
-            ),
-          ),
-          style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
-          validator: validator,
-        ),
+              color: Colors.white.withOpacity(0.6))),
+          style: const TextStyle(color: Colors.white),
+          validator: validator),
         const SizedBox(height: 16),
-      ],
-    );
+      ]);
   }
 
   Widget _buildDropdown({
@@ -178,17 +169,13 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
         Text(
           label + (required ? ' *' : ''),
           style: const TextStyle(
-            fontFamily: 'Montserrat',
             color: darkGreen,
-            fontSize: 15,
-          ),
-        ),
+            fontSize: 15)),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
             color: softGreen,
-            borderRadius: BorderRadius.circular(8),
-          ),
+            borderRadius: BorderRadius.circular(8)),
           child: DropdownButtonFormField<int>(
             value: value,
             decoration: InputDecoration(
@@ -196,30 +183,23 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
               fillColor: softGreen,
               border: OutlineInputBorder(
                 borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(8),
-              ),
+                borderRadius: BorderRadius.circular(8)),
               contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            ),
+                  const EdgeInsets.symmetric(horizontal: 12, vertical: 8)),
             dropdownColor: softGreen,
             style:
-                const TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
+                const TextStyle(color: Colors.white),
             items: items.map((item) {
               return DropdownMenuItem<int>(
                 value: getId(item),
                 child: Text(
                   getName(item),
-                  style: const TextStyle(color: Colors.white),
-                ),
-              );
+                  style: const TextStyle(color: Colors.white)));
             }).toList(),
             onChanged: onChanged,
-            validator: required ? (v) => v == null ? 'Requerido' : null : null,
-          ),
-        ),
+            validator: required ? (v) => v == null ? 'Requerido' : null : null)),
         const SizedBox(height: 16),
-      ],
-    );
+      ]);
   }
 
   @override
@@ -230,11 +210,9 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
         title: const Text(
           'Crear Veterinaria',
           style:
-              TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
-        ),
+              TextStyle( fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
-        elevation: 0,
-      ),
+        elevation: 0),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -246,25 +224,21 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                   padding: const EdgeInsets.all(18),
                   decoration: BoxDecoration(
                     color: lightGreen.withOpacity(0.3),
-                    borderRadius: BorderRadius.circular(18),
-                  ),
+                    borderRadius: BorderRadius.circular(18)),
                   child: Column(
                     children: [
                       _buildInput(
                         controller: _nombreCtrl,
                         label: 'Nombre *',
                         validator: (v) =>
-                            v == null || v.isEmpty ? 'Requerido' : null,
-                      ),
+                            v == null || v.isEmpty ? 'Requerido' : null),
                       _buildInput(
                         controller: _direccionCtrl,
-                        label: 'Dirección',
-                      ),
+                        label: 'Dirección'),
                       _buildInput(
                         controller: _telefonoCtrl,
                         label: 'Teléfono',
-                        keyboardType: TextInputType.phone,
-                      ),
+                        keyboardType: TextInputType.phone),
                       if (_isLoading)
                         const Center(
                             child:
@@ -280,8 +254,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                             setState(() => _selectedDepartamentoId = val);
                             if (val != null) _loadCiudades(val);
                           },
-                          required: true,
-                        ),
+                          required: true),
                         _buildDropdown(
                           label: 'Ciudad',
                           value: _selectedCiudadId,
@@ -290,8 +263,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                           getId: (item) => item['id'] ?? 0,
                           onChanged: (val) =>
                               setState(() => _selectedCiudadId = val),
-                          required: true,
-                        ),
+                          required: true),
                         _buildDropdown(
                           label: 'Usuario Administrador',
                           value: _selectedAdminUserId,
@@ -300,14 +272,12 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                               item['nombre_completo'] ?? item['email'] ?? '',
                           getId: (item) => item['id'] ?? 0,
                           onChanged: (val) =>
-                              setState(() => _selectedAdminUserId = val),
-                        ),
+                              setState(() => _selectedAdminUserId = val)),
                       ],
                       _buildInput(
                         controller: _descripcionCtrl,
                         label: 'Descripción',
-                        maxLines: 3,
-                      ),
+                        maxLines: 3),
                       if (_error != null)
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
@@ -315,11 +285,7 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                             _error!,
                             style: const TextStyle(
                               color: Colors.red,
-                              fontFamily: 'Montserrat',
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
+                              fontSize: 14))),
                       if (_success != null)
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16),
@@ -327,12 +293,8 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                             _success!,
                             style: const TextStyle(
                               color: Colors.white,
-                              fontFamily: 'Montserrat',
                               fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
+                              fontWeight: FontWeight.bold))),
                       SizedBox(
                         width: double.infinity,
                         height: 45,
@@ -342,36 +304,20 @@ class _CreateVeterinariaScreenState extends State<CreateVeterinariaScreen> {
                             backgroundColor: white,
                             foregroundColor: darkGreen,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(8))),
                           child: _loading
                               ? const SizedBox(
                                   width: 20,
                                   height: 20,
                                   child: CircularProgressIndicator(
                                     color: darkGreen,
-                                    strokeWidth: 2,
-                                  ),
-                                )
+                                    strokeWidth: 2))
                               : const Text(
                                   'Crear Veterinaria',
                                   style: TextStyle(
-                                    fontFamily: 'Montserrat',
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+                                    fontSize: 16)))),
+                    ])),
+              ])))));
   }
 }

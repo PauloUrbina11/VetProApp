@@ -95,6 +95,12 @@ export const registerFailedAttempt = async (correo) => {
     `;
     
     const result = await pool.query(update, [correo]);
+    
+    // Si el usuario no existe, no hay rows
+    if (result.rows.length === 0) {
+        return 0;
+    }
+    
     const fails = result.rows[0].intentos_fallidos;
 
     // Si llega a 5 → bloquear

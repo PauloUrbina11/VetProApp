@@ -29,8 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Image.asset(
                     'assets/images/paw_white.png',
                     width: 85,
-                    height: 85,
-                  ),
+                    height: 85),
 
                   const SizedBox(height: 20),
 
@@ -39,12 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     'VETPROAPP',
                     style: TextStyle(
                       fontSize: 32,
-                      fontFamily: 'Montserrat',
                       fontWeight: FontWeight.w900,
                       color: Colors.white,
-                      letterSpacing: 1.5,
-                    ),
-                  ),
+                      letterSpacing: 1.5)),
 
                   const SizedBox(height: 25),
 
@@ -61,25 +57,19 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Iniciar sesión',
                               style: TextStyle(
                                 fontSize: 16,
-                                fontFamily: 'Montserrat',
                                 color: isLogin
                                     ? Colors.white
                                     : Colors.white.withOpacity(0.6),
                                 fontWeight: isLogin
                                     ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                            ),
+                                    : FontWeight.normal)),
                             if (isLogin)
                               Container(
                                 margin: const EdgeInsets.only(top: 4),
                                 height: 2,
                                 width: 80,
-                                color: Colors.white,
-                              )
-                          ],
-                        ),
-                      ),
+                                color: Colors.white)
+                          ])),
 
                       const SizedBox(width: 40),
 
@@ -92,27 +82,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Registrarse',
                               style: TextStyle(
                                 fontSize: 16,
-                                fontFamily: 'Montserrat',
                                 color: !isLogin
                                     ? Colors.white
                                     : Colors.white.withOpacity(0.6),
                                 fontWeight: !isLogin
                                     ? FontWeight.bold
-                                    : FontWeight.normal,
-                              ),
-                            ),
+                                    : FontWeight.normal)),
                             if (!isLogin)
                               Container(
                                 margin: const EdgeInsets.only(top: 4),
                                 height: 2,
                                 width: 80,
-                                color: Colors.white,
-                              )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                                color: Colors.white)
+                          ])),
+                    ]),
 
                   const SizedBox(height: 35),
 
@@ -121,10 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
                       color: lightGreen.withOpacity(0.3),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: isLogin ? const LoginForm() : const RegisterForm(),
-                  ),
+                      borderRadius: BorderRadius.circular(18)),
+                    child: isLogin ? const LoginForm() : const RegisterForm()),
 
                   if (isLogin) ...[
                     const SizedBox(height: 20),
@@ -136,22 +117,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         '¿Has olvidado tu contraseña?',
                         style: TextStyle(
                           fontSize: 15,
-                          fontFamily: 'Montserrat',
                           color: Colors.white.withOpacity(0.9),
                           decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                          fontWeight: FontWeight.bold))),
                   ],
 
                   const SizedBox(height: 40),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+                ]))))));
   }
 }

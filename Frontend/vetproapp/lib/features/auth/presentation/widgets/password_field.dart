@@ -23,28 +23,21 @@ class _PasswordFieldState extends State<PasswordField> {
         fillColor: softGreen,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
-          borderRadius: BorderRadius.circular(8),
-        ),
+          borderRadius: BorderRadius.circular(8)),
         hintText: 'Tu contraseña',
         hintStyle: TextStyle(
-          color: Colors.white.withOpacity(0.6),
-          fontFamily: 'Montserrat',
-        ),
+          color: Colors.white.withOpacity(0.6)),
         suffixIcon: IconButton(
           icon: Icon(
             obscure ? Icons.visibility_off : Icons.visibility,
-            color: Colors.white.withOpacity(0.8),
-          ),
-          onPressed: () => setState(() => obscure = !obscure),
-        ),
-      ),
+            color: Colors.white.withOpacity(0.8)),
+          onPressed: () => setState(() => obscure = !obscure))),
       style: const TextStyle(color: Colors.white),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return "Ingresa tu contraseña";
         }
         return null;
-      },
-    );
+      });
   }
 }

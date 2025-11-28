@@ -105,15 +105,11 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancelar'),
-          ),
+            child: const Text('Cancelar')),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: const Text('Eliminar', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
-    );
+            child: const Text('Eliminar', style: TextStyle(color: Colors.red))),
+        ]));
 
     if (confirm == true) {
       try {
@@ -140,11 +136,8 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
         Text(
           label,
           style: const TextStyle(
-            fontFamily: 'Montserrat',
             color: darkGreen,
-            fontSize: 15,
-          ),
-        ),
+            fontSize: 15)),
         const SizedBox(height: 8),
         TextFormField(
           controller: controller,
@@ -155,18 +148,12 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
             fillColor: softGreen,
             border: OutlineInputBorder(
               borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(8),
-            ),
+              borderRadius: BorderRadius.circular(8)),
             hintStyle: TextStyle(
-              color: Colors.white.withOpacity(0.6),
-              fontFamily: 'Montserrat',
-            ),
-          ),
-          style: const TextStyle(color: Colors.white, fontFamily: 'Montserrat'),
-        ),
+              color: Colors.white.withOpacity(0.6))),
+          style: const TextStyle(color: Colors.white)),
         const SizedBox(height: 16),
-      ],
-    );
+      ]);
   }
 
   @override
@@ -177,11 +164,9 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
         title: const Text(
           'Gestión de Servicios',
           style:
-              TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
-        ),
+              TextStyle( fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
-        elevation: 0,
-      ),
+        elevation: 0),
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: Colors.white))
           : SafeArea(
@@ -195,16 +180,11 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: lightGreen.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                          borderRadius: BorderRadius.circular(8)),
                         child: Text(
                           _error!,
                           style: const TextStyle(
-                            color: darkGreen,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                      ),
+                            color: darkGreen))),
                     if (_error != null) const SizedBox(height: 12),
 
                     // Formulario de creación
@@ -212,8 +192,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                       padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
                         color: lightGreen.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(18),
-                      ),
+                        borderRadius: BorderRadius.circular(18)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -221,52 +200,38 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                             'Crear Nuevo Servicio',
                             style: TextStyle(
                               color: darkGreen,
-                              fontFamily: 'Montserrat',
                               fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                              fontWeight: FontWeight.bold)),
                           const SizedBox(height: 16),
                           _buildInput(
                             controller: _nombreCtrl,
-                            label: 'Nombre *',
-                          ),
+                            label: 'Nombre *'),
                           _buildInput(
                             controller: _descripcionCtrl,
                             label: 'Descripción',
-                            maxLines: 3,
-                          ),
+                            maxLines: 3),
                           const Text(
                             'Tipo de Servicio *',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               color: darkGreen,
-                              fontSize: 15,
-                            ),
-                          ),
+                              fontSize: 15)),
                           const SizedBox(height: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
                               color: softGreen,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                              borderRadius: BorderRadius.circular(8)),
                             child: DropdownButton<int>(
                               value: _selectedTypeId,
                               hint: const Text(
                                 'Seleccionar tipo',
                                 style: TextStyle(
-                                  color: white,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
+                                  color: white)),
                               isExpanded: true,
                               underline: const SizedBox(),
                               dropdownColor: softGreen,
                               style: const TextStyle(
-                                color: white,
-                                fontFamily: 'Montserrat',
-                              ),
+                                color: white),
                               items: _serviceTypes
                                   .map<DropdownMenuItem<int>>((type) {
                                 return DropdownMenuItem<int>(
@@ -274,16 +239,10 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                   child: Text(
                                     type['nombre'] ?? '',
                                     style: const TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                    ),
-                                  ),
-                                );
+                                      color: Colors.white)));
                               }).toList(),
                               onChanged: (val) =>
-                                  setState(() => _selectedTypeId = val),
-                            ),
-                          ),
+                                  setState(() => _selectedTypeId = val))),
                           const SizedBox(height: 20),
                           SizedBox(
                             width: double.infinity,
@@ -294,30 +253,19 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                 backgroundColor: white,
                                 foregroundColor: darkGreen,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
+                                  borderRadius: BorderRadius.circular(8))),
                               child: _creating
                                   ? const SizedBox(
                                       height: 20,
                                       width: 20,
                                       child: CircularProgressIndicator(
                                         color: darkGreen,
-                                        strokeWidth: 2,
-                                      ),
-                                    )
+                                        strokeWidth: 2))
                                   : const Text(
                                       'Crear Servicio',
                                       style: TextStyle(
-                                        fontFamily: 'Montserrat',
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                                        fontWeight: FontWeight.bold)))),
+                        ])),
 
                     const SizedBox(height: 24),
 
@@ -326,11 +274,8 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                       'Servicios Existentes',
                       style: TextStyle(
                         color: darkGreen,
-                        fontFamily: 'Montserrat',
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                        fontWeight: FontWeight.bold)),
                     const SizedBox(height: 12),
 
                     _services.isEmpty
@@ -338,19 +283,13 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                             padding: const EdgeInsets.all(24),
                             decoration: BoxDecoration(
                               color: Colors.white.withOpacity(0.15),
-                              borderRadius: BorderRadius.circular(18),
-                            ),
+                              borderRadius: BorderRadius.circular(18)),
                             child: const Center(
                               child: Text(
                                 'No hay servicios registrados',
                                 style: TextStyle(
                                   color: darkGreen,
-                                  fontFamily: 'Montserrat',
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          )
+                                  fontSize: 16))))
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
@@ -361,8 +300,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                 margin: const EdgeInsets.only(bottom: 12),
                                 decoration: BoxDecoration(
                                   color: Colors.white.withOpacity(0.15),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
+                                  borderRadius: BorderRadius.circular(12)),
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 8),
@@ -370,10 +308,7 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                     service['nombre'] ?? 'Sin nombre',
                                     style: const TextStyle(
                                       color: darkGreen,
-                                      fontFamily: 'Montserrat',
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                      fontWeight: FontWeight.bold)),
                                   subtitle: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -383,34 +318,19 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                                         Text(
                                           service['descripcion'],
                                           style: TextStyle(
-                                            color: darkGreen.withOpacity(0.8),
-                                            fontFamily: 'Montserrat',
-                                          ),
-                                        ),
+                                            color: darkGreen.withOpacity(0.8))),
                                       if (service['tipo_nombre'] != null)
                                         Text(
                                           'Tipo: ${service['tipo_nombre']}',
                                           style: TextStyle(
-                                            color: darkGreen.withOpacity(0.8),
-                                            fontFamily: 'Montserrat',
-                                          ),
-                                        ),
-                                    ],
-                                  ),
+                                            color: darkGreen.withOpacity(0.8))),
+                                    ]),
                                   trailing: IconButton(
                                     icon: const Icon(Icons.delete,
                                         color: Colors.red),
                                     onPressed: () =>
-                                        _deleteService(service['id']),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                  ],
-                ),
-              ),
-            ),
-    );
+                                        _deleteService(service['id']))));
+                            }),
+                  ]))));
   }
 }

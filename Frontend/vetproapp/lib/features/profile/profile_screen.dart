@@ -71,8 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Selecciona departamento y ciudad'),
-            backgroundColor: Colors.red),
-      );
+            backgroundColor: Colors.red));
       return;
     }
     setState(() => _saving = true);
@@ -162,8 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           backgroundColor: white,
                           foregroundColor: darkGreen,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12)),
-                        ),
+                              borderRadius: BorderRadius.circular(12))),
                         child: _saving
                             ? const SizedBox(
                                 height: 22,
@@ -172,16 +170,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     strokeWidth: 2, color: vetproGreen))
                             : const Text('Guardar cambios',
                                 style: TextStyle(
-                                    fontFamily: 'Montserrat',
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-    );
+                                    fontWeight: FontWeight.bold)))),
+                  ]))));
   }
 
   String? _required(String? v) =>
@@ -191,11 +182,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         text,
         style: const TextStyle(
           fontSize: 14,
-          fontFamily: 'Montserrat',
           color: darkGreen,
-          fontWeight: FontWeight.w600,
-        ),
-      );
+          fontWeight: FontWeight.w600));
 
   Widget _greenInput(TextEditingController ctrl,
       {required String hint,
@@ -209,7 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       obscureText: obscure,
       validator: validator,
       style: const TextStyle(
-          color: Colors.white, fontFamily: 'Montserrat', fontSize: 14),
+          color: Colors.white, fontSize: 14),
       decoration: InputDecoration(
         filled: true,
         fillColor: softGreen,
@@ -220,9 +208,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         prefixIcon: Icon(icon, color: Colors.white.withOpacity(0.85)),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none),
-      ),
-    );
+            borderSide: BorderSide.none)));
   }
 
   Widget _dropdownDepartamentos() {
@@ -242,13 +228,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               .map((d) => DropdownMenuItem<int>(
                     value: d['id'] as int,
                     child: Text(d['nombre'] ?? '',
-                        style: const TextStyle(color: Colors.white)),
-                  ))
+                        style: const TextStyle(color: Colors.white))))
               .toList(),
-          onChanged: _onDepartamentoChanged,
-        ),
-      ),
-    );
+          onChanged: _onDepartamentoChanged)));
   }
 
   Widget _dropdownCiudades() {
@@ -268,12 +250,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               .map((c) => DropdownMenuItem<int>(
                     value: c['id'] as int,
                     child: Text(c['nombre'] ?? '',
-                        style: const TextStyle(color: Colors.white)),
-                  ))
+                        style: const TextStyle(color: Colors.white))))
               .toList(),
-          onChanged: (v) => setState(() => _ciudadId = v),
-        ),
-      ),
-    );
+          onChanged: (v) => setState(() => _ciudadId = v))));
   }
 }

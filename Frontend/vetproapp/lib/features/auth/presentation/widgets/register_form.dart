@@ -49,8 +49,7 @@ class _RegisterFormState extends State<RegisterForm> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: softGreen,
-        borderRadius: BorderRadius.circular(8),
-      ),
+        borderRadius: BorderRadius.circular(8)),
       child: DropdownButton<int>(
         isExpanded: true,
         value: selectedDepartamentoId,
@@ -58,14 +57,12 @@ class _RegisterFormState extends State<RegisterForm> {
         dropdownColor: softGreen,
         hint: Text(
           'Selecciona un departamento',
-          style: TextStyle(color: Colors.white.withOpacity(0.7)),
-        ),
+          style: TextStyle(color: Colors.white.withOpacity(0.7))),
         items: departamentos.map((d) {
           return DropdownMenuItem<int>(
             value: d['id'],
             child: Text(d['nombre'] ?? '',
-                style: const TextStyle(color: Colors.white)),
-          );
+                style: const TextStyle(color: Colors.white)));
         }).toList(),
         onChanged: (v) {
           setState(() {
@@ -74,9 +71,7 @@ class _RegisterFormState extends State<RegisterForm> {
             selectedCiudadId = null;
           });
           if (v != null) _loadCiudades(v);
-        },
-      ),
-    );
+        }));
   }
 
   Widget _cityDropdown() {
@@ -84,8 +79,7 @@ class _RegisterFormState extends State<RegisterForm> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: softGreen,
-        borderRadius: BorderRadius.circular(8),
-      ),
+        borderRadius: BorderRadius.circular(8)),
       child: DropdownButton<int>(
         isExpanded: true,
         value: selectedCiudadId,
@@ -93,20 +87,16 @@ class _RegisterFormState extends State<RegisterForm> {
         dropdownColor: softGreen,
         hint: Text(
           'Selecciona una ciudad',
-          style: TextStyle(color: Colors.white.withOpacity(0.7)),
-        ),
+          style: TextStyle(color: Colors.white.withOpacity(0.7))),
         items: ciudades.map((c) {
           return DropdownMenuItem<int>(
             value: c['id'],
             child: Text(c['nombre'] ?? '',
-                style: const TextStyle(color: Colors.white)),
-          );
+                style: const TextStyle(color: Colors.white)));
         }).toList(),
         onChanged: (v) {
           setState(() => selectedCiudadId = v);
-        },
-      ),
-    );
+        }));
   }
 
   @override
@@ -121,17 +111,13 @@ class _RegisterFormState extends State<RegisterForm> {
             'Nombre completo',
             style: TextStyle(
               fontSize: 14,
-              fontFamily: 'Montserrat',
               color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+              fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           _inputField(
             controller: nombreController,
             hint: 'Escribe tu nombre',
-            icon: Icons.person,
-          ),
+            icon: Icons.person),
 
           const SizedBox(height: 18),
 
@@ -140,17 +126,13 @@ class _RegisterFormState extends State<RegisterForm> {
             'Correo electrónico',
             style: TextStyle(
               fontSize: 14,
-              fontFamily: 'Montserrat',
               color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+              fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           _inputField(
             controller: correoController,
             hint: 'email@example.com',
-            icon: Icons.email,
-          ),
+            icon: Icons.email),
 
           const SizedBox(height: 18),
 
@@ -159,11 +141,8 @@ class _RegisterFormState extends State<RegisterForm> {
             'Contraseña',
             style: TextStyle(
               fontSize: 14,
-              fontFamily: 'Montserrat',
               color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+              fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           PasswordField(controller: passwordController),
 
@@ -174,17 +153,13 @@ class _RegisterFormState extends State<RegisterForm> {
             'Dirección',
             style: TextStyle(
               fontSize: 14,
-              fontFamily: 'Montserrat',
               color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+              fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           _inputField(
             controller: direccionController,
             hint: 'Dirección (calle, número, barrio)',
-            icon: Icons.home,
-          ),
+            icon: Icons.home),
 
           const SizedBox(height: 18),
 
@@ -193,17 +168,13 @@ class _RegisterFormState extends State<RegisterForm> {
             'Celular',
             style: TextStyle(
               fontSize: 14,
-              fontFamily: 'Montserrat',
               color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+              fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           _inputField(
             controller: celularController,
             hint: '3001234567',
-            icon: Icons.phone,
-          ),
+            icon: Icons.phone),
 
           const SizedBox(height: 18),
 
@@ -212,11 +183,8 @@ class _RegisterFormState extends State<RegisterForm> {
             'Departamento',
             style: TextStyle(
               fontSize: 14,
-              fontFamily: 'Montserrat',
               color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+              fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           _departmentDropdown(),
 
@@ -226,11 +194,8 @@ class _RegisterFormState extends State<RegisterForm> {
             'Ciudad',
             style: TextStyle(
               fontSize: 14,
-              fontFamily: 'Montserrat',
               color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+              fontWeight: FontWeight.w500)),
           const SizedBox(height: 8),
           _cityDropdown(),
 
@@ -246,33 +211,22 @@ class _RegisterFormState extends State<RegisterForm> {
                 backgroundColor: white,
                 foregroundColor: darkGreen,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
+                  borderRadius: BorderRadius.circular(10))),
               child: loading
                   ? const SizedBox(
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
                         color: darkGreen,
-                        strokeWidth: 2,
-                      ),
-                    )
+                        strokeWidth: 2))
                   : const Text(
                       'Crear cuenta',
                       style: TextStyle(
-                        fontFamily: 'Montserrat',
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-            ),
-          ),
+                        fontWeight: FontWeight.bold)))),
 
           const SizedBox(height: 15),
-        ],
-      ),
-    );
+        ]));
   }
 
   Future<void> _createAccount() async {
@@ -281,8 +235,7 @@ class _RegisterFormState extends State<RegisterForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             backgroundColor: Colors.red,
-            content: Text('Selecciona un departamento')),
-      );
+            content: Text('Selecciona un departamento')));
       return;
     }
 
@@ -290,8 +243,7 @@ class _RegisterFormState extends State<RegisterForm> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             backgroundColor: Colors.red,
-            content: Text('Selecciona una ciudad')),
-      );
+            content: Text('Selecciona una ciudad')));
       return;
     }
 
@@ -341,47 +293,35 @@ class _RegisterFormState extends State<RegisterForm> {
                       SnackBar(
                         backgroundColor:
                             act["ok"] == true ? Colors.green : Colors.red,
-                        content: Text(act["message"] ?? 'Resultado'),
-                      ),
-                    );
+                        content: Text(act["message"] ?? 'Resultado')));
                   },
-                  child: const Text('Activar ahora'),
-                ),
+                  child: const Text('Activar ahora')),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                     Navigator.pushReplacementNamed(context, '/login');
                   },
-                  child: const Text('Ir a iniciar sesión'),
-                ),
-              ],
-            ),
-          );
+                  child: const Text('Ir a iniciar sesión')),
+              ]));
         } else {
           // Sin token de activación: ir directamente al login
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: Colors.green,
-              content: Text(res["message"] ?? 'Registro exitoso'),
-            ),
-          );
+              content: Text(res["message"] ?? 'Registro exitoso')));
           Navigator.pushReplacementNamed(context, '/login');
         }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             backgroundColor: Colors.red,
-            content: Text(res["message"] ?? 'Error al registrar'),
-          ),
-        );
+            content: Text(res["message"] ?? 'Error al registrar')));
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.red,
-          content: Text(e.toString()),
-        ),
-      );
+          content: Text(e.toString())));
     }
 
     setState(() => loading = false);
@@ -400,9 +340,7 @@ class _RegisterFormState extends State<RegisterForm> {
       },
       style: const TextStyle(
         color: Colors.white,
-        fontFamily: 'Montserrat',
-        fontSize: 14,
-      ),
+        fontSize: 14),
       decoration: InputDecoration(
         filled: true,
         fillColor: softGreen,
@@ -410,15 +348,10 @@ class _RegisterFormState extends State<RegisterForm> {
             const EdgeInsets.symmetric(vertical: 12, horizontal: 15),
         hintText: hint,
         hintStyle: TextStyle(
-          color: Colors.white.withOpacity(0.6),
-          fontFamily: 'Montserrat',
-        ),
+          color: Colors.white.withOpacity(0.6)),
         prefixIcon: Icon(icon, color: Colors.white.withOpacity(0.8)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    );
+          borderSide: BorderSide.none)));
   }
 }

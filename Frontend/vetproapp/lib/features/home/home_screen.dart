@@ -148,8 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (speciesIds.isNotEmpty) {
         final recResults = await Future.wait(
           speciesIds.map(
-              (id) => RecommendationsService.getRecommendations(especieId: id)),
-        );
+              (id) => RecommendationsService.getRecommendations(especieId: id)));
         for (final list in recResults) {
           recs.addAll(list);
         }
@@ -222,8 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     if (_loading) {
       return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
+        body: Center(child: CircularProgressIndicator()));
     }
 
     // Rol 1 = Admin, Rol 2 = Veterinaria, Rol 3 = Dueño de mascota
@@ -256,8 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.pushNamed(context, '/settings');
                       },
                       icon: const Icon(Icons.settings),
-                      color: vetproGreen,
-                    ),
+                      color: vetproGreen),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Align(
@@ -271,13 +268,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Bienvenido/a',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                  fontFamily: 'Montserrat',
                                   color: vetproGreen,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
+                                  fontWeight: FontWeight.w600))),
                             const SizedBox(height: 6),
                             ConstrainedBox(
                               constraints: const BoxConstraints(maxWidth: 200),
@@ -285,33 +278,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _greetingText(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   color: vetproGreen.withOpacity(0.8),
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                                  fontWeight: FontWeight.w500))),
+                          ]))),
                     const SizedBox(width: 8),
                     CircleAvatar(
                       backgroundColor: Colors.white,
                       child: IconButton(
                         onPressed: () async {
                           await Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const ProfileMenuScreen(),
-                          ));
+                            builder: (_) => const ProfileMenuScreen()));
                           _reloadAllData();
                         },
                         icon: const Icon(Icons.person),
-                        color: vetproGreen,
-                      ),
-                    ),
-                  ],
-                ),
+                        color: vetproGreen)),
+                  ]),
 
                 const SizedBox(height: 18),
 
@@ -321,9 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -333,24 +313,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 140,
                   decoration: BoxDecoration(
                     color: softGreen,
-                    borderRadius: BorderRadius.circular(18),
-                  ),
+                    borderRadius: BorderRadius.circular(18)),
                   padding: const EdgeInsets.all(14),
                   child: Container(
                     decoration: BoxDecoration(
                       color: white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     child: Center(
                       child: Image.asset(
                         'assets/images/paw_white.png',
                         width: 120,
                         height: 70,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                  ),
-                ),
+                        fit: BoxFit.contain)))),
 
                 const SizedBox(height: 18),
 
@@ -360,9 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -376,8 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: lightGreen,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                        borderRadius: BorderRadius.circular(12)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -387,41 +358,30 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: const TextStyle(
                               color: darkGreen,
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                              fontWeight: FontWeight.bold)),
                           const SizedBox(height: 6),
                           if (_nextAppointment!['notas_cliente'] != null)
                             Text(
                               _nextAppointment!['notas_cliente'],
                               style: const TextStyle(
                                 color: darkGreen,
-                                fontSize: 14,
-                              ),
+                                fontSize: 14),
                               maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                        ],
-                      ),
-                    ),
-                  )
+                              overflow: TextOverflow.ellipsis),
+                        ])))
                 else
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     child: const Text(
                       'No hay citas programadas',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.grey,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
+                        fontSize: 14))),
 
                 const SizedBox(height: 18),
 
@@ -434,19 +394,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         color: vetproGreen,
                         fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                        fontWeight: FontWeight.bold)),
                     TextButton(
                       onPressed: () async {
                         await Navigator.pushNamed(context, '/my_pets');
                         // Recargar datos al volver
                         _loadUserData();
                       },
-                      child: const Text('Ver todas'),
-                    ),
-                  ],
-                ),
+                      child: const Text('Ver todas')),
+                  ]),
 
                 const SizedBox(height: 12),
 
@@ -456,15 +412,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     child: Center(
                       child: Text(
                         'No hay mascotas registradas',
-                        style: TextStyle(color: Colors.grey.shade600),
-                      ),
-                    ),
-                  )
+                        style: TextStyle(color: Colors.grey.shade600))))
                 else
                   ...(_userPets.take(3).map((pet) => GestureDetector(
                         onTap: () async {
@@ -472,9 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           await Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => PetDetailScreen(pet: pet),
-                            ),
-                          );
+                              builder: (context) => PetDetailScreen(pet: pet)));
                           // Siempre recargar la lista al volver
                           _loadUserData();
                         },
@@ -484,14 +434,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             border:
                                 Border.all(color: vetproGreen.withOpacity(0.3)),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                            borderRadius: BorderRadius.circular(12)),
                           child: Row(
                             children: [
                               Text(
                                 _getAnimalIcon(pet['especie_id']),
-                                style: const TextStyle(fontSize: 32),
-                              ),
+                                style: const TextStyle(fontSize: 32)),
                               const SizedBox(width: 12),
                               Expanded(
                                 child: Column(
@@ -501,25 +449,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                       pet['nombre'] ?? 'Sin nombre',
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 14,
-                                      ),
-                                    ),
+                                        fontSize: 14)),
                                     const SizedBox(height: 4),
                                     Text(
                                       _getEspecieName(pet['especie_id']),
                                       style: TextStyle(
                                         color: Colors.grey.shade600,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                        fontSize: 12)),
+                                  ])),
                               Icon(Icons.chevron_right, color: vetproGreen),
-                            ],
-                          ),
-                        ),
-                      ))),
+                            ]))))),
 
                 const SizedBox(height: 18),
 
@@ -529,9 +468,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -541,8 +478,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     child: Row(
                       children: [
                         Icon(Icons.lightbulb_outline,
@@ -553,13 +489,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             'No hay recomendaciones disponibles',
                             style: TextStyle(
                               fontSize: 14,
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
+                              color: Colors.grey.shade600))),
+                      ]))
                 else
                   GestureDetector(
                     onTap: () =>
@@ -569,8 +500,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: lightGreen.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                        borderRadius: BorderRadius.circular(12)),
                       child: Row(
                         children: [
                           Expanded(
@@ -584,39 +514,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: vetproGreen,
-                                  ),
+                                    color: vetproGreen),
                                   maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                                  overflow: TextOverflow.ellipsis),
                                 const SizedBox(height: 4),
                                 Text(
                                   _recommendations[0]['descripcion'] ?? '',
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: Colors.grey.shade700,
-                                  ),
+                                    color: Colors.grey.shade700),
                                   maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ],
-                            ),
-                          ),
+                                  overflow: TextOverflow.ellipsis),
+                              ])),
                           const SizedBox(width: 12),
                           Icon(Icons.arrow_forward_ios,
                               color: vetproGreen, size: 20),
-                        ],
-                      ),
-                    ),
-                  ),
+                        ]))),
 
                 const SizedBox(height: 16),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ])))));
   }
 
   int _getVetCountForDay(DateTime day) {
@@ -642,8 +558,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.pushNamed(context, '/settings');
                       },
                       icon: const Icon(Icons.settings),
-                      color: vetproGreen,
-                    ),
+                      color: vetproGreen),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Align(
@@ -657,13 +572,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Bienvenido/a',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                  fontFamily: 'Montserrat',
                                   color: vetproGreen,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
+                                  fontWeight: FontWeight.w600))),
                             const SizedBox(height: 6),
                             ConstrainedBox(
                               constraints: const BoxConstraints(maxWidth: 200),
@@ -671,33 +582,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _greetingText(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   color: vetproGreen.withOpacity(0.8),
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                                  fontWeight: FontWeight.w500))),
+                          ]))),
                     const SizedBox(width: 8),
                     CircleAvatar(
                       backgroundColor: Colors.white,
                       child: IconButton(
                         onPressed: () async {
                           await Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const ProfileMenuScreen(),
-                          ));
+                            builder: (_) => const ProfileMenuScreen()));
                           _reloadAllData();
                         },
                         icon: const Icon(Icons.person),
-                        color: vetproGreen,
-                      ),
-                    ),
-                  ],
-                ),
+                        color: vetproGreen)),
+                  ]),
 
                 const SizedBox(height: 18),
 
@@ -707,9 +607,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -729,8 +627,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             '${_vetStats?['citasPendientes'] ?? 0}',
                             Icons.pending_actions,
                             Colors.orange)),
-                  ],
-                ),
+                  ]),
                 const SizedBox(height: 12),
                 Row(
                   children: [
@@ -747,8 +644,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             '${_vetStats?['mascotasAtendidas'] ?? 0}',
                             Icons.pets,
                             Colors.purple)),
-                  ],
-                ),
+                  ]),
 
                 const SizedBox(height: 18),
 
@@ -758,9 +654,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -770,8 +664,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         border: Border.all(color: vetproGreen.withOpacity(0.3)),
                         borderRadius: BorderRadius.circular(12),
-                        color: vetproGreen.withOpacity(0.05),
-                      ),
+                        color: vetproGreen.withOpacity(0.05)),
                       child: Row(
                         children: [
                           Icon(Icons.event, color: vetproGreen, size: 28),
@@ -784,43 +677,30 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _formatAppointmentDate(appt['fecha_hora']),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                                ),
+                                    fontSize: 15)),
                                 const SizedBox(height: 4),
                                 Text(
                                   appt['usuario_nombre'] ?? 'Paciente',
                                   style: TextStyle(
                                     color: Colors.grey.shade600,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                                    fontSize: 13)),
+                              ])),
                           Text(
                             appt['estado_nombre'] ?? '',
                             style: TextStyle(
                               color: vetproGreen,
                               fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )),
+                              fontSize: 12)),
+                        ]))),
                 if (_vetNextAppointments.isEmpty)
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       border: Border.all(color: vetproGreen.withOpacity(0.3)),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     child: Text(
                       'No hay próximas citas',
-                      style: TextStyle(color: Colors.grey.shade600),
-                    ),
-                  ),
+                      style: TextStyle(color: Colors.grey.shade600))),
 
                 const SizedBox(height: 18),
 
@@ -830,9 +710,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -841,8 +719,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: vetproGreen.withOpacity(0.3)),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     padding: const EdgeInsets.all(12),
                     child: TableCalendar(
                       firstDay: DateTime.utc(2020, 1, 1),
@@ -866,26 +743,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       calendarStyle: CalendarStyle(
                         todayDecoration: BoxDecoration(
                           color: vetproGreen.withOpacity(0.5),
-                          shape: BoxShape.circle,
-                        ),
+                          shape: BoxShape.circle),
                         selectedDecoration: BoxDecoration(
                           color: vetproGreen,
-                          shape: BoxShape.circle,
-                        ),
+                          shape: BoxShape.circle),
                         markerDecoration: BoxDecoration(
                           color: Colors.red,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
+                          shape: BoxShape.circle)),
                       headerStyle: HeaderStyle(
                         formatButtonVisible: false,
                         titleCentered: true,
                         titleTextStyle: TextStyle(
                           color: vetproGreen,
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                          fontWeight: FontWeight.bold)),
                       calendarBuilders: CalendarBuilders(
                         defaultBuilder: (context, day, focusedDay) {
                           final count = _getVetCountForDay(day);
@@ -893,23 +764,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             margin: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               color: _getColorForCount(count),
-                              shape: BoxShape.circle,
-                            ),
+                              shape: BoxShape.circle),
                             child: Center(
                               child: Text(
                                 '${day.day}',
                                 style: TextStyle(
                                   color:
-                                      count > 0 ? Colors.white : Colors.black,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                                      count > 0 ? Colors.white : Colors.black))));
+                        })))),
 
                 const SizedBox(height: 12),
 
@@ -922,16 +784,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     _buildLegendItem('3-5', softGreen),
                     const SizedBox(width: 12),
                     _buildLegendItem('6+', darkGreen),
-                  ],
-                ),
+                  ]),
 
                 const SizedBox(height: 16),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ])))));
   }
 
   Widget _buildLegendItem(String label, Color color) {
@@ -942,16 +798,12 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 16,
           decoration: BoxDecoration(
             color: color,
-            shape: BoxShape.circle,
-          ),
-        ),
+            shape: BoxShape.circle)),
         const SizedBox(width: 6),
         Text(
           label,
-          style: const TextStyle(fontSize: 12, color: Colors.grey),
-        ),
-      ],
-    );
+          style: const TextStyle(fontSize: 12, color: Colors.grey)),
+      ]);
   }
 
   // Método original de usuario se mantiene sólo si role 3 activo
@@ -981,8 +833,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.pushNamed(context, '/settings');
                       },
                       icon: const Icon(Icons.settings),
-                      color: vetproGreen,
-                    ),
+                      color: vetproGreen),
                     const SizedBox(width: 6),
                     Expanded(
                       child: Align(
@@ -996,13 +847,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Bienvenido/a',
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
-                                  fontFamily: 'Montserrat',
                                   color: vetproGreen,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
+                                  fontWeight: FontWeight.w600))),
                             const SizedBox(height: 6),
                             ConstrainedBox(
                               constraints: const BoxConstraints(maxWidth: 200),
@@ -1010,33 +857,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 '${_userName ?? ''} 👋',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   color: vetproGreen.withOpacity(0.8),
                                   fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                                  fontWeight: FontWeight.w500))),
+                          ]))),
                     const SizedBox(width: 8),
                     CircleAvatar(
                       backgroundColor: Colors.white,
                       child: IconButton(
                         onPressed: () async {
                           await Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const ProfileMenuScreen(),
-                          ));
+                            builder: (_) => const ProfileMenuScreen()));
                           _reloadAllData();
                         },
                         icon: const Icon(Icons.person),
-                        color: vetproGreen,
-                      ),
-                    ),
-                  ],
-                ),
+                        color: vetproGreen)),
+                  ]),
 
                 const SizedBox(height: 18),
 
@@ -1046,9 +882,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -1081,8 +915,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         '${_globalStats?['citasHoy'] ?? 0}',
                         Icons.calendar_today,
                         Colors.purple.shade400),
-                  ],
-                ),
+                  ]),
 
                 const SizedBox(height: 18),
 
@@ -1092,43 +925,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
                 _buildAdminActionCard(
                   'Asignar Roles',
-                  'Asignar roles a usuarios del sistema',
+                  'Asignar roles a usuarios de veterinarias',
                   Icons.security,
                   Colors.blue,
-                  () => Navigator.pushNamed(context, '/manage_roles'),
-                ),
+                  () => Navigator.pushNamed(context, '/manage_roles')),
 
                 _buildAdminActionCard(
                   'Crear Veterinaria',
-                  'Registrar nueva clínica y asociar usuario',
+                  'Registrar nueva clínica y asociar usuario administrador',
                   Icons.add_business,
                   Colors.green,
-                  () => Navigator.pushNamed(context, '/create_veterinaria'),
-                ),
+                  () => Navigator.pushNamed(context, '/create_veterinaria')),
 
                 _buildAdminActionCard(
                   'Gestión de Citas',
                   'Ver todas las citas del sistema',
                   Icons.calendar_month,
                   Colors.orange,
-                  () => Navigator.pushNamed(context, '/manage_appointments'),
-                ),
+                  () => Navigator.pushNamed(context, '/manage_appointments')),
 
                 _buildAdminActionCard(
                   'Gestión de Servicios',
                   'Administrar servicios disponibles',
                   Icons.miscellaneous_services,
                   Colors.purple,
-                  () => Navigator.pushNamed(context, '/manage_services'),
-                ),
+                  () => Navigator.pushNamed(context, '/manage_services')),
 
                 const SizedBox(height: 18),
 
@@ -1138,9 +965,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: vetproGreen,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                    fontWeight: FontWeight.bold)),
 
                 const SizedBox(height: 12),
 
@@ -1149,15 +974,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey.shade300),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                      borderRadius: BorderRadius.circular(12)),
                     child: Center(
                       child: Text(
                         'No hay actividad reciente',
-                        style: TextStyle(color: Colors.grey.shade600),
-                      ),
-                    ),
-                  )
+                        style: TextStyle(color: Colors.grey.shade600))))
                 else
                   ..._recentActivity.map((activity) {
                     final iconData = _getIconData(activity['icon'] ?? 'event');
@@ -1170,17 +991,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       activity['description'] ?? '',
                       time,
                       iconData,
-                      color,
-                    );
+                      color);
                   }).toList(),
 
                 const SizedBox(height: 16),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+              ])))));
   }
 
   Widget _buildStatCard(
@@ -1189,8 +1004,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
-      ),
+        border: Border.all(color: color.withOpacity(0.3))),
       padding: const EdgeInsets.all(16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1202,21 +1016,15 @@ class _HomeScreenState extends State<HomeScreen> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
+              color: color)),
           const SizedBox(height: 4),
           Text(
             title,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontSize: 12,
-              color: Colors.grey,
-            ),
-          ),
-        ],
-      ),
-    );
+              color: Colors.grey)),
+        ]));
   }
 
   Widget _buildAdminActionCard(String title, String description, IconData icon,
@@ -1229,18 +1037,15 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: BoxDecoration(
           border: Border.all(color: color.withOpacity(0.3)),
           borderRadius: BorderRadius.circular(12),
-          color: color.withOpacity(0.05),
-        ),
+          color: color.withOpacity(0.05)),
         child: Row(
           children: [
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: color.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(icon, color: color, size: 28),
-            ),
+                borderRadius: BorderRadius.circular(8)),
+              child: Icon(icon, color: color, size: 28)),
             const SizedBox(width: 16),
             Expanded(
               child: Column(
@@ -1250,25 +1055,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     title,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-                  ),
+                      fontSize: 15)),
                   const SizedBox(height: 4),
                   Text(
                     description,
                     style: TextStyle(
                       color: Colors.grey.shade600,
-                      fontSize: 12,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                      fontSize: 12)),
+                ])),
             Icon(Icons.chevron_right, color: color),
-          ],
-        ),
-      ),
-    );
+          ])));
   }
 
   IconData _getIconData(String iconName) {
@@ -1393,8 +1189,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     final especie = _especies.firstWhere(
       (e) => e['id'] == especieId,
-      orElse: () => {'nombre': 'Desconocido'},
-    );
+      orElse: () => {'nombre': 'Desconocido'});
 
     return especie['nombre'] ?? 'Desconocido';
   }
@@ -1406,18 +1201,15 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(12),
-      ),
+        borderRadius: BorderRadius.circular(12)),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: color.withOpacity(0.2),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: color, size: 20),
-          ),
+              shape: BoxShape.circle),
+            child: Icon(icon, color: color, size: 20)),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -1427,29 +1219,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   title,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 13,
-                  ),
-                ),
+                    fontSize: 13)),
                 const SizedBox(height: 4),
                 Text(
                   description,
                   style: TextStyle(
                     color: Colors.grey.shade600,
-                    fontSize: 11,
-                  ),
-                ),
-              ],
-            ),
-          ),
+                    fontSize: 11)),
+              ])),
           Text(
             time,
             style: TextStyle(
               color: Colors.grey.shade500,
-              fontSize: 11,
-            ),
-          ),
-        ],
-      ),
-    );
+              fontSize: 11)),
+        ]));
   }
 }

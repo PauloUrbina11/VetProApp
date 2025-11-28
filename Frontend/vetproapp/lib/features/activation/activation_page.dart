@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io' show Platform;
+import '../../../app/config/theme.dart';
 
 class ActivationPage extends StatefulWidget {
   final String token;
@@ -27,8 +28,7 @@ class _ActivationPageState extends State<ActivationPage> {
         url,
         headers: {'Content-Type': 'application/json'},
         // El backend espera `rol_id` en el body JSON.
-        body: jsonEncode({'rol_id': roleId}),
-      );
+        body: jsonEncode({'rol_id': roleId}));
 
       final body = jsonDecode(res.body);
 
@@ -70,7 +70,7 @@ class _ActivationPageState extends State<ActivationPage> {
             children: [
               const Text('¿Cuál es tu perfil?',
                   style: const TextStyle(
-                      color: Colors.white,
+                      color: darkGreen,
                       fontWeight: FontWeight.w600,
                       fontSize: 20)),
               const SizedBox(height: 20),
@@ -81,8 +81,7 @@ class _ActivationPageState extends State<ActivationPage> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(strokeWidth: 2))
-                    : const Text('Tengo una mascota'),
-              ),
+                    : const Text('Tengo una mascota')),
               const SizedBox(height: 12),
               ElevatedButton(
                 onPressed: _loading ? null : () => _activate(2),
@@ -91,12 +90,7 @@ class _ActivationPageState extends State<ActivationPage> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(strokeWidth: 2))
-                    : const Text('Tengo una veterinaria'),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                    : const Text('Veterinaria'))
+            ]))));
   }
 }

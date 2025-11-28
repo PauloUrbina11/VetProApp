@@ -56,9 +56,7 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const AddPetScreen(),
-      ),
-    );
+        builder: (context) => const AddPetScreen()));
     if (result == true) {
       _loadData();
     }
@@ -68,9 +66,7 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => PetDetailScreen(pet: pet),
-      ),
-    );
+        builder: (context) => PetDetailScreen(pet: pet)));
     if (result == true) {
       _loadData();
     }
@@ -84,20 +80,15 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
         title: Text(
           _userRole == 1 ? 'Todas las Mascotas' : 'Mis Mascotas',
           style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+            fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
         foregroundColor: white,
-        elevation: 0,
-      ),
+        elevation: 0),
       floatingActionButton: _userRole != 1
           ? FloatingActionButton(
               onPressed: _showAddPetDialog,
               backgroundColor: softGreen,
-              child: const Icon(Icons.add, color: white),
-            )
+              child: const Icon(Icons.add, color: white))
           : null,
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: softGreen))
@@ -110,16 +101,11 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: lightGreen.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+                        borderRadius: BorderRadius.circular(8)),
                       child: Text(
                         _error!,
                         style: const TextStyle(
-                          color: darkGreen,
-                          fontFamily: 'Montserrat',
-                        ),
-                      ),
-                    ),
+                          color: darkGreen))),
                   Expanded(
                     child: _pets.isEmpty
                         ? Center(
@@ -128,8 +114,7 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
                               margin: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
                                 color: lightGreen.withOpacity(0.3),
-                                borderRadius: BorderRadius.circular(18),
-                              ),
+                                borderRadius: BorderRadius.circular(18)),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -144,14 +129,8 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
                                     textAlign: TextAlign.center,
                                     style: const TextStyle(
                                       color: darkGreen,
-                                      fontFamily: 'Montserrat',
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
+                                      fontSize: 16)),
+                                ])))
                         : RefreshIndicator(
                             onRefresh: _loadData,
                             color: softGreen,
@@ -161,14 +140,8 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
                               itemBuilder: (context, index) {
                                 final pet = _pets[index];
                                 return _buildPetCard(pet);
-                              },
-                            ),
-                          ),
-                  ),
-                ],
-              ),
-            ),
-    );
+                              }))),
+                ])));
   }
 
   Widget _buildPetCard(dynamic pet) {
@@ -177,8 +150,7 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: lightGreen.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12),
-      ),
+        borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         contentPadding: const EdgeInsets.all(12),
         leading: CircleAvatar(
@@ -192,20 +164,14 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
                     width: 60,
                     height: 60,
                     errorBuilder: (_, __, ___) =>
-                        const Icon(Icons.pets, color: white, size: 30),
-                  ),
-                )
-              : const Icon(Icons.pets, color: white, size: 30),
-        ),
+                        const Icon(Icons.pets, color: white, size: 30)))
+              : const Icon(Icons.pets, color: white, size: 30)),
         title: Text(
           pet['nombre'] ?? 'Sin nombre',
           style: const TextStyle(
             color: darkGreen,
-            fontFamily: 'Montserrat',
             fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
+            fontSize: 16)),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -215,26 +181,17 @@ class _MyPetsScreenState extends State<MyPetsScreen> {
                 'Dueño: ${pet['owner_name']}',
                 style: TextStyle(
                   color: darkGreen.withOpacity(0.8),
-                  fontFamily: 'Montserrat',
-                  fontSize: 13,
-                ),
-              ),
+                  fontSize: 13)),
             ],
             const SizedBox(height: 4),
             Text(
               '${pet['especie_nombre'] ?? 'Especie desconocida'} - ${pet['raza_nombre'] ?? 'Raza desconocida'}',
               style: TextStyle(
                 color: darkGreen.withOpacity(0.7),
-                fontFamily: 'Montserrat',
-                fontSize: 12,
-              ),
-            ),
-          ],
-        ),
+                fontSize: 12)),
+          ]),
         trailing: Icon(Icons.chevron_right, color: darkGreen),
-        onTap: () => _showPetDetail(pet),
-      ),
-    );
+        onTap: () => _showPetDetail(pet)));
   }
 }
 
@@ -279,9 +236,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error al cargar especies: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+            backgroundColor: Colors.red));
       }
     }
   }
@@ -298,9 +253,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error al cargar razas: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+            backgroundColor: Colors.red));
       }
     }
   }
@@ -317,13 +270,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
             colorScheme: ColorScheme.light(
               primary: softGreen,
               onPrimary: white,
-              onSurface: darkGreen,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
+              onSurface: darkGreen)),
+          child: child!);
+      });
     if (picked != null) {
       setState(() {
         _fechaNacimiento = picked;
@@ -336,27 +285,21 @@ class _AddPetScreenState extends State<AddPetScreen> {
     if (_selectedEspecieId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar( content: Text('Debes seleccionar una especie'),
-          backgroundColor: Colors.red,
-        ),
-      );
+          backgroundColor: Colors.red));
       return;
     }
 
     if (_selectedRazaId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar( content: Text('Debes seleccionar una raza'),
-          backgroundColor: Colors.red,
-        ),
-      );
+          backgroundColor: Colors.red));
       return;
     }
 
     if (_sexo == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar( content: Text('Debes seleccionar el sexo'),
-          backgroundColor: Colors.red,
-        ),
-      );
+          backgroundColor: Colors.red));
       return;
     }
 
@@ -378,9 +321,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Mascota creada exitosamente'),
-            backgroundColor: Colors.green,
-          ),
-        );
+            backgroundColor: Colors.green));
         Navigator.pop(context, true);
       }
     } catch (e) {
@@ -388,9 +329,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+            backgroundColor: Colors.red));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -413,14 +352,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
         title: const Text(
           'Agregar Mascota',
           style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+            fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
         foregroundColor: white,
-        elevation: 0,
-      ),
+        elevation: 0),
       body: _loadingData
           ? const Center(child: CircularProgressIndicator(color: softGreen))
           : SingleChildScrollView(
@@ -436,8 +371,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       hint: 'Nombre de la mascota',
                       icon: Icons.pets,
                       validator: (v) =>
-                          v == null || v.isEmpty ? 'Requerido' : null,
-                    ),
+                          v == null || v.isEmpty ? 'Requerido' : null),
                     const SizedBox(height: 18),
                     _label('Especie *'),
                     _buildDropdown(
@@ -451,8 +385,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                           _selectedRazaId = null;
                         });
                         if (val != null) _loadRazas(val);
-                      },
-                    ),
+                      }),
                     const SizedBox(height: 18),
                     _label('Raza *'),
                     _buildDropdown(
@@ -460,8 +393,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       items: _razas,
                       hint: 'Selecciona raza',
                       onChanged: (val) => setState(() => _selectedRazaId = val),
-                      enabled: _selectedEspecieId != null,
-                    ),
+                      enabled: _selectedEspecieId != null),
                     const SizedBox(height: 18),
                     _label('Sexo *'),
                     _buildDropdown(
@@ -472,8 +404,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                       ],
                       hint: 'Selecciona sexo',
                       onChanged: (val) => setState(() => _sexo = val),
-                      isString: true,
-                    ),
+                      isString: true),
                     const SizedBox(height: 18),
                     _label('Fecha de Nacimiento'),
                     InkWell(
@@ -483,8 +414,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
                             horizontal: 14, vertical: 16),
                         decoration: BoxDecoration(
                           color: softGreen,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                          borderRadius: BorderRadius.circular(12)),
                         child: Row(
                           children: [
                             Icon(Icons.calendar_today,
@@ -498,29 +428,21 @@ class _AddPetScreenState extends State<AddPetScreen> {
                                 color: _fechaNacimiento != null
                                     ? white
                                     : white.withOpacity(0.6),
-                                fontFamily: 'Montserrat',
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                                fontSize: 14)),
+                          ]))),
                     const SizedBox(height: 18),
                     _label('Color'),
                     _buildInput(
                       controller: _colorCtrl,
                       hint: 'Color del pelaje',
-                      icon: Icons.palette,
-                    ),
+                      icon: Icons.palette),
                     const SizedBox(height: 18),
                     _label('Peso (kg)'),
                     _buildInput(
                       controller: _pesoCtrl,
                       hint: 'Peso en kilogramos',
                       icon: Icons.monitor_weight,
-                      keyboardType: TextInputType.number,
-                    ),
+                      keyboardType: TextInputType.number),
                     const SizedBox(height: 28),
                     SizedBox(
                       width: double.infinity,
@@ -531,44 +453,28 @@ class _AddPetScreenState extends State<AddPetScreen> {
                           backgroundColor: white,
                           foregroundColor: darkGreen,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
+                            borderRadius: BorderRadius.circular(12))),
                         child: _loading
                             ? const SizedBox(
                                 height: 22,
                                 width: 22,
                                 child: CircularProgressIndicator(
                                   strokeWidth: 2,
-                                  color: softGreen,
-                                ),
-                              )
+                                  color: softGreen))
                             : const Text(
                                 'Guardar Mascota',
                                 style: TextStyle(
-                                  fontFamily: 'Montserrat',
                                   fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-    );
+                                  fontWeight: FontWeight.bold)))),
+                  ]))));
   }
 
   Widget _label(String text) => Text(
         text,
         style: const TextStyle(
           fontSize: 14,
-          fontFamily: 'Montserrat',
           color: darkGreen,
-          fontWeight: FontWeight.w600,
-        ),
-      );
+          fontWeight: FontWeight.w600));
 
   Widget _buildInput({
     required TextEditingController controller,
@@ -583,9 +489,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
       keyboardType: keyboardType,
       style: const TextStyle(
         color: white,
-        fontFamily: 'Montserrat',
-        fontSize: 14,
-      ),
+        fontSize: 14),
       decoration: InputDecoration(
         filled: true,
         fillColor: softGreen,
@@ -596,10 +500,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
         prefixIcon: Icon(icon, color: white.withOpacity(0.85)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    );
+          borderSide: BorderSide.none)));
   }
 
   Widget _buildDropdown({
@@ -614,8 +515,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
         color: enabled ? softGreen : softGreen.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12),
-      ),
+        borderRadius: BorderRadius.circular(12)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<dynamic>(
           isExpanded: true,
@@ -624,8 +524,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
           dropdownColor: softGreen,
           hint: Text(
             hint,
-            style: TextStyle(color: white.withOpacity(0.7)),
-          ),
+            style: TextStyle(color: white.withOpacity(0.7))),
           items: items.map((item) {
             final id = isString ? item['id'] : item['id'] as int;
             final nombre = item['nombre'] ?? '';
@@ -633,14 +532,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
               value: id,
               child: Text(
                 nombre,
-                style: const TextStyle(color: white),
-              ),
-            );
+                style: const TextStyle(color: white)));
           }).toList(),
-          onChanged: enabled ? onChanged : null,
-        ),
-      ),
-    );
+          onChanged: enabled ? onChanged : null)));
   }
 }
 
@@ -662,27 +556,21 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
       builder: (context) => AlertDialog(
         title: const Text(
           '¿Eliminar mascota?',
-          style: TextStyle(fontFamily: 'Montserrat', color: darkGreen),
-        ),
+          style: TextStyle( color: darkGreen)),
         content: const Text(
           'Esta acción no se puede deshacer. Solo se pueden eliminar mascotas sin historial clínico.',
-          style: TextStyle(fontFamily: 'Montserrat'),
-        ),
+          style: TextStyle()),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             child: const Text('Cancelar',
-                style: TextStyle(fontFamily: 'Montserrat')),
-          ),
+                style: TextStyle())),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
             style: TextButton.styleFrom(foregroundColor: Colors.red),
             child: const Text('Eliminar',
-                style: TextStyle(fontFamily: 'Montserrat')),
-          ),
-        ],
-      ),
-    );
+                style: TextStyle())),
+        ]));
 
     if (confirm != true) return;
 
@@ -693,9 +581,7 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Mascota eliminada exitosamente'),
-            backgroundColor: Colors.green,
-          ),
-        );
+            backgroundColor: Colors.green));
         Navigator.pop(context, true);
       }
     } catch (e) {
@@ -703,9 +589,7 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+            backgroundColor: Colors.red));
       }
     } finally {
       if (mounted) setState(() => _deleting = false);
@@ -717,18 +601,14 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Historial clínico - Próximamente'),
-        backgroundColor: Colors.blue,
-      ),
-    );
+        backgroundColor: Colors.blue));
   }
 
   Future<void> _editPet() async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => EditPetScreen(pet: widget.pet),
-      ),
-    );
+        builder: (context) => EditPetScreen(pet: widget.pet)));
     if (result == true) {
       // Recargar los datos de la mascota
       try {
@@ -741,18 +621,14 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Mascota actualizada exitosamente'),
-              backgroundColor: Colors.green,
-            ),
-          );
+              backgroundColor: Colors.green));
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Error al recargar datos: $e'),
-              backgroundColor: Colors.red,
-            ),
-          );
+              backgroundColor: Colors.red));
         }
       }
     }
@@ -780,14 +656,10 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
         title: Text(
           pet['nombre'] ?? 'Detalle Mascota',
           style: const TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+            fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
         foregroundColor: white,
-        elevation: 0,
-      ),
+        elevation: 0),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -799,20 +671,15 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                 height: 120,
                 decoration: BoxDecoration(
                   color: softGreen,
-                  shape: BoxShape.circle,
-                ),
+                  shape: BoxShape.circle),
                 child: pet['foto_principal'] != null
                     ? ClipOval(
                         child: Image.network(
                           pet['foto_principal'],
                           fit: BoxFit.cover,
                           errorBuilder: (_, __, ___) =>
-                              const Icon(Icons.pets, color: white, size: 60),
-                        ),
-                      )
-                    : const Icon(Icons.pets, color: white, size: 60),
-              ),
-            ),
+                              const Icon(Icons.pets, color: white, size: 60)))
+                    : const Icon(Icons.pets, color: white, size: 60))),
             const SizedBox(height: 24),
 
             // Información de la mascota
@@ -820,8 +687,7 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
               padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: lightGreen.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(16),
-              ),
+                borderRadius: BorderRadius.circular(16)),
               child: Column(
                 children: [
                   _buildInfoRow('Nombre', pet['nombre'] ?? 'N/A'),
@@ -837,9 +703,7 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                     _buildInfoRow('Peso', '${pet['peso_kg']} kg'),
                   if (pet['owner_name'] != null)
                     _buildInfoRow('Dueño', pet['owner_name']),
-                ],
-              ),
-            ),
+                ])),
             const SizedBox(height: 24),
 
             // Botones de acción
@@ -852,20 +716,13 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                   backgroundColor: softGreen,
                   foregroundColor: white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(12))),
                 icon: const Icon(Icons.medical_services),
                 label: const Text(
                   'Ver Historial Clínico',
                   style: TextStyle(
-                    fontFamily: 'Montserrat',
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+                    fontWeight: FontWeight.bold)))),
             const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
@@ -876,20 +733,13 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                   backgroundColor: Colors.blue.shade400,
                   foregroundColor: white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(12))),
                 icon: const Icon(Icons.edit),
                 label: const Text(
                   'Editar Mascota',
                   style: TextStyle(
-                    fontFamily: 'Montserrat',
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+                    fontWeight: FontWeight.bold)))),
             const SizedBox(height: 12),
             SizedBox(
               width: double.infinity,
@@ -900,33 +750,21 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
                   backgroundColor: Colors.red.shade400,
                   foregroundColor: white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
+                    borderRadius: BorderRadius.circular(12))),
                 icon: _deleting
                     ? const SizedBox(
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
                           color: white,
-                          strokeWidth: 2,
-                        ),
-                      )
+                          strokeWidth: 2))
                     : const Icon(Icons.delete),
                 label: Text(
                   _deleting ? 'Eliminando...' : 'Eliminar Mascota',
                   style: const TextStyle(
-                    fontFamily: 'Montserrat',
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+                    fontWeight: FontWeight.bold)))),
+          ])));
   }
 
   Widget _buildInfoRow(String label, String value) {
@@ -940,26 +778,16 @@ class _PetDetailScreenState extends State<PetDetailScreen> {
             child: Text(
               '$label:',
               style: const TextStyle(
-                fontFamily: 'Montserrat',
                 color: darkGreen,
                 fontWeight: FontWeight.bold,
-                fontSize: 14,
-              ),
-            ),
-          ),
+                fontSize: 14))),
           Expanded(
             child: Text(
               value,
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 color: darkGreen.withOpacity(0.8),
-                fontSize: 14,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+                fontSize: 14))),
+        ]));
   }
 }
 
@@ -1008,13 +836,9 @@ class _EditPetScreenState extends State<EditPetScreen> {
             colorScheme: ColorScheme.light(
               primary: softGreen,
               onPrimary: white,
-              onSurface: darkGreen,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
+              onSurface: darkGreen)),
+          child: child!);
+      });
     if (picked != null) {
       setState(() {
         _fechaNacimiento = picked;
@@ -1046,9 +870,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Error: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+            backgroundColor: Colors.red));
       }
     } finally {
       if (mounted) setState(() => _loading = false);
@@ -1070,14 +892,10 @@ class _EditPetScreenState extends State<EditPetScreen> {
         title: const Text(
           'Editar Mascota',
           style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+            fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
         foregroundColor: white,
-        elevation: 0,
-      ),
+        elevation: 0),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -1091,8 +909,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 decoration: BoxDecoration(
                   color: lightGreen.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: darkGreen.withOpacity(0.2)),
-                ),
+                  border: Border.all(color: darkGreen.withOpacity(0.2))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -1100,11 +917,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
                       'Información no editable:',
                       style: TextStyle(
                         fontSize: 14,
-                        fontFamily: 'Montserrat',
                         color: darkGreen,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                        fontWeight: FontWeight.bold)),
                     const SizedBox(height: 12),
                     _buildReadOnlyRow('Nombre', widget.pet['nombre'] ?? 'N/A'),
                     _buildReadOnlyRow(
@@ -1113,9 +927,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
                         'Raza', widget.pet['raza_nombre'] ?? 'N/A'),
                     if (widget.pet['sexo'] != null)
                       _buildReadOnlyRow('Sexo', widget.pet['sexo']),
-                  ],
-                ),
-              ),
+                  ])),
 
               const SizedBox(height: 24),
 
@@ -1123,11 +935,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 'Campos editables:',
                 style: TextStyle(
                   fontSize: 14,
-                  fontFamily: 'Montserrat',
                   color: darkGreen,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+                  fontWeight: FontWeight.bold)),
 
               const SizedBox(height: 18),
 
@@ -1139,8 +948,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
                       const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
                   decoration: BoxDecoration(
                     color: softGreen,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+                    borderRadius: BorderRadius.circular(12)),
                   child: Row(
                     children: [
                       Icon(Icons.calendar_today,
@@ -1154,14 +962,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
                           color: _fechaNacimiento != null
                               ? white
                               : white.withOpacity(0.6),
-                          fontFamily: 'Montserrat',
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                          fontSize: 14)),
+                    ]))),
 
               const SizedBox(height: 18),
 
@@ -1169,8 +971,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
               _buildInput(
                 controller: _colorCtrl,
                 hint: 'Color del pelaje',
-                icon: Icons.palette,
-              ),
+                icon: Icons.palette),
 
               const SizedBox(height: 18),
 
@@ -1179,8 +980,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 controller: _pesoCtrl,
                 hint: 'Peso en kilogramos',
                 icon: Icons.monitor_weight,
-                keyboardType: TextInputType.number,
-              ),
+                keyboardType: TextInputType.number),
 
               const SizedBox(height: 28),
 
@@ -1193,44 +993,28 @@ class _EditPetScreenState extends State<EditPetScreen> {
                     backgroundColor: white,
                     foregroundColor: darkGreen,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
+                      borderRadius: BorderRadius.circular(12))),
                   child: _loading
                       ? const SizedBox(
                           height: 22,
                           width: 22,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: softGreen,
-                          ),
-                        )
+                            color: softGreen))
                       : const Text(
                           'Guardar Cambios',
                           style: TextStyle(
-                            fontFamily: 'Montserrat',
                             fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                            fontWeight: FontWeight.bold)))),
+            ]))));
   }
 
   Widget _label(String text) => Text(
         text,
         style: const TextStyle(
           fontSize: 14,
-          fontFamily: 'Montserrat',
           color: darkGreen,
-          fontWeight: FontWeight.w600,
-        ),
-      );
+          fontWeight: FontWeight.w600));
 
   Widget _buildInput({
     required TextEditingController controller,
@@ -1243,9 +1027,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
       keyboardType: keyboardType,
       style: const TextStyle(
         color: white,
-        fontFamily: 'Montserrat',
-        fontSize: 14,
-      ),
+        fontSize: 14),
       decoration: InputDecoration(
         filled: true,
         fillColor: softGreen,
@@ -1256,10 +1038,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
         prefixIcon: Icon(icon, color: white.withOpacity(0.85)),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
-        ),
-      ),
-    );
+          borderSide: BorderSide.none)));
   }
 
   Widget _buildReadOnlyRow(String label, String value) {
@@ -1272,25 +1051,15 @@ class _EditPetScreenState extends State<EditPetScreen> {
             child: Text(
               '$label:',
               style: TextStyle(
-                fontFamily: 'Montserrat',
                 color: darkGreen.withOpacity(0.7),
-                fontSize: 13,
-              ),
-            ),
-          ),
+                fontSize: 13))),
           Expanded(
             child: Text(
               value,
               style: const TextStyle(
-                fontFamily: 'Montserrat',
                 color: darkGreen,
                 fontSize: 13,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+                fontWeight: FontWeight.w600))),
+        ]));
   }
 }

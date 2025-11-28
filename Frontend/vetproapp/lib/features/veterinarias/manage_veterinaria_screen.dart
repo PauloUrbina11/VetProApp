@@ -92,18 +92,6 @@ class _ManageVeterinariaScreenState extends State<ManageVeterinariaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: mint,
-      appBar: AppBar(
-        title: const Text(
-          'Gestión de Veterinaria',
-          style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: softGreen,
-        foregroundColor: white,
-        elevation: 0,
-      ),
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: softGreen))
           : !_isAuthorized
@@ -116,30 +104,23 @@ class _ManageVeterinariaScreenState extends State<ManageVeterinariaScreen> {
                         Icon(
                           Icons.lock_outline,
                           size: 80,
-                          color: darkGreen.withOpacity(0.5),
-                        ),
+                          color: darkGreen.withOpacity(0.5)),
                         const SizedBox(height: 24),
                         Text(
                           'Acceso no autorizado',
                           style: TextStyle(
                             color: darkGreen,
-                            fontFamily: 'Montserrat',
                             fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                            fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center),
                         const SizedBox(height: 16),
                         Text(
                           _error ??
                               'No tienes permisos para acceder a esta sección',
                           style: TextStyle(
                             color: darkGreen.withOpacity(0.8),
-                            fontFamily: 'Montserrat',
-                            fontSize: 14,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                            fontSize: 14),
+                          textAlign: TextAlign.center),
                         const SizedBox(height: 32),
                         ElevatedButton(
                           onPressed: () => Navigator.pop(context),
@@ -148,26 +129,15 @@ class _ManageVeterinariaScreenState extends State<ManageVeterinariaScreen> {
                             foregroundColor: white,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 32,
-                              vertical: 12,
-                            ),
+                              vertical: 12),
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(12))),
                           child: const Text(
                             'Volver',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                )
-              : EditVeterinariaScreen(veterinaria: _veterinaria!),
-    );
+                              fontWeight: FontWeight.bold))),
+                      ])))
+              : EditVeterinariaScreen(veterinaria: _veterinaria!));
   }
 }

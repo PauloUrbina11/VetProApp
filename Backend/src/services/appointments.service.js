@@ -1,6 +1,7 @@
 import {
   listAppointmentsByUser,
   listAllAppointments,
+  listAppointmentsByVeterinaria,
   getNextAppointmentByUser,
   getCalendarCountsByUser,
   createAppointment,
@@ -24,7 +25,11 @@ export const createMyAppointment = async (userId, data) => {
   return await createAppointment(userId, data);
 };
 
-export const updateMyAppointment = async (id, data) => {
+export const updateMyAppointment = async (id, data, userId) => {
+  // Agregar el userId como update_user si viene
+  if (userId) {
+    data.update_user = userId;
+  }
   return await updateAppointment(id, data);
 };
 
@@ -34,4 +39,8 @@ export const removeMyAppointment = async (id) => {
 
 export const getAllAppointments = async () => {
   return await listAllAppointments();
+};
+
+export const getAppointmentsByVeterinaria = async (veterinariaId) => {
+  return await listAppointmentsByVeterinaria(veterinariaId);
 };

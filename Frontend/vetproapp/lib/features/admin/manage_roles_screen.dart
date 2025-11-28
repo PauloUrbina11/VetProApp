@@ -67,8 +67,7 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
       await AdminService.assignVeterinariaRole(
         _selectedVeterinariaId!,
         _selectedUserId!,
-        _selectedVeterinariaRolId!,
-      );
+        _selectedVeterinariaRolId!);
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Rol de veterinaria asignado')));
     } catch (e) {
@@ -90,11 +89,9 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
         title: const Text(
           'Asignar Roles Veterinaria',
           style:
-              TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
-        ),
+              TextStyle( fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
-        elevation: 0,
-      ),
+        elevation: 0),
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: Colors.white))
           : SafeArea(
@@ -107,26 +104,18 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           color: lightGreen.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                          borderRadius: BorderRadius.circular(8)),
                         child: Text(
                           _error!,
                           style: const TextStyle(
-                            color: darkGreen,
-                            fontFamily: 'Montserrat',
-                          ),
-                        ),
-                      ),
+                            color: darkGreen))),
                     const SizedBox(height: 12),
                     const Text(
                       'Usuarios con rol Veterinaria',
                       style: TextStyle(
                         color: darkGreen,
-                        fontFamily: 'Montserrat',
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                        fontWeight: FontWeight.bold)),
                     const SizedBox(height: 12),
                     Expanded(
                       child: ListView.builder(
@@ -140,74 +129,53 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                               color: isSelected
                                   ? lightGreen.withOpacity(0.8)
                                   : lightGreen.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(12),
-                            ),
+                              borderRadius: BorderRadius.circular(12)),
                             child: ListTile(
                               title: Text(
                                 '${u['nombre_completo'] ?? 'Usuario'}',
                                 style: const TextStyle(
                                   color: darkGreen,
-                                  fontFamily: 'Montserrat',
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                                  fontWeight: FontWeight.bold)),
                               subtitle: Text(
                                 '${u['correo']} - ID: ${u['id']}',
                                 style: TextStyle(
-                                  color: darkGreen.withOpacity(0.7),
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
+                                  color: darkGreen.withOpacity(0.7))),
                               selected: isSelected,
                               onTap: () => setState(() {
                                 _selectedUserId = u['id'];
-                              }),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                              })));
+                        })),
                     const SizedBox(height: 16),
                     Container(
                       padding: const EdgeInsets.all(18),
                       decoration: BoxDecoration(
                         color: lightGreen.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(18),
-                      ),
+                        borderRadius: BorderRadius.circular(18)),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const Text(
                             'Veterinaria',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               color: darkGreen,
-                              fontSize: 15,
-                            ),
-                          ),
+                              fontSize: 15)),
                           const SizedBox(height: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
                               color: softGreen,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                              borderRadius: BorderRadius.circular(8)),
                             child: DropdownButton<int>(
                               value: _selectedVeterinariaId,
                               hint: const Text(
                                 'Seleccionar veterinaria',
                                 style: TextStyle(
-                                  color: white,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
+                                  color: white)),
                               isExpanded: true,
                               underline: const SizedBox(),
                               dropdownColor: const Color(0xFF15803D),
                               style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                              ),
+                                color: Colors.white),
                               items: _veterinarias
                                   .map<DropdownMenuItem<int>>((vet) {
                                 return DropdownMenuItem<int>(
@@ -215,49 +183,34 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                                   child: Text(
                                     vet['nombre'] ?? '',
                                     style: const TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                    ),
-                                  ),
-                                );
+                                      color: Colors.white)));
                               }).toList(),
                               onChanged: (val) => setState(() {
                                 _selectedVeterinariaId = val;
-                              }),
-                            ),
-                          ),
+                              }))),
                           const SizedBox(height: 16),
                           const Text(
                             'Rol en Veterinaria',
                             style: TextStyle(
-                              fontFamily: 'Montserrat',
                               color: darkGreen,
-                              fontSize: 15,
-                            ),
-                          ),
+                              fontSize: 15)),
                           const SizedBox(height: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
                               color: softGreen,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                              borderRadius: BorderRadius.circular(8)),
                             child: DropdownButton<int>(
                               value: _selectedVeterinariaRolId,
                               hint: const Text(
                                 'Seleccionar rol',
                                 style: TextStyle(
-                                  color: white,
-                                  fontFamily: 'Montserrat',
-                                ),
-                              ),
+                                  color: white)),
                               isExpanded: true,
                               underline: const SizedBox(),
                               dropdownColor: const Color(0xFF15803D),
                               style: const TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'Montserrat',
-                              ),
+                                color: Colors.white),
                               items: _veterinariaRoles
                                   .map<DropdownMenuItem<int>>((role) {
                                 return DropdownMenuItem<int>(
@@ -265,17 +218,11 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                                   child: Text(
                                     role['nombre'],
                                     style: const TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'Montserrat',
-                                    ),
-                                  ),
-                                );
+                                      color: Colors.white)));
                               }).toList(),
                               onChanged: (val) => setState(() {
                                 _selectedVeterinariaRolId = val;
-                              }),
-                            ),
-                          ),
+                              }))),
                           const SizedBox(height: 20),
                           SizedBox(
                             width: double.infinity,
@@ -286,35 +233,20 @@ class _ManageRolesScreenState extends State<ManageRolesScreen> {
                                 backgroundColor: white,
                                 foregroundColor: darkGreen,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
+                                  borderRadius: BorderRadius.circular(8))),
                               child: _assigning
                                   ? const SizedBox(
                                       width: 20,
                                       height: 20,
                                       child: CircularProgressIndicator(
                                         color: darkGreen,
-                                        strokeWidth: 2,
-                                      ),
-                                    )
+                                        strokeWidth: 2))
                                   : const Text(
                                       'Asignar Rol',
                                       style: TextStyle(
-                                        fontFamily: 'Montserrat',
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-    );
+                                        fontSize: 16)))),
+                        ])),
+                  ]))));
   }
 }

@@ -39,8 +39,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
       if (speciesIds.isNotEmpty) {
         final results = await Future.wait(
           speciesIds.map(
-              (id) => RecommendationsService.getRecommendations(especieId: id)),
-        );
+              (id) => RecommendationsService.getRecommendations(especieId: id)));
         for (final list in results) recs.addAll(list);
         // Eliminar duplicados por id
         final seen = <int>{};
@@ -70,13 +69,9 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
         title: const Text(
           'Recomendaciones',
           style: TextStyle(
-            fontFamily: 'Montserrat',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+            fontWeight: FontWeight.bold)),
         backgroundColor: softGreen,
-        foregroundColor: white,
-      ),
+        foregroundColor: white),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : _recommendations.isEmpty
@@ -91,12 +86,8 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                         'No hay recomendaciones disponibles',
                         style: TextStyle(
                           color: Colors.grey.shade600,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
+                          fontSize: 16)),
+                    ]))
               : RefreshIndicator(
                   onRefresh: _loadRecommendations,
                   child: ListView.builder(
@@ -105,10 +96,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                     itemBuilder: (context, index) {
                       final rec = _recommendations[index];
                       return _buildRecommendationCard(rec);
-                    },
-                  ),
-                ),
-    );
+                    })));
   }
 
   Widget _buildRecommendationCard(Map<String, dynamic> rec) {
@@ -132,10 +120,7 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                   height: 180,
                   color: Colors.grey.shade200,
                   child: Icon(Icons.image_not_supported,
-                      size: 64, color: Colors.grey.shade400),
-                ),
-              ),
-            ),
+                      size: 64, color: Colors.grey.shade400)))),
           Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -144,26 +129,17 @@ class _RecommendationsScreenState extends State<RecommendationsScreen> {
                 Text(
                   rec['titulo'] ?? 'Sin título',
                   style: const TextStyle(
-                    fontFamily: 'Montserrat',
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: darkGreen,
-                  ),
-                ),
+                    color: darkGreen)),
                 const SizedBox(height: 8),
                 Text(
                   rec['descripcion'] ?? '',
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.grey.shade700,
-                    height: 1.5,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+                    height: 1.5)),
+              ])),
+        ]));
   }
 }
