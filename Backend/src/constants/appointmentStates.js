@@ -1,0 +1,18 @@
+/**
+ * Constantes de estados de citas
+ */
+export const APPOINTMENT_STATES = {
+  PENDIENTE: 1,
+  CONFIRMADA: 2,
+  COMPLETADA: 3,
+  CANCELADA: 4,
+  NO_ASISTIO: 5,
+};
+
+export const APPOINTMENT_STATE_NAMES = {
+  [APPOINTMENT_STATES.PENDIENTE]: 'Pendiente',
+  [APPOINTMENT_STATES.CONFIRMADA]: 'Confirmada',
+  [APPOINTMENT_STATES.COMPLETADA]: 'Completada',
+  [APPOINTMENT_STATES.CANCELADA]: 'Cancelada',
+  [APPOINTMENT_STATES.NO_ASISTIO]: 'No asistió',
+};

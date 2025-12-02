@@ -16,28 +16,22 @@ export const register = async (req, res) => {
 };
 
 export const activateAccount = async (req, res) => {
-        try {
-        const token = req.query.token;  // viene por URL
-        const { rol_id } = req.body;    // viene por JSON
+  try {
+    const token = req.query.token;
+    const { rol_id } = req.body;
+    
+    const result = await activateUserWithRole(token, rol_id);
 
-        if (!token) {
-            return res.status(400).json({ ok: false, message: "Token requerido" });
-        }
-
-        if (!rol_id) {
-            return res.status(400).json({ ok: false, message: "rol_id requerido" });
-        }
-
-        const result = await activateUserWithRole(token, rol_id);
-
-        return res.json({
-            ok: true,
-            ...result
-        });
-
-    } catch (error) {
-        return res.status(400).json({ ok: false, message: error.message });
-    }
+    return res.json({
+      ok: true,
+      ...result
+    });
+  } catch (error) {
+    return res.status(400).json({ 
+      ok: false, 
+      message: error.message 
+    });
+  }
 };
 
 export const login = async (req, res) => {
@@ -52,14 +46,6 @@ export const login = async (req, res) => {
 export const requestPasswordResetController = async (req, res) => {
   try {
     const { correo } = req.body;
-
-    if (!correo) {
-      return res.status(400).json({
-        ok: false,
-        message: "El correo es obligatorio",
-      });
-    }
-
     const result = await requestPasswordReset(correo);
 
     return res.status(200).json({
@@ -78,14 +64,6 @@ export const requestPasswordResetController = async (req, res) => {
 export const resetPasswordController = async (req, res) => {
   try {
     const { token, newPassword } = req.body;
-
-    if (!token || !newPassword) {
-      return res.status(400).json({
-        ok: false,
-        message: "Token y nueva contraseña son obligatorios",
-      });
-    }
-
     const result = await resetPassword(token, newPassword);
 
     return res.status(200).json({

@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'auth_service.dart';
+import '../config/api_config.dart';
 
 class UserService {
-  static const String baseUrl = 'http://10.0.2.2:4000/api/users';
+  static const String baseUrl = ApiConfig.users;
 
   static Future<Map<String, dynamic>?> getMyProfile() async {
     final token = await AuthService.getToken();

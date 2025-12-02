@@ -13,8 +13,8 @@ export const createUserDB = async (data) => {
 
     const query = `
         INSERT INTO users 
-            (nombre_completo, correo, password_hash, direccion, ciudad_id, departamento_id, celular)
-        VALUES ($1,$2,$3,$4,$5,$6,$7)
+            (nombre_completo, correo, password_hash, direccion, ciudad_id, departamento_id, celular, ultimo_cambio_contrasena)
+        VALUES ($1,$2,$3,$4,$5,$6,$7, NOW())
         RETURNING id, nombre_completo, correo;
     `;
 

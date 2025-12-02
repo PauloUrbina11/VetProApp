@@ -17,58 +17,57 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Restablecer contraseña')),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Introduce tu correo para recibir un enlace o token de restablecimiento',
-                style: TextStyle(fontSize: 16, color: darkGreen)),
-              const SizedBox(height: 16),
-              Form(
-                key: formKey,
-                child: TextFormField(
-                  controller: correoController,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: softGreen, // Fondo verde
-                    labelText: 'Correo electrónico',
-                    labelStyle: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15),
-                    hintText: 'usuario@example.com',
-                    hintStyle: TextStyle(
-                      color: Colors.white.withOpacity(0.6)),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(8))),
-                  style: const TextStyle(
-                    color: Colors.white, // Texto ingresado en blanco
-                    ),
-                  validator: (v) {
-                    if (v == null || v.isEmpty) return 'Ingresa tu correo';
-                    if (!v.contains('@')) return 'Correo inválido';
-                    return null;
-                  })),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                  onPressed: loading ? null : _submit,
-                  child: loading
-                      ? const SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2))
-                      : const Text('Solicitar restablecimiento')))
-            ]))));
+        appBar: AppBar(title: const Text('Restablecer contraseña')),
+        body: SafeArea(
+            child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                          'Introduce tu correo para recibir un enlace o token de restablecimiento',
+                          style: TextStyle(fontSize: 16, color: darkGreen)),
+                      const SizedBox(height: 16),
+                      Form(
+                          key: formKey,
+                          child: TextFormField(
+                              controller: correoController,
+                              decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: softGreen, // Fondo verde
+                                  labelText: 'Correo electrónico',
+                                  labelStyle: const TextStyle(
+                                      color: Colors.white, fontSize: 15),
+                                  hintText: 'usuario@example.com',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white.withOpacity(0.6)),
+                                  border: OutlineInputBorder(
+                                      borderSide: BorderSide.none,
+                                      borderRadius: BorderRadius.circular(8))),
+                              style: const TextStyle(
+                                color:
+                                    Colors.white, // Texto ingresado en blanco
+                              ),
+                              validator: (v) {
+                                if (v == null || v.isEmpty)
+                                  return 'Ingresa tu correo';
+                                if (!v.contains('@')) return 'Correo inválido';
+                                return null;
+                              })),
+                      const SizedBox(height: 20),
+                      SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: ElevatedButton(
+                              onPressed: loading ? null : _submit,
+                              child: loading
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                          color: Colors.white, strokeWidth: 2))
+                                  : const Text('Solicitar restablecimiento')))
+                    ]))));
   }
 
   Future<void> _submit() async {
@@ -79,37 +78,37 @@ class _ResetRequestScreenState extends State<ResetRequestScreen> {
     try {
       final res = await AuthService.requestPasswordReset(correo);
       if (res["ok"] == true) {
-        final token = res["token"] ?? res["reset_token"];
+        // final token = res["token"] ?? res["reset_token"];
         // Mostrar dialog con token (temporal hasta enviar email)
         showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            title: const Text('Solicitud enviada'),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(res["message"] ?? 'Se ha enviado un enlace al correo'),
-              ]),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  // Vaciar y volver al login
-                  correoController.clear();
-                  Navigator.pushReplacementNamed(context, '/login');
-                },
-                child: const Text('Ir a iniciar sesión'))
-            ]));
+            context: context,
+            builder: (_) => AlertDialog(
+                    title: const Text('Solicitud enviada'),
+                    content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(res["message"] ??
+                              'Se ha enviado un enlace al correo'),
+                        ]),
+                    actions: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            // Vaciar y volver al login
+                            correoController.clear();
+                            Navigator.pushReplacementNamed(context, '/login');
+                          },
+                          child: const Text('Ir a iniciar sesión'))
+                    ]));
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              backgroundColor: Colors.red,
-              content: Text(res["message"] ?? 'Error')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(res["message"] ?? 'Error')));
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(backgroundColor: Colors.red, content: Text(e.toString())));
+          SnackBar(backgroundColor: Colors.red, content: Text(e.toString())));
     }
 
     setState(() => loading = false);

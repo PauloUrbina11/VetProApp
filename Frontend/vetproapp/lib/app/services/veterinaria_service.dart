@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'auth_service.dart';
+import '../config/api_config.dart';
 
 class VeterinariaService {
-  static const String _baseUrl = 'http://10.0.2.2:4000/api/veterinarias';
+  static const String _baseUrl = ApiConfig.veterinarias;
 
   static Future<Map<String, String>> _headers() async {
     final token = await AuthService.getToken();
@@ -82,5 +83,18 @@ class VeterinariaService {
     if (resp.statusCode != 200 || data['ok'] != true) {
       throw Exception(data['error'] ?? 'Error al actualizar veterinaria');
     }
+  }
+
+  static Future<List<int>> getMyVeterinariaRoles(int veterinariaId) async {
+    final h = await _headers();
+    final resp = await http.get(
+        Uri.parse(
+            'http://10.0.2.2:4000/api/veterinarias/$veterinariaId/my-roles'),
+        headers: h);
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error al obtener roles');
+    }
+    return (data['data'] as List).map((e) => e as int).toList();
   }
 }

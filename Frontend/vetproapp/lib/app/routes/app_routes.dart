@@ -15,8 +15,13 @@ import '../../features/activation/activation_page.dart';
 import '../../features/auth/presentation/screens/reset_password_screen.dart';
 import '../../features/admin/create_veterinaria_screen.dart';
 import '../../features/admin/manage_roles_screen.dart';
+import '../../features/admin/admin_users_screen.dart';
+import '../../features/admin/admin_reports_screen.dart';
+import '../../features/admin/admin_schedule_screen.dart';
 import '../../features/veterinarias/veterinarias_screen.dart';
 import '../../features/veterinarias/manage_veterinaria_screen.dart';
+import '../../features/veterinarias/veterinaria_patients_screen.dart';
+import '../../features/veterinarias/veterinaria_reports_screen.dart';
 
 class AppRoutes {
   static const initialRoute = '/login';
@@ -35,8 +40,13 @@ class AppRoutes {
     '/notifications': (context) => const NotificationsScreen(),
     '/create_veterinaria': (context) => const CreateVeterinariaScreen(),
     '/manage_roles': (context) => const ManageRolesScreen(),
+    '/admin/users': (context) => const AdminUsersScreen(),
+    '/admin/reports': (context) => const AdminReportsScreen(),
+    '/admin/schedule': (context) => const AdminScheduleScreen(),
     '/veterinarias': (context) => const VeterinariasScreen(),
     '/manage_veterinaria': (context) => const ManageVeterinariaScreen(),
+    '/veterinaria/patients': (context) => const VeterinariaPatients(),
+    '/veterinaria/reports': (context) => const VeterinariaReportsScreen(),
     '/home': (context) => const HomeScreen(),
     '/activate': (context) {
       final args =

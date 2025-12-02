@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'auth_service.dart';
+import '../config/api_config.dart';
 
 class RecommendationsService {
-  static const String _baseUrl = 'http://10.0.2.2:4000/api/recommendations';
+  static const String _baseUrl = ApiConfig.recommendations;
 
   static Future<Map<String, String>> _headers() async {
     final token = await AuthService.getToken();

@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
 
 
@@ -41,7 +43,9 @@ dependencies:
   app_links: ^4.0.0
   table_calendar: ^3.0.9
   google_fonts: ^6.1.0
-  intl: ^0.18.0
+  intl: ^0.20.2
+  google_maps_flutter: ^2.5.0
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:

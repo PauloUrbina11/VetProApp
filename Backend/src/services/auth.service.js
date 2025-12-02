@@ -12,17 +12,23 @@ import {
 } from "../models/user.model.js";
 import { assignRoleToUser, getUserRole } from "../models/role.model.js";
 import { hashPassword, comparePassword } from "../utils/passwordHash.js";
-import { generateToken } from "../utils/generateToken.js";
-import { generateJWT } from "../utils/generateJWT.js";
-import { generateTokenPlain } from "../utils/generateTokenPlain.js"; 
-import { sendActivationEmail } from "../utils/emailService.js";
-import { sendResetEmail } from "../utils/emailService.js";
+import { 
+  generateJWT, 
+  generateActivationToken, 
+  generateRandomToken 
+} from "../utils/tokens.js";
+import { sendActivationEmail, sendResetEmail } from "../utils/emailService.js";
+import { validateRegisterData, validateLoginData } from "../validators/auth.validator.js";
+import { createNotification } from "../models/notifications.model.js";
+import { pool } from "../config/database.js";
 
 
 // -------------------------------------------------------------
 // REGISTRO DE USUARIO
 // -------------------------------------------------------------
 export const registerUser = async (data) => {
+    // Validar datos de entrada
+    validateRegisterData(data);
 
     const existing = await findUserByEmail(data.correo);
     if (existing) throw new Error("El correo ya está registrado");
@@ -34,8 +40,8 @@ export const registerUser = async (data) => {
         password_hash: hashed,
     });
 
-    // 4. Generar token de activación (CORRECTO)
-    const token = generateToken(newUser.id);
+    // Generar token de activación
+    const token = generateActivationToken(newUser.id);
 
     // 5. Guardar token en BD
     await saveTokenActivation(newUser.correo, token);
@@ -74,6 +80,8 @@ export const activateUserWithRole = async (token, rol_id) => {
     // Asignar rol indicado por el front
     await assignRoleToUser(updatedUser.id, rol_id);
 
+    // No se notifica el registro de nuevos usuarios
+
     return {
         message: "Cuenta activada correctamente",
         user: updatedUser,
@@ -85,6 +93,8 @@ export const activateUserWithRole = async (token, rol_id) => {
 // LOGIN DE USUARIO
 // --------------------------------------------------------------------------------
 export const loginUser = async ({ correo, password }) => {
+    // Validar datos de entrada
+    validateLoginData({ correo, password });
 
     const user = await findUserByEmail(correo);
     if (!user) {
@@ -128,10 +138,10 @@ export const requestPasswordReset = async (correo) => {
         throw new Error("La cuenta nunca ha sido activada.");
     }
 
-    // token único
-    const token = generateTokenPlain();
+    // Generar token único
+    const token = generateRandomToken();
 
-    // guardar
+    // Guardar token en BD
     await saveResetToken(correo, token);
     // Intentar enviar correo de reset (si SMTP está configurado se enviará)
     try {

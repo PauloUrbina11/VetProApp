@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'auth_service.dart';
+import '../config/api_config.dart';
 
 class VeterinariaServicesService {
-  static const String baseUrl = 'http://10.0.2.2:4000/api';
+  static const String baseUrl = ApiConfig.baseUrl;
 
   // Obtener servicios de una veterinaria
   static Future<List<dynamic>> getServicios(int veterinariaId,

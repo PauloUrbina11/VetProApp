@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../../../app/services/auth_service.dart';
 import '../../../../app/config/theme.dart';
+import '../../../../app/widgets/section_label.dart';
+import '../../../../app/utils/validators.dart';
+import '../../../../app/utils/snackbar_helper.dart';
 import 'password_field.dart';
 
 class LoginForm extends StatefulWidget {
@@ -26,9 +29,10 @@ class _LoginFormState extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           /// LABEL CORREO
-          const Text(
-            'Correo Electrónico',
-            style: TextStyle(color: Colors.white, fontSize: 15),
+          const SectionLabel(
+            text: 'Correo Electrónico',
+            color: Colors.white,
+            fontSize: 15,
           ),
           const SizedBox(height: 8),
 
@@ -48,23 +52,16 @@ class _LoginFormState extends State<LoginForm> {
               ),
             ),
             style: const TextStyle(color: Colors.white),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return "Ingresa tu correo";
-              }
-              if (!value.contains("@")) {
-                return "Correo inválido";
-              }
-              return null;
-            },
+            validator: Validators.email,
           ),
 
           const SizedBox(height: 20),
 
           /// LABEL CONTRASEÑA
-          const Text(
-            'Contraseña',
-            style: TextStyle(color: Colors.white, fontSize: 15),
+          const SectionLabel(
+            text: 'Contraseña',
+            color: Colors.white,
+            fontSize: 15,
           ),
           const SizedBox(height: 8),
 
@@ -126,29 +123,21 @@ class _LoginFormState extends State<LoginForm> {
       final result = await AuthService.login(correo, password);
 
       if (result["ok"] == true) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.green,
-            content: Text("Inicio de sesión exitoso"),
-          ),
-        );
-
-        // Navegar al home
+        if (!mounted) return;
+        SnackBarHelper.showSuccess(context, "Inicio de sesión exitoso");
         Navigator.pushReplacementNamed(context, "/home");
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            backgroundColor: Colors.red,
-            content: Text(result["message"] ?? "Error desconocido"),
-          ),
+        if (!mounted) return;
+        SnackBarHelper.showError(
+          context,
+          result["message"] ?? "Error desconocido",
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(e.toString().replaceAll("Exception:", "").trim()),
-        ),
+      if (!mounted) return;
+      SnackBarHelper.showError(
+        context,
+        e.toString().replaceAll("Exception:", "").trim(),
       );
     }
 

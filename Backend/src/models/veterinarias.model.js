@@ -51,23 +51,49 @@ export const createVeterinaria = async (data) => {
     logo_url,
     descripcion,
   } = data;
-  const q = `
-    INSERT INTO veterinarias (nombre, direccion, telefono, ciudad_id, latitud, longitud, user_admin_id, logo_url, descripcion)
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-    RETURNING *
-  `;
-  const res = await pool.query(q, [
-    nombre,
-    direccion || null,
-    telefono || null,
-    ciudad_id || null,
-    latitud || null,
-    longitud || null,
-    user_admin_id || null,
-    logo_url || null,
-    descripcion || null,
-  ]);
-  return res.rows[0];
+  
+  const client = await pool.connect();
+  try {
+    await client.query('BEGIN');
+    
+    // Crear veterinaria
+    const q = `
+      INSERT INTO veterinarias (nombre, direccion, telefono, ciudad_id, latitud, longitud, user_admin_id, logo_url, descripcion)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+      RETURNING *
+    `;
+    const res = await client.query(q, [
+      nombre,
+      direccion || null,
+      telefono || null,
+      ciudad_id || null,
+      latitud || null,
+      longitud || null,
+      user_admin_id || null,
+      logo_url || null,
+      descripcion || null,
+    ]);
+    
+    const veterinaria = res.rows[0];
+    
+    // Si hay user_admin_id, crear registro en veterinaria_user con rol administrador (1)
+    if (user_admin_id) {
+      const insertUserRole = `
+        INSERT INTO veterinaria_user (veterinaria_id, user_id, veterinaria_rol_id)
+        VALUES ($1, $2, $3)
+        ON CONFLICT (veterinaria_id, user_id) DO NOTHING
+      `;
+      await client.query(insertUserRole, [veterinaria.id, user_admin_id, 1]);
+    }
+    
+    await client.query('COMMIT');
+    return veterinaria;
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 export const updateVeterinaria = async (id, data) => {

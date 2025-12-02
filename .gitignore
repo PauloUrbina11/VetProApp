@@ -49,6 +49,8 @@ Frontend/vetproapp/.packages
 Frontend/vetproapp/.pub-cache/
 Frontend/vetproapp/.pub/
 Frontend/vetproapp/build/
+Frontend/vetproapp/.env
+Frontend/vetproapp/.env.local
 
 # Symbolication related
 Frontend/vetproapp/app.*.symbols

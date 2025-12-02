@@ -3,6 +3,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../app/config/theme.dart';
 import '../../../app/services/auth_service.dart';
 import '../../../app/services/user_service.dart';
+import '../../../app/widgets/custom_text_field.dart';
+import '../../../app/widgets/custom_button.dart';
+import '../../../app/widgets/custom_dropdown.dart';
+import '../../../app/widgets/section_label.dart';
+import '../../../app/utils/validators.dart';
+import '../../../app/utils/snackbar_helper.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -68,10 +74,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     if (_departamentoId == null || _ciudadId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Selecciona departamento y ciudad'),
-            backgroundColor: Colors.red));
+      SnackBarHelper.showError(context, 'Selecciona departamento y ciudad');
       return;
     }
     setState(() => _saving = true);
@@ -91,12 +94,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('_vetpro_nombre', updated['nombre_completo'] ?? '');
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Perfil actualizado'), backgroundColor: Colors.green));
+      SnackBarHelper.showSuccess(context, 'Perfil actualizado');
     } else {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Error al actualizar'), backgroundColor: Colors.red));
+      SnackBarHelper.showError(context, 'Error al actualizar');
     }
   }
 
@@ -113,145 +114,103 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mi perfil')),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : Container(
-              color: mint,
-              child: Form(
-                key: _formKey,
-                child: ListView(
-                  padding: const EdgeInsets.all(20),
-                  children: [
-                    _label('Nombre completo'),
-                    _greenInput(_nombreCtrl,
+        appBar: AppBar(title: const Text('Mi perfil')),
+        body: _loading
+            ? const Center(child: CircularProgressIndicator())
+            : Container(
+                color: mint,
+                child: Form(
+                    key: _formKey,
+                    child:
+                        ListView(padding: const EdgeInsets.all(20), children: [
+                      const SectionLabel(text: 'Nombre completo'),
+                      const SizedBox(height: 4),
+                      CustomTextField(
+                        controller: _nombreCtrl,
                         hint: 'Escribe tu nombre',
                         icon: Icons.person,
-                        validator: _required),
-                    const SizedBox(height: 18),
-                    _label('Correo'),
-                    _greenInput(_correoCtrl,
+                        validator: (v) =>
+                            Validators.required(v, fieldName: 'Nombre'),
+                      ),
+                      const SizedBox(height: 18),
+                      const SectionLabel(text: 'Correo'),
+                      const SizedBox(height: 4),
+                      CustomTextField(
+                        controller: _correoCtrl,
                         hint: 'email@example.com',
                         icon: Icons.email,
-                        readOnly: true),
-                    const SizedBox(height: 18),
-                    _label('Celular'),
-                    _greenInput(_celularCtrl,
-                        hint: '3001234567', icon: Icons.phone),
-                    const SizedBox(height: 18),
-                    _label('Dirección'),
-                    _greenInput(_direccionCtrl,
-                        hint: 'Calle, número, barrio', icon: Icons.home),
-                    const SizedBox(height: 18),
-                    _label('Departamento'),
-                    _dropdownDepartamentos(),
-                    const SizedBox(height: 14),
-                    _label('Ciudad'),
-                    _dropdownCiudades(),
-                    const SizedBox(height: 18),
-                    _label('Contraseña nueva'),
-                    _greenInput(_passwordCtrl,
-                        hint: '••••••••', icon: Icons.lock, obscure: true),
-                    const SizedBox(height: 28),
-                    SizedBox(
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: _saving ? null : _save,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: white,
-                          foregroundColor: darkGreen,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12))),
-                        child: _saving
-                            ? const SizedBox(
-                                height: 22,
-                                width: 22,
-                                child: CircularProgressIndicator(
-                                    strokeWidth: 2, color: vetproGreen))
-                            : const Text('Guardar cambios',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold)))),
-                  ]))));
-  }
-
-  String? _required(String? v) =>
-      v == null || v.trim().isEmpty ? 'Requerido' : null;
-
-  Widget _label(String text) => Text(
-        text,
-        style: const TextStyle(
-          fontSize: 14,
-          color: darkGreen,
-          fontWeight: FontWeight.w600));
-
-  Widget _greenInput(TextEditingController ctrl,
-      {required String hint,
-      required IconData icon,
-      bool readOnly = false,
-      bool obscure = false,
-      String? Function(String?)? validator}) {
-    return TextFormField(
-      controller: ctrl,
-      readOnly: readOnly,
-      obscureText: obscure,
-      validator: validator,
-      style: const TextStyle(
-          color: Colors.white, fontSize: 14),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: softGreen,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 14, horizontal: 14),
-        hintText: hint,
-        hintStyle: TextStyle(color: Colors.white.withOpacity(0.6)),
-        prefixIcon: Icon(icon, color: Colors.white.withOpacity(0.85)),
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none)));
+                        readOnly: true,
+                      ),
+                      const SizedBox(height: 18),
+                      const SectionLabel(text: 'Celular'),
+                      const SizedBox(height: 4),
+                      CustomTextField(
+                        controller: _celularCtrl,
+                        hint: '3001234567',
+                        icon: Icons.phone,
+                        keyboardType: TextInputType.phone,
+                      ),
+                      const SizedBox(height: 18),
+                      const SectionLabel(text: 'Dirección'),
+                      const SizedBox(height: 4),
+                      CustomTextField(
+                        controller: _direccionCtrl,
+                        hint: 'Calle, número, barrio',
+                        icon: Icons.home,
+                      ),
+                      const SizedBox(height: 18),
+                      const SectionLabel(text: 'Departamento'),
+                      const SizedBox(height: 4),
+                      _dropdownDepartamentos(),
+                      const SizedBox(height: 14),
+                      const SectionLabel(text: 'Ciudad'),
+                      const SizedBox(height: 4),
+                      _dropdownCiudades(),
+                      const SizedBox(height: 18),
+                      const SectionLabel(text: 'Contraseña nueva'),
+                      const SizedBox(height: 4),
+                      CustomTextField(
+                        controller: _passwordCtrl,
+                        hint: '••••••••',
+                        icon: Icons.lock,
+                        obscureText: true,
+                      ),
+                      const SizedBox(height: 28),
+                      CustomButton(
+                        text: 'Guardar cambios',
+                        onPressed: _save,
+                        loading: _saving,
+                      ),
+                    ]))));
   }
 
   Widget _dropdownDepartamentos() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-          color: softGreen, borderRadius: BorderRadius.circular(12)),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<int>(
-          isExpanded: true,
-          value: _departamentoId,
-          iconEnabledColor: Colors.white,
-          dropdownColor: softGreen,
-          hint: Text('Selecciona',
-              style: TextStyle(color: Colors.white.withOpacity(0.7))),
-          items: _departamentos
-              .map((d) => DropdownMenuItem<int>(
-                    value: d['id'] as int,
-                    child: Text(d['nombre'] ?? '',
-                        style: const TextStyle(color: Colors.white))))
-              .toList(),
-          onChanged: _onDepartamentoChanged)));
+    return CustomDropdown<int>(
+      value: _departamentoId,
+      hint: 'Selecciona',
+      items: _departamentos
+          .map((d) => DropdownMenuItem<int>(
+                value: d['id'] as int,
+                child: Text(d['nombre'] ?? '',
+                    style: const TextStyle(color: Colors.white)),
+              ))
+          .toList(),
+      onChanged: _onDepartamentoChanged,
+    );
   }
 
   Widget _dropdownCiudades() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-          color: softGreen, borderRadius: BorderRadius.circular(12)),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<int>(
-          isExpanded: true,
-          value: _ciudadId,
-          iconEnabledColor: Colors.white,
-          dropdownColor: softGreen,
-          hint: Text('Selecciona',
-              style: TextStyle(color: Colors.white.withOpacity(0.7))),
-          items: _ciudades
-              .map((c) => DropdownMenuItem<int>(
-                    value: c['id'] as int,
-                    child: Text(c['nombre'] ?? '',
-                        style: const TextStyle(color: Colors.white))))
-              .toList(),
-          onChanged: (v) => setState(() => _ciudadId = v))));
+    return CustomDropdown<int>(
+      value: _ciudadId,
+      hint: 'Selecciona',
+      items: _ciudades
+          .map((c) => DropdownMenuItem<int>(
+                value: c['id'] as int,
+                child: Text(c['nombre'] ?? '',
+                    style: const TextStyle(color: Colors.white)),
+              ))
+          .toList(),
+      onChanged: (v) => setState(() => _ciudadId = v),
+    );
   }
 }

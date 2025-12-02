@@ -15,3 +15,13 @@ export const listRecommendations = async ({ especie_id, veterinaria_id }) => {
   const res = await pool.query(q, values);
   return res.rows;
 };
+
+export const createRecommendation = async ({ titulo, descripcion, especie_id, veterinaria_id, imagen_url }) => {
+  const q = `
+    INSERT INTO recomendaciones (titulo, descripcion, especie_id, veterinaria_id, imagen_url)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *
+  `;
+  const res = await pool.query(q, [titulo, descripcion, especie_id, veterinaria_id, imagen_url || null]);
+  return res.rows[0];
+};

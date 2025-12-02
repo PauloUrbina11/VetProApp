@@ -17,23 +17,27 @@ export const listAppointmentsByUser = async (userId) => {
 
 export const listAllAppointments = async () => {
   const q = `
-    SELECT c.id, c.user_id, c.fecha_hora, c.estado_id, c.notas_cliente, c.notas_veterinaria,
+    SELECT c.id, c.user_id, vc.veterinaria_id, c.fecha_hora, c.estado_id, c.notas_cliente, c.notas_veterinaria,
            c.created_at, c.updated_at,
            ec.nombre as estado_nombre,
            u.nombre_completo as usuario_nombre, u.correo as usuario_email,
            u.celular as usuario_telefono,
+           v.nombre as veterinaria_nombre,
            STRING_AGG(DISTINCT m.nombre, ', ') as mascotas,
-           STRING_AGG(DISTINCT s.nombre, ', ') as servicios
+           STRING_AGG(DISTINCT s.nombre, ', ') as servicios,
+           ARRAY_AGG(DISTINCT m.id) FILTER (WHERE m.id IS NOT NULL) as mascota_ids
     FROM citas c
     LEFT JOIN estados_citas ec ON c.estado_id = ec.id
     LEFT JOIN users u ON c.user_id = u.id
+    LEFT JOIN veterinarias_citas vc ON c.id = vc.cita_id
+    LEFT JOIN veterinarias v ON vc.veterinaria_id = v.id
     LEFT JOIN citas_mascotas cm ON c.id = cm.cita_id
     LEFT JOIN mascotas m ON cm.mascota_id = m.id
     LEFT JOIN citas_servicios cs ON c.id = cs.cita_id
     LEFT JOIN servicios s ON cs.servicio_id = s.id
-    GROUP BY c.id, c.user_id, c.fecha_hora, c.estado_id, c.notas_cliente, 
+    GROUP BY c.id, c.user_id, vc.veterinaria_id, c.fecha_hora, c.estado_id, c.notas_cliente, 
              c.notas_veterinaria, c.created_at, c.updated_at,
-             ec.nombre, u.nombre_completo, u.correo, u.celular
+             ec.nombre, u.nombre_completo, u.correo, u.celular, v.nombre
     ORDER BY c.fecha_hora DESC
   `;
   const res = await pool.query(q);
@@ -42,9 +46,21 @@ export const listAllAppointments = async () => {
 
 export const getNextAppointmentByUser = async (userId) => {
   const q = `
-    SELECT c.id, c.user_id, c.fecha_hora, c.estado_id, c.notas_cliente
+    SELECT 
+      c.id, 
+      c.user_id, 
+      c.fecha_hora, 
+      c.estado_id, 
+      c.notas_cliente,
+      ARRAY_AGG(DISTINCT m.nombre ORDER BY m.nombre) FILTER (WHERE m.id IS NOT NULL) AS mascota_nombres,
+      ARRAY_AGG(DISTINCT s.nombre ORDER BY s.nombre) FILTER (WHERE s.id IS NOT NULL) AS servicio_nombres
     FROM citas c
+    LEFT JOIN citas_mascotas cm ON c.id = cm.cita_id
+    LEFT JOIN mascotas m ON cm.mascota_id = m.id
+    LEFT JOIN citas_servicios cs ON c.id = cs.cita_id
+    LEFT JOIN servicios s ON cs.servicio_id = s.id
     WHERE c.user_id = $1 AND c.fecha_hora > now()
+    GROUP BY c.id, c.user_id, c.fecha_hora, c.estado_id, c.notas_cliente
     ORDER BY c.fecha_hora ASC
     LIMIT 1
   `;
@@ -165,7 +181,8 @@ export const listAppointmentsByVeterinaria = async (veterinariaId) => {
            u.nombre_completo as usuario_nombre, u.correo as usuario_email,
            u.celular as usuario_telefono,
            STRING_AGG(DISTINCT m.nombre, ', ') as mascotas,
-           STRING_AGG(DISTINCT s.nombre, ', ') as servicios
+           STRING_AGG(DISTINCT s.nombre, ', ') as servicios,
+           ARRAY_AGG(DISTINCT m.id) FILTER (WHERE m.id IS NOT NULL) as mascota_ids
     FROM citas c
     INNER JOIN veterinarias_citas vc ON c.id = vc.cita_id
     LEFT JOIN estados_citas ec ON c.estado_id = ec.id

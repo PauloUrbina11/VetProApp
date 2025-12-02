@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../config/api_config.dart';
 
 class AuthService {
-  static const String baseUrl = "http://10.0.2.2:4000/api/auth";
+  static const String baseUrl = ApiConfig.auth;
   static const String _kTokenKey = "_vetpro_token";
   static const String _kRoleKey = "_vetpro_role";
   static const String _kUserIdKey = "_vetpro_user_id";
@@ -18,10 +19,8 @@ class AuthService {
         "password": password,
       });
 
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: requestBody);
+      final response = await http.post(url,
+          headers: {"Content-Type": "application/json"}, body: requestBody);
 
       final status = response.statusCode;
       final body = response.body;
@@ -81,10 +80,9 @@ class AuthService {
       Map<String, dynamic> payload) async {
     final url = Uri.parse("$baseUrl/register");
     try {
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(payload));
+      final response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode(payload));
 
       final data = jsonDecode(response.body);
       return {"ok": response.statusCode == 201, ...data};
@@ -145,10 +143,9 @@ class AuthService {
       String correo) async {
     final url = Uri.parse("$baseUrl/reset/request");
     try {
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"correo": correo}));
+      final response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({"correo": correo}));
       final data = jsonDecode(response.body);
       return {"ok": response.statusCode == 200, ...data};
     } catch (e) {
@@ -161,10 +158,9 @@ class AuthService {
       String token, String newPassword) async {
     final url = Uri.parse("$baseUrl/reset/update");
     try {
-      final response = await http.post(
-        url,
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({"token": token, "newPassword": newPassword}));
+      final response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: jsonEncode({"token": token, "newPassword": newPassword}));
       final data = jsonDecode(response.body);
       return {"ok": response.statusCode == 200, ...data};
     } catch (e) {

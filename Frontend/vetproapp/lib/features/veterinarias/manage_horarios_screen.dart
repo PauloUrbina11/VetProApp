@@ -40,12 +40,12 @@ class _ManageHorariosScreenState extends State<ManageHorariosScreen> {
     return visualIndex + 1; // Lunes a Sábado
   }
 
-  int _getIndexFromDiaSemana(int diaSemana) {
-    // diaSemana: 0=Domingo, 1=Lunes...
-    // visualIndex: 0=Lunes, 1=Martes, ..., 6=Domingo
-    if (diaSemana == 0) return 6; // Domingo
-    return diaSemana - 1; // Lunes a Sábado
-  }
+  // int _getIndexFromDiaSemana(int diaSemana) {
+  //   // diaSemana: 0=Domingo, 1=Lunes...
+  //   // visualIndex: 0=Lunes, 1=Martes, ..., 6=Domingo
+  //   if (diaSemana == 0) return 6; // Domingo
+  //   return diaSemana - 1; // Lunes a Sábado
+  // }
 
   @override
   void initState() {

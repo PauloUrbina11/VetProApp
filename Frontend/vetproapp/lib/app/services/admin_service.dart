@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'auth_service.dart';
+import '../config/api_config.dart';
 
 export 'auth_service.dart' show AuthService;
 
 class AdminService {
-  static const String _baseUrl = 'http://10.0.2.2:4000/api';
+  static const String _baseUrl = ApiConfig.baseUrl;
 
   static Future<Map<String, String>> _headers() async {
     final token = await AuthService.getToken();
@@ -139,5 +140,49 @@ class AdminService {
       throw Exception(data['error'] ?? 'Error getRecentActivity');
     }
     return data['data'] as List<dynamic>;
+  }
+
+  static Future<List<dynamic>> getUserVeterinariaRoles(
+      int veterinariaId, int userId) async {
+    final h = await _headers();
+    final resp = await http.get(
+        Uri.parse(
+            '$_baseUrl/admin/veterinaria/$veterinariaId/user/$userId/roles'),
+        headers: h);
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error getUserVeterinariaRoles');
+    }
+    return data['data'] as List<dynamic>;
+  }
+
+  static Future<void> removeVeterinariaRole(
+      int veterinariaId, int userId, int veterinariaRolId) async {
+    final h = await _headers();
+    final resp =
+        await http.delete(Uri.parse('$_baseUrl/admin/veterinaria-role'),
+            headers: h,
+            body: jsonEncode({
+              'veterinaria_id': veterinariaId,
+              'user_id': userId,
+              'veterinaria_rol_id': veterinariaRolId,
+            }));
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error removeVeterinariaRole');
+    }
+  }
+
+  static Future<Map<String, dynamic>> toggleUserActive(int userId) async {
+    final h = await _headers();
+    final resp = await http.patch(
+      Uri.parse('$_baseUrl/admin/users/$userId/toggle-active'),
+      headers: h,
+    );
+    final data = jsonDecode(resp.body);
+    if (resp.statusCode != 200 || data['ok'] != true) {
+      throw Exception(data['error'] ?? 'Error toggleUserActive');
+    }
+    return data['data'] as Map<String, dynamic>;
   }
 }

@@ -4,6 +4,8 @@ import '../../app/services/appointments_service.dart';
 import '../../app/services/admin_service.dart';
 import '../../app/services/auth_service.dart';
 import '../../app/services/veterinaria_service.dart';
+import '../../app/services/permissions_service.dart';
+import '../../app/services/medical_records_service.dart';
 import '../../app/config/theme.dart';
 
 class ManageAppointmentsScreen extends StatefulWidget {
@@ -29,6 +31,10 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
   Future<void> _loadData() async {
     final role = await AuthService.getRole();
     setState(() => _userRole = role);
+    // Cargar permisos si es rol veterinaria
+    if (role == 2) {
+      await PermissionsService.loadVeterinariaRoles();
+    }
     _loadAppointments();
   }
 
@@ -101,15 +107,54 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
     }
   }
 
+  List<int> _getAllowedStatuses(int currentStatusId) {
+    // Si es rol veterinaria (2), usar permisos basados en veterinaria_rol
+    if (_userRole == 2) {
+      return PermissionsService.getAllowedStatusChanges(currentStatusId);
+    }
+
+    // Admin (rol 1) puede hacer todos los cambios
+    switch (currentStatusId) {
+      case 1: // Pendiente
+        return [2, 4]; // Confirmada, Cancelada
+      case 2: // Confirmada
+        return [3, 4, 5]; // Completada, Cancelada, No asistió
+      case 3: // Completada (final)
+        return [];
+      case 4: // Cancelada (final)
+        return [];
+      case 5: // No asistió (final)
+        return [];
+      default:
+        return [];
+    }
+  }
+
   Future<void> _changeAppointmentStatus(
       int appointmentId, int currentStatusId) async {
-    final estados = [
+    final allowedStatuses = _getAllowedStatuses(currentStatusId);
+
+    if (allowedStatuses.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Este estado es final y no puede ser modificado'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
+
+    final allEstados = [
       {'id': 1, 'nombre': 'Pendiente'},
       {'id': 2, 'nombre': 'Confirmada'},
       {'id': 3, 'nombre': 'Completada'},
       {'id': 4, 'nombre': 'Cancelada'},
       {'id': 5, 'nombre': 'No asistió'},
     ];
+
+    final estados = allEstados
+        .where((estado) => allowedStatuses.contains(estado['id']))
+        .toList();
 
     final selectedStatus = await showDialog<int>(
       context: context,
@@ -118,16 +163,14 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: estados.map((estado) {
-            final isSelected = estado['id'] == currentStatusId;
             return ListTile(
               title: Text(estado['nombre'] as String),
               leading: Radio<int>(
                 value: estado['id'] as int,
-                groupValue: currentStatusId,
+                groupValue: null,
                 onChanged: (value) => Navigator.pop(context, value),
                 activeColor: softGreen,
               ),
-              selected: isSelected,
               onTap: () => Navigator.pop(context, estado['id'] as int),
             );
           }).toList(),
@@ -142,52 +185,259 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
     );
 
     if (selectedStatus != null && selectedStatus != currentStatusId) {
-      // Mostrar diálogo para ingresar notas
-      final notasController = TextEditingController();
-      final notas = await showDialog<String>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Notas de la Veterinaria'),
-          content: TextField(
-            controller: notasController,
-            maxLines: 4,
-            decoration: const InputDecoration(
-              hintText: 'Ingrese observaciones o notas sobre esta cita...',
-              border: OutlineInputBorder(),
+      // Si el estado seleccionado es "Completada" (3), validar que la cita ya haya pasado
+      if (selectedStatus == 3) {
+        final appointment =
+            _appointments.firstWhere((a) => a['id'] == appointmentId);
+
+        // Verificar si la cita ya pasó (solo para veterinarias, rol 2)
+        if (_userRole == 2) {
+          try {
+            final fechaHora =
+                DateTime.parse(appointment['fecha_hora']).toLocal();
+            final now = DateTime.now();
+
+            if (fechaHora.isAfter(now)) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                      'No puedes completar esta cita antes de su hora programada (${DateFormat('dd/MM/yyyy HH:mm').format(fechaHora)})'),
+                  backgroundColor: Colors.orange,
+                  duration: const Duration(seconds: 4),
+                ),
+              );
+              return;
+            }
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error al validar la fecha de la cita: $e'),
+                backgroundColor: Colors.red,
+              ),
+            );
+            return;
+          }
+        }
+
+        await _showMedicalRecordForm(appointmentId, appointment);
+      } else {
+        // Para otros estados, mostrar diálogo de notas
+        final notasController = TextEditingController();
+        final notas = await showDialog<String>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Notas de la Veterinaria'),
+            content: TextField(
+              controller: notasController,
+              maxLines: 4,
+              decoration: const InputDecoration(
+                hintText: 'Ingrese observaciones o notas sobre esta cita...',
+                border: OutlineInputBorder(),
+              ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, null),
+                child: const Text('Cancelar'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, notasController.text),
+                child: const Text('Guardar'),
+              ),
+            ],
           ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, null),
-              child: const Text('Cancelar'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, notasController.text),
-              child: const Text('Guardar'),
-            ),
-          ],
+        );
+
+        if (notas != null) {
+          try {
+            final payload = {
+              'estado_id': selectedStatus,
+              'notas_veterinaria':
+                  notas.trim().isNotEmpty ? notas.trim() : null,
+            };
+
+            await AppointmentsService.updateAppointment(
+              appointmentId,
+              payload,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Estado actualizado exitosamente'),
+                backgroundColor: Colors.green,
+              ),
+            );
+            _loadAppointments();
+          } catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error: ${e.toString()}'),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      }
+    }
+  }
+
+  Future<void> _showMedicalRecordForm(
+      int appointmentId, Map<String, dynamic> appointment) async {
+    final diagnosticoController = TextEditingController();
+    final tratamientoController = TextEditingController();
+    final motivoController = TextEditingController();
+    final descripcionController = TextEditingController();
+    final notasController = TextEditingController();
+
+    final result = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title:
+            const Text('Historia Clínica', style: TextStyle(color: darkGreen)),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Complete la información médica de la cita:',
+                style: TextStyle(fontSize: 12, color: Colors.grey),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: motivoController,
+                decoration: const InputDecoration(
+                  labelText: 'Motivo de consulta',
+                  border: OutlineInputBorder(),
+                  hintText: 'Ej: Vacunación, chequeo general...',
+                ),
+                maxLines: 2,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: descripcionController,
+                decoration: const InputDecoration(
+                  labelText: 'Descripción de la visita *',
+                  border: OutlineInputBorder(),
+                  hintText: 'Describa lo observado durante la consulta...',
+                ),
+                maxLines: 3,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: diagnosticoController,
+                decoration: const InputDecoration(
+                  labelText: 'Diagnóstico',
+                  border: OutlineInputBorder(),
+                  hintText: 'Diagnóstico médico...',
+                ),
+                maxLines: 3,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: tratamientoController,
+                decoration: const InputDecoration(
+                  labelText: 'Tratamiento/Recomendaciones',
+                  border: OutlineInputBorder(),
+                  hintText: 'Medicamentos, instrucciones, cuidados...',
+                ),
+                maxLines: 3,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: notasController,
+                decoration: const InputDecoration(
+                  labelText: 'Notas adicionales',
+                  border: OutlineInputBorder(),
+                  hintText: 'Notas para el expediente de la cita...',
+                ),
+                maxLines: 2,
+              ),
+            ],
+          ),
         ),
-      );
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancelar'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (descripcionController.text.trim().isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('La descripción es obligatoria'),
+                    backgroundColor: Colors.orange,
+                  ),
+                );
+                return;
+              }
+              Navigator.pop(context, true);
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: softGreen),
+            child: const Text('Guardar y Completar Cita'),
+          ),
+        ],
+      ),
+    );
 
-      if (notas != null) {
-        try {
-          final payload = {
-            'estado_id': selectedStatus,
-            'notas_veterinaria': notas.trim().isNotEmpty ? notas.trim() : null,
-          };
+    if (result == true) {
+      try {
+        // Obtener veterinaria_id e información de mascotas de la cita
+        final veterinariaIds = await VeterinariaService.getMyVeterinarias();
+        if (veterinariaIds.isEmpty) {
+          throw Exception('No se encontró veterinaria asociada');
+        }
 
-          await AppointmentsService.updateAppointment(
-            appointmentId,
-            payload,
-          );
+        // Obtener IDs de mascotas de la cita
+        final mascotaIds = await _getMascotaIdsFromAppointment(appointmentId);
+
+        if (mascotaIds.isEmpty) {
+          throw Exception('No se encontraron mascotas asociadas a esta cita');
+        }
+
+        // Crear historia clínica para cada mascota
+        for (final mascotaId in mascotaIds) {
+          await MedicalRecordsService.createMedicalRecord({
+            'mascota_id': mascotaId,
+            'veterinaria_id': veterinariaIds[0],
+            'cita_id': appointmentId,
+            'fecha': DateTime.now().toIso8601String(),
+            'motivo': motivoController.text.trim().isNotEmpty
+                ? motivoController.text.trim()
+                : null,
+            'descripcion': descripcionController.text.trim(),
+            'diagnostico': diagnosticoController.text.trim().isNotEmpty
+                ? diagnosticoController.text.trim()
+                : null,
+            'tratamiento': tratamientoController.text.trim().isNotEmpty
+                ? tratamientoController.text.trim()
+                : null,
+          });
+        }
+
+        // Actualizar estado de la cita a "Completada"
+        await AppointmentsService.updateAppointment(
+          appointmentId,
+          {
+            'estado_id': 3,
+            'notas_veterinaria': notasController.text.trim().isNotEmpty
+                ? notasController.text.trim()
+                : null,
+          },
+        );
+
+        if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Estado actualizado exitosamente'),
+              content: Text('Cita completada e historia clínica guardada'),
               backgroundColor: Colors.green,
             ),
           );
           _loadAppointments();
-        } catch (e) {
+        }
+      } catch (e) {
+        if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Error: ${e.toString()}'),
@@ -199,10 +449,30 @@ class _ManageAppointmentsScreenState extends State<ManageAppointmentsScreen> {
     }
   }
 
+  Future<List<int>> _getMascotaIdsFromAppointment(int appointmentId) async {
+    final appointment =
+        _appointments.firstWhere((a) => a['id'] == appointmentId);
+
+    // Si tenemos mascota_ids en el appointment (array de PostgreSQL)
+    if (appointment.containsKey('mascota_ids') &&
+        appointment['mascota_ids'] != null) {
+      final mascotaIds = appointment['mascota_ids'];
+      if (mascotaIds is List) {
+        return mascotaIds
+            .map((id) => id is int ? id : int.parse(id.toString()))
+            .toList();
+      }
+    }
+
+    // Fallback: Si no hay mascota_ids pero hay user_id, retornar error descriptivo
+    throw Exception(
+        'No se pudieron obtener los IDs de las mascotas de esta cita. Datos: ${appointment.keys.toList()}');
+  }
+
   String _formatFecha(String? fechaHora) {
     if (fechaHora == null) return 'N/A';
     try {
-      final date = DateTime.parse(fechaHora);
+      final date = DateTime.parse(fechaHora).toLocal();
       return DateFormat('dd-MM-yyyy HH:mm').format(date);
     } catch (e) {
       return fechaHora;

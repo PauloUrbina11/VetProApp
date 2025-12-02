@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../app/config/theme.dart';
 import '../../../app/services/veterinaria_services_service.dart';
 import '../../../app/services/services_service.dart';
+import '../../../app/services/permissions_service.dart';
+import '../../../app/services/auth_service.dart';
 
 class ManageServicesScreen extends StatefulWidget {
   final int veterinariaId;
@@ -19,10 +21,22 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
   bool _loading = true;
   List<dynamic> _serviciosVeterinaria = [];
   List<dynamic> _todosLosServicios = [];
+  bool _canEdit = false;
 
   @override
   void initState() {
     super.initState();
+    _checkPermissions();
+  }
+
+  Future<void> _checkPermissions() async {
+    final role = await AuthService.getRole();
+    if (role == 2) {
+      await PermissionsService.loadVeterinariaRoles();
+      setState(() {
+        _canEdit = PermissionsService.canEditService();
+      });
+    }
     _loadData();
   }
 
@@ -182,11 +196,13 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
         elevation: 0,
         iconTheme: const IconThemeData(color: darkGreen),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _mostrarDialogoAgregar,
-        backgroundColor: softGreen,
-        child: const Icon(Icons.add, color: white),
-      ),
+      floatingActionButton: _canEdit
+          ? FloatingActionButton(
+              onPressed: _mostrarDialogoAgregar,
+              backgroundColor: softGreen,
+              child: const Icon(Icons.add, color: white),
+            )
+          : null,
       body: _loading
           ? const Center(child: CircularProgressIndicator(color: softGreen))
           : _serviciosVeterinaria.isEmpty
@@ -205,15 +221,16 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      ElevatedButton.icon(
-                        onPressed: _mostrarDialogoAgregar,
-                        icon: const Icon(Icons.add),
-                        label: const Text('Agregar servicio'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: softGreen,
-                          foregroundColor: white,
+                      if (_canEdit)
+                        ElevatedButton.icon(
+                          onPressed: _mostrarDialogoAgregar,
+                          icon: const Icon(Icons.add),
+                          label: const Text('Agregar servicio'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: softGreen,
+                            foregroundColor: white,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 )
@@ -297,33 +314,36 @@ class _ManageServicesScreenState extends State<ManageServicesScreen> {
             ],
           ],
         ),
-        trailing: IconButton(
-          icon: const Icon(Icons.delete_outline, color: Colors.red),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => AlertDialog(
-                title: const Text('Confirmar eliminación'),
-                content: Text(
-                    '¿Está seguro que desea eliminar el servicio "${servicioVet['servicio_nombre']}"?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancelar'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      _eliminarServicio(servicioVet['id']);
-                    },
-                    style: TextButton.styleFrom(foregroundColor: Colors.red),
-                    child: const Text('Eliminar'),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+        trailing: _canEdit
+            ? IconButton(
+                icon: const Icon(Icons.delete_outline, color: Colors.red),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Confirmar eliminación'),
+                      content: Text(
+                          '¿Está seguro que desea eliminar el servicio "${servicioVet['servicio_nombre']}"?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text('Cancelar'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _eliminarServicio(servicioVet['id']);
+                          },
+                          style:
+                              TextButton.styleFrom(foregroundColor: Colors.red),
+                          child: const Text('Eliminar'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              )
+            : null,
       ),
     );
   }

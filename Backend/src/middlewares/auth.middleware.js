@@ -16,6 +16,7 @@ export const authMiddleware = (req, res, next) => {
 
         // Agregar info del usuario al request
         req.user = decoded;
+        req.userId = decoded.id || decoded.userId || decoded.user_id;
 
         next(); // continuar a la ruta
     } catch (err) {
