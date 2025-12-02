@@ -1,6 +1,8 @@
 import app from "./app.js";
 import dotenv from "dotenv";
 
+console.log("=== INICIANDO server.js ===");
+
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
