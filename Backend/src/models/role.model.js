@@ -1,16 +1,4 @@
 import { pool } from "../config/database.js";
-import { 
-  createRolesTables, 
-  ensureDefaultRoles 
-} from "../database/migrations/roles.migration.js";
-
-/**
- * Inicializa las tablas y roles por defecto
- */
-export const initRoles = async () => {
-  await createRolesTables();
-  await ensureDefaultRoles();
-};
 
 export const assignRoleToUser = async (userId, roleId) => {
   // avoid duplicate assignments
