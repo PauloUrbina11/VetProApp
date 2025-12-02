@@ -1,10 +1,6 @@
 import app from "./app.js";
 import dotenv from "dotenv";
 
-console.log("=== INICIANDO server.js ===");
-
-dotenv.config();
-
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, "0.0.0.0", () => {
