@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 
+console.log("=== EJECUTANDO app.js DESDE EXPRESS ===");
+
 console.log("Cargando rutas...");
 
 import authRoutes from "./routes/auth.routes.js";
