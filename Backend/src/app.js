@@ -45,7 +45,7 @@ app.use("/api/medical-records", medicalRecordsRoutes);
 app.use("/api/notifications", notificationsRoutes);
 
 // Iniciar servicios de recordatorios
-startReminderService();
-startPasswordReminderService();
+//startReminderService();
+//startPasswordReminderService();
 
 export default app;
