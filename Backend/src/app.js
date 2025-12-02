@@ -15,7 +15,6 @@ import statsRoutes from "./routes/stats.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import medicalRecordsRoutes from "./routes/medical_records.routes.js";
 import notificationsRoutes from "./routes/notifications.routes.js";
-import { initRoles } from "./models/role.model.js";
 import { startReminderService } from "./services/reminders.service.js";
 import { startPasswordReminderService } from "./services/password_reminder.service.js";
 
