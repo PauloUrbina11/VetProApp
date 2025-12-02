@@ -20,10 +20,6 @@ import { startPasswordReminderService } from "./services/password_reminder.servi
 
 const app = express();
 
-// Iniciar servicios de recordatorios
-startReminderService();
-startPasswordReminderService();
-
 app.use(cors());
 app.use(express.json());
 
@@ -47,5 +43,9 @@ app.use("/api/stats", statsRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/medical-records", medicalRecordsRoutes);
 app.use("/api/notifications", notificationsRoutes);
+
+// Iniciar servicios de recordatorios
+startReminderService();
+startPasswordReminderService();
 
 export default app;
