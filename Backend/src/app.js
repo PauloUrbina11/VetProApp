@@ -1,18 +1,10 @@
 import express from "express";
 import cors from "cors";
 
-console.log("=== EJECUTANDO app.js DESDE EXPRESS ===");
-
-console.log("Cargando rutas...");
-
 import authRoutes from "./routes/auth.routes.js";
-console.log("auth.routes.js cargado");
 import locationRoutes from "./routes/location.routes.js";
-console.log("location.routes.js cargado");
 import petsRoutes from "./routes/pets.routes.js";
-console.log("pets.routes.js cargado");
 import appointmentsRoutes from "./routes/appointments.routes.js";
-console.log("appointments.routes.js cargado");
 import servicesRoutes from "./routes/services.routes.js";
 import veterinariasRoutes from "./routes/veterinarias.routes.js";
 import horariosRoutes from "./routes/horarios.routes.js";
