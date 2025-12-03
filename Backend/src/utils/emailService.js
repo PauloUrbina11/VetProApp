@@ -1,5 +1,4 @@
-import formData from 'form-data';
-import Mailgun from 'mailgun.js';
+import { Resend } from 'resend';
 
 const TEST_EMAIL = 'paurbi_1101@hotmail.com';
 
@@ -8,15 +7,15 @@ export const sendActivationEmail = async (originalUserEmail, token) => {
   const appActivationUrl = `vetproapp://activate?token=${encodeURIComponent(token)}`;
 
   const subject = 'Activación de cuenta - VetProApp';
-  const text = `Hola,\n\nPara activar tu cuenta visita el siguiente enlace:\n${webActivationUrl}\n\nSi estás en móvil, también puedes abrir la app con este enlace:\n${appActivationUrl}`;
   const html = `
+    <h2>Bienvenido a VetProApp</h2>
     <p>Hola,</p>
     <p>Para activar tu cuenta puedes:</p>
     <ul>
-      <li>Usar este enlace web: <a href="${webActivationUrl}">Activar cuenta</a></li>
-      <li>O abrir la app móvil: <a href="${appActivationUrl}">Abrir en la app</a></li>
+      <li><a href="${webActivationUrl}">Activar cuenta desde la web</a></li>
+      <li><a href="${appActivationUrl}">Abrir en la app móvil</a></li>
     </ul>
-    <p>Correo original del usuario: ${originalUserEmail}</p>
+    <p><small>Correo original del usuario: ${originalUserEmail}</small></p>
   `;
 
   console.log('=== Activation email ===');
@@ -25,26 +24,29 @@ export const sendActivationEmail = async (originalUserEmail, token) => {
   console.log(`Activation link (web): ${webActivationUrl}`);
   console.log('========================');
 
-  const { MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_FROM_EMAIL } = process.env;
-  if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN || !MAILGUN_FROM_EMAIL) {
-    console.log('Mailgun no configurado. Necesitas MAILGUN_API_KEY, MAILGUN_DOMAIN y MAILGUN_FROM_EMAIL');
+  const { RESEND_API_KEY, RESEND_FROM_EMAIL } = process.env;
+  if (!RESEND_API_KEY || !RESEND_FROM_EMAIL) {
+    console.log('Resend no configurado. Necesitas RESEND_API_KEY y RESEND_FROM_EMAIL');
     return { ok: true, sent: false };
   }
 
   try {
-    const mailgun = new Mailgun(formData);
-    const mg = mailgun.client({ username: 'api', key: MAILGUN_API_KEY });
+    const resend = new Resend(RESEND_API_KEY);
     
-    await mg.messages.create(MAILGUN_DOMAIN, {
-      from: MAILGUN_FROM_EMAIL,
+    const { data, error } = await resend.emails.send({
+      from: RESEND_FROM_EMAIL,
       to: TEST_EMAIL,
       subject,
-      text,
       html,
     });
 
-    console.log('✅ Email de activación enviado correctamente');
-    return { ok: true, sent: true };
+    if (error) {
+      console.error('❌ Error enviando email de activación:', error);
+      return { ok: false, sent: false, error: error.message };
+    }
+
+    console.log('✅ Email de activación enviado correctamente:', data.id);
+    return { ok: true, sent: true, messageId: data.id };
   } catch (err) {
     console.error('❌ Error enviando email de activación:', err.message);
     return { ok: false, sent: false, error: err.message };
@@ -58,15 +60,15 @@ export const sendResetEmail = async (originalUserEmail, token) => {
   const appResetUrl = `vetproapp://reset?token=${encodeURIComponent(token)}`;
 
   const subject = 'Restablecer contraseña - VetProApp';
-  const text = `Hola,\n\nPara restablecer tu contraseña visita el siguiente enlace:\n${webResetUrl}\n\nSi estás en móvil, también puedes abrir la app con este enlace:\n${appResetUrl}`;
   const html = `
+    <h2>Restablecer contraseña</h2>
     <p>Hola,</p>
     <p>Para restablecer tu contraseña puedes:</p>
     <ul>
-      <li>Usar este enlace web: <a href="${webResetUrl}">Restablecer contraseña</a></li>
-      <li>O abrir la app móvil: <a href="${appResetUrl}">Abrir en la app</a></li>
+      <li><a href="${webResetUrl}">Restablecer desde la web</a></li>
+      <li><a href="${appResetUrl}">Abrir en la app móvil</a></li>
     </ul>
-    <p>Correo original del usuario: ${originalUserEmail}</p>
+    <p><small>Correo original del usuario: ${originalUserEmail}</small></p>
   `;
 
   console.log('=== Reset email ===');
@@ -75,26 +77,29 @@ export const sendResetEmail = async (originalUserEmail, token) => {
   console.log(`Reset link (web): ${webResetUrl}`);
   console.log('===================');
 
-  const { MAILGUN_API_KEY, MAILGUN_DOMAIN, MAILGUN_FROM_EMAIL } = process.env;
-  if (!MAILGUN_API_KEY || !MAILGUN_DOMAIN || !MAILGUN_FROM_EMAIL) {
-    console.log('Mailgun no configurado. Necesitas MAILGUN_API_KEY, MAILGUN_DOMAIN y MAILGUN_FROM_EMAIL');
+  const { RESEND_API_KEY, RESEND_FROM_EMAIL } = process.env;
+  if (!RESEND_API_KEY || !RESEND_FROM_EMAIL) {
+    console.log('Resend no configurado. Necesitas RESEND_API_KEY y RESEND_FROM_EMAIL');
     return { ok: true, sent: false };
   }
 
   try {
-    const mailgun = new Mailgun(formData);
-    const mg = mailgun.client({ username: 'api', key: MAILGUN_API_KEY });
+    const resend = new Resend(RESEND_API_KEY);
     
-    await mg.messages.create(MAILGUN_DOMAIN, {
-      from: MAILGUN_FROM_EMAIL,
+    const { data, error } = await resend.emails.send({
+      from: RESEND_FROM_EMAIL,
       to: TEST_EMAIL,
       subject,
-      text,
       html,
     });
 
-    console.log('✅ Email de reset enviado correctamente');
-    return { ok: true, sent: true };
+    if (error) {
+      console.error('❌ Error enviando email de reset:', error);
+      return { ok: false, sent: false, error: error.message };
+    }
+
+    console.log('✅ Email de reset enviado correctamente:', data.id);
+    return { ok: true, sent: true, messageId: data.id };
   } catch (err) {
     console.error('❌ Error enviando email de reset:', err.message);
     return { ok: false, sent: false, error: err.message };
