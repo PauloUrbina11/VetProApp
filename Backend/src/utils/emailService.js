@@ -4,7 +4,7 @@ const TEST_EMAIL = 'paurbi_1101@hotmail.com';
 
 export const sendActivationEmail = async (originalUserEmail, token) => {
   // Enviar ambos enlaces: HTTP clickeable y deep link para abrir la app móvil
-  const webActivationUrl = `http://localhost:4000/api/auth/activate?token=${encodeURIComponent(token)}`;
+  const webActivationUrl = `https://vetproapp.onrender.com/api/auth/activate?token=${encodeURIComponent(token)}`;
   const appActivationUrl = `vetproapp://activate?token=${encodeURIComponent(token)}`;
 
   const subject = 'Activación de cuenta - VetProApp (Pruebas)';
@@ -66,7 +66,7 @@ export const sendActivationEmail = async (originalUserEmail, token) => {
 export default sendActivationEmail;
 
 export const sendResetEmail = async (originalUserEmail, token) => {
-  const webResetUrl = `http://localhost:4000/api/auth/reset?token=${encodeURIComponent(token)}`;
+  const webResetUrl = `https://vetproapp.onrender.com/api/auth/reset?token=${encodeURIComponent(token)}`;
   const appResetUrl = `vetproapp://reset?token=${encodeURIComponent(token)}`;
 
   const subject = 'Restablecer contraseña - VetProApp (Pruebas)';
