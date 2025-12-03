@@ -43,17 +43,15 @@ export const registerUser = async (data) => {
     // Generar token de activación
     const token = generateActivationToken(newUser.id);
 
-    // 5. Guardar token en BD
+    // Guardar token en BD
     await saveTokenActivation(newUser.correo, token);
 
-        // 5.b Enviar correo de activación (para pruebas se envía a paurbi_1101@hotmail.com)
-        try {
-            await sendActivationEmail(newUser.correo, token);
-        } catch (err) {
-            console.error('Error al intentar enviar email de activación:', err.message || err);
-        }
+    // Enviar correo de activación en segundo plano (no bloquea la respuesta)
+    sendActivationEmail(newUser.correo, token).catch(err => {
+        console.error('Error al enviar email de activación (background):', err.message || err);
+    });
 
-    // 6. Respuesta
+    // Respuesta inmediata sin esperar el email
     return {
         ok: true,
         message: "Usuario registrado. Revisa tu correo para activar la cuenta.",
@@ -61,7 +59,7 @@ export const registerUser = async (data) => {
             id: newUser.id,
             correo: newUser.correo,
         },
-        activation_token: token // temporal mientras no usamos emails
+        activation_token: token
     };
 };
 
@@ -143,16 +141,15 @@ export const requestPasswordReset = async (correo) => {
 
     // Guardar token en BD
     await saveResetToken(correo, token);
-    // Intentar enviar correo de reset (si SMTP está configurado se enviará)
-    try {
-        await sendResetEmail(correo, token);
-    } catch (err) {
-        console.error('Error al intentar enviar email de reset:', err.message || err);
-    }
+    
+    // Enviar correo de reset en segundo plano (no bloquea la respuesta)
+    sendResetEmail(correo, token).catch(err => {
+        console.error('Error al enviar email de reset (background):', err.message || err);
+    });
 
     return {
         message: "Se ha enviado un enlace para restablecer tu contraseña.",
-        token // temporal hasta configurar email
+        token
     };
 };
 
