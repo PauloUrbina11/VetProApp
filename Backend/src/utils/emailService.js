@@ -1,4 +1,4 @@
-import formData from 'form-data';
+import FormData from 'form-data';
 import Mailgun from 'mailgun.js';
 
 const TEST_EMAIL = 'paurbi_1101@hotmail.com';
@@ -32,7 +32,7 @@ export const sendActivationEmail = async (originalUserEmail, token) => {
   }
 
   try {
-    const mailgun = new Mailgun(formData);
+    const mailgun = new Mailgun(FormData);
     const mg = mailgun.client({ username: 'api', key: MAILGUN_API_KEY });
     
     await mg.messages.create(MAILGUN_DOMAIN, {
@@ -82,7 +82,7 @@ export const sendResetEmail = async (originalUserEmail, token) => {
   }
 
   try {
-    const mailgun = new Mailgun(formData);
+    const mailgun = new Mailgun(FormData);
     const mg = mailgun.client({ username: 'api', key: MAILGUN_API_KEY });
     
     await mg.messages.create(MAILGUN_DOMAIN, {
