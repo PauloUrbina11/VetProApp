@@ -51,7 +51,7 @@ export const registerUser = async (data) => {
         console.error('Error al enviar email de activación (background):', err.message || err);
     });
 
-    // Respuesta inmediata sin esperar el email
+    // Respuesta inmediata
     return {
         ok: true,
         message: "Usuario registrado. Revisa tu correo para activar la cuenta.",
