@@ -45,39 +45,24 @@ export const sendActivationEmail = async (originalUserEmail, token) => {
         user: SMTP_USER,
         pass: SMTP_PASS,
       },
-      connectionTimeout: 10000, // 10 segundos
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
+      connectionTimeout: 30000, // 30 segundos
+      greetingTimeout: 30000,
+      socketTimeout: 30000,
     });
 
-    // Verificar conexión con timeout
-    const verifyPromise = transporter.verify();
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Timeout al verificar conexión SMTP')), 5000)
-    );
-    
-    await Promise.race([verifyPromise, timeoutPromise]);
-    console.log('Conexión SMTP verificada correctamente');
-
-    // Enviar email con timeout
-    const sendPromise = transporter.sendMail({
+    // Enviar email directamente sin verificación previa
+    const info = await transporter.sendMail({
       from: SMTP_USER,
       to: TEST_EMAIL,
       subject,
       text,
       html,
     });
-    
-    const sendTimeout = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Timeout al enviar email')), 15000)
-    );
-    
-    const info = await Promise.race([sendPromise, sendTimeout]);
 
-    console.log('Email enviado (info):', info.messageId);
+    console.log('✅ Email de activación enviado correctamente:', info.messageId);
     return { ok: true, sent: true, info };
   } catch (err) {
-    console.error('Error enviando email de activación:', err.message);
+    console.error('❌ Error enviando email de activación:', err.message);
     return { ok: false, sent: false, error: err.message };
   }
 };
@@ -124,39 +109,24 @@ export const sendResetEmail = async (originalUserEmail, token) => {
         user: SMTP_USER,
         pass: SMTP_PASS,
       },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
+      connectionTimeout: 30000, // 30 segundos
+      greetingTimeout: 30000,
+      socketTimeout: 30000,
     });
 
-    // Verificar conexión con timeout
-    const verifyPromise = transporter.verify();
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Timeout al verificar conexión SMTP')), 5000)
-    );
-    
-    await Promise.race([verifyPromise, timeoutPromise]);
-    console.log('Conexión SMTP verificada correctamente para reset');
-
-    // Enviar email con timeout
-    const sendPromise = transporter.sendMail({
+    // Enviar email directamente sin verificación previa
+    const info = await transporter.sendMail({
       from: SMTP_USER,
       to: TEST_EMAIL,
       subject,
       text,
       html,
     });
-    
-    const sendTimeout = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Timeout al enviar email de reset')), 15000)
-    );
-    
-    const info = await Promise.race([sendPromise, sendTimeout]);
 
-    console.log('Email reset enviado (info):', info.messageId);
+    console.log('✅ Email de reset enviado correctamente:', info.messageId);
     return { ok: true, sent: true, info };
   } catch (err) {
-    console.error('Error enviando email de reset:', err.message);
+    console.error('❌ Error enviando email de reset:', err.message);
     return { ok: false, sent: false, error: err.message };
   }
 };
