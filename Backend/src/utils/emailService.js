@@ -40,17 +40,24 @@ export const sendActivationEmail = async (originalUserEmail, token) => {
     const transporter = nodemailer.createTransport({
       host: SMTP_HOST,
       port: SMTP_PORT ? parseInt(SMTP_PORT, 10) : 587,
-      secure: SMTP_PORT == 465, // true for 465, false for other ports
+      secure: false, // false para STARTTLS
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS,
       },
-      connectionTimeout: 30000, // 30 segundos
-      greetingTimeout: 30000,
-      socketTimeout: 30000,
+      tls: {
+        rejectUnauthorized: false, // Permite certificados autofirmados
+        ciphers: 'SSLv3'
+      },
+      connectionTimeout: 10000,
+      greetingTimeout: 5000,
+      socketTimeout: 10000,
+      pool: true,
+      maxConnections: 1,
+      rateDelta: 1000,
+      rateLimit: 1
     });
 
-    // Enviar email directamente sin verificación previa
     const info = await transporter.sendMail({
       from: SMTP_USER,
       to: TEST_EMAIL,
@@ -104,17 +111,24 @@ export const sendResetEmail = async (originalUserEmail, token) => {
     const transporter = nodemailer.createTransport({
       host: SMTP_HOST,
       port: SMTP_PORT ? parseInt(SMTP_PORT, 10) : 587,
-      secure: SMTP_PORT == 465,
+      secure: false, // false para STARTTLS
       auth: {
         user: SMTP_USER,
         pass: SMTP_PASS,
       },
-      connectionTimeout: 30000, // 30 segundos
-      greetingTimeout: 30000,
-      socketTimeout: 30000,
+      tls: {
+        rejectUnauthorized: false, // Permite certificados autofirmados
+        ciphers: 'SSLv3'
+      },
+      connectionTimeout: 10000,
+      greetingTimeout: 5000,
+      socketTimeout: 10000,
+      pool: true,
+      maxConnections: 1,
+      rateDelta: 1000,
+      rateLimit: 1
     });
 
-    // Enviar email directamente sin verificación previa
     const info = await transporter.sendMail({
       from: SMTP_USER,
       to: TEST_EMAIL,
